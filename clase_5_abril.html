@@ -20,16 +20,36 @@
     color: var(--txt); 
     line-height: 1.6; 
     font-size: 20px; 
-    padding: 15px 0 40px 0; 
+    padding: 0 0 40px 0; 
   }
   
   header { background: var(--nav); color: var(--bco); padding: 25px 20px; border-bottom: 5px solid var(--teal); }
   header h1 { font-size: 28px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
   header p { font-size: 18px; opacity: 0.9; }
   
-  .container { width: 95%; max-width: 1400px; margin: 0 auto; padding: 0 15px; }
+  .container { width: 95%; max-width: 1400px; margin: 20px auto; padding: 0 15px; }
+
+  /* Botón de volver al inicio de Abril */
+  .back-btn {
+    display: inline-block;
+    margin-bottom: 25px;
+    padding: 12px 24px;
+    background: var(--bco);
+    color: var(--nav);
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid var(--bd);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  .back-btn:hover {
+    border-color: var(--nav);
+    background: var(--gris);
+    transform: translateX(-5px);
+  }
   
-  .card { background: var(--bco); border-radius: var(--r); padding: 30px; margin-bottom: 30px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); border-left: 6px solid var(--bd); }
+  .card { background: var(--bco); border-radius: var(--r); padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,.08); border-left: 6px solid var(--bd); }
   .c-setup { border-left-color: var(--amb); }
   .c-codigo { border-left-color: var(--vio); background: #FAFCFF; position: relative; }
   .c-eval { border-left-color: var(--classroom); background: #F6FEF8; }
@@ -43,7 +63,7 @@
     background: var(--code-bg); 
     color: #D4D4D4; 
     font-family: 'Consolas', monospace; 
-    padding: 50px 20px 20px 20px; 
+    padding: 55px 20px 20px 20px; 
     border-radius: var(--r); 
     font-size: 18px; 
     border: 1px solid #000; 
@@ -53,7 +73,7 @@
   
   .keyword { color: #569CD6; } .string { color: #CE9178; } .comment { color: #6A9955; font-style: italic; }
   
-  .copy-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); color: #FFF; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: bold; transition: 0.2s; z-index: 10; }
+  .copy-btn { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); color: #FFF; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: bold; transition: 0.2s; z-index: 10; }
   .copy-btn:hover { background: rgba(255,255,255,0.3); }
   
   .action-box { padding: 20px; border-radius: var(--r); margin: 20px 0; font-size: 19px; border-left: 5px solid; }
@@ -71,6 +91,8 @@
 </header>
 
 <div class="container">
+
+  <a href="index_abril.html" class="back-btn">⬅ Volver al Inicio</a>
 
   <!-- BLOQUE 1: LA TAREA COGNITIVA PRINCIPAL -->
   <div class="card c-setup">
