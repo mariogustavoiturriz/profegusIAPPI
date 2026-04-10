@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA Aplicada · Clase 5 (Abril)</title>
+<style>
+  :root {
+    --nav: #1A2C3A; --teal: #00949A; --grn: #2A6049; --amb: #D4873A; 
+    --vio: #3D5A99; --gris: #F3F6F9; --bd: #C5D2DC; --txt: #2C3E50;
+    --bco: #FFFFFF; --code-bg: #1E1E1E; --r: 12px;
+    --colab: #F9AB00; --classroom: #137333;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: #EEF3F7; 
+    color: var(--txt); 
+    line-height: 1.6; 
+    font-size: 20px; 
+    padding: 15px 0 40px 0; 
+  }
+  
+  header { background: var(--nav); color: var(--bco); padding: 25px 20px; border-bottom: 5px solid var(--teal); }
+  header h1 { font-size: 28px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+  header p { font-size: 18px; opacity: 0.9; }
+  
+  .container { width: 95%; max-width: 1400px; margin: 0 auto; padding: 0 15px; }
+  
+  .card { background: var(--bco); border-radius: var(--r); padding: 30px; margin-bottom: 30px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); border-left: 6px solid var(--bd); }
+  .c-setup { border-left-color: var(--amb); }
+  .c-codigo { border-left-color: var(--vio); background: #FAFCFF; position: relative; }
+  .c-eval { border-left-color: var(--classroom); background: #F6FEF8; }
+  
+  h2 { color: var(--nav); font-size: 24px; margin-bottom: 15px; text-transform: uppercase; border-bottom: 2px solid var(--gris); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .badge { background: var(--nav); color: var(--bco); padding: 5px 12px; border-radius: 6px; font-size: 18px; font-weight: bold; }
+  
+  .code-container { position: relative; margin: 20px 0; width: 100%; }
+  
+  .code-block { 
+    background: var(--code-bg); 
+    color: #D4D4D4; 
+    font-family: 'Consolas', monospace; 
+    padding: 50px 20px 20px 20px; 
+    border-radius: var(--r); 
+    font-size: 18px; 
+    border: 1px solid #000; 
+    overflow-x: auto; 
+    white-space: pre; 
+  }
+  
+  .keyword { color: #569CD6; } .string { color: #CE9178; } .comment { color: #6A9955; font-style: italic; }
+  
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); color: #FFF; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: bold; transition: 0.2s; z-index: 10; }
+  .copy-btn:hover { background: rgba(255,255,255,0.3); }
+  
+  .action-box { padding: 20px; border-radius: var(--r); margin: 20px 0; font-size: 19px; border-left: 5px solid; }
+  .action-colab { background: #FFF8E1; border-color: var(--colab); color: #5D4000; }
+  .action-classroom { background: #E6F4EA; border-color: var(--classroom); color: #0D5323; }
+  .action-box strong { display: block; margin-bottom: 8px; font-size: 20px; text-transform: uppercase; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CLASE 5: LA PRIMERA LLAMADA A LA IA</h1>
+  <p>Material Práctico | Taller de IA Aplicada | Prof. Gustavo Iturriz</p>
+</header>
+
+<div class="container">
+
+  <!-- BLOQUE 1: LA TAREA COGNITIVA PRINCIPAL -->
+  <div class="card c-setup">
+    <h2><span class="badge">1</span> EL DESAFÍO: CREAR TU CONTRASEÑA</h2>
+    <p>Para que la Inteligencia Artificial nos escuche, primero necesita saber quiénes somos. Para eso necesitamos una <strong>API Key</strong> (una contraseña secreta).</p>
+    <ol style="margin-top: 15px; margin-left: 20px; line-height: 1.8;">
+      <li>Entrá a <a href="https://console.groq.com" target="_blank" style="font-weight: bold; color: var(--vio);">console.groq.com</a> desde el navegador de tu notebook.</li>
+      <li>Iniciá sesión con tu cuenta de Google del colegio.</li>
+      <li>En el menú, buscá la opción <strong>API Keys</strong>.</li>
+      <li>Hacé clic en el botón <strong>"Create API Key"</strong>.</li>
+      <li>Copiá la clave larguísima (empieza con <code>gsk_...</code>). ¡Tenela a mano que la vamos a usar en el código!</li>
+    </ol>
+  </div>
+
+  <!-- BLOQUE 2: COPIAR Y PEGAR -->
+  <div class="card c-codigo">
+    <h2><span class="badge">2</span> TU PRIMER CÓDIGO</h2>
+    <p>Vamos a conectar Python con la Inteligencia Artificial.</p>
+
+    <div class="action-box action-colab">
+      <strong style="color: #5D4000;">PASO A PASO:</strong>
+      <ol style="margin-left: 20px; font-weight: 500; color: #5D4000;">
+        <li>Abrí <strong>Google Colab</strong> y creá un nuevo cuaderno.</li>
+        <li>Copiá el código de acá abajo y pegalo.</li>
+        <li>Reemplazá el texto de la línea 4 por tu <strong>API Key</strong> real.</li>
+        <li>Tocá el botón de "Play" para ejecutarlo.</li>
+      </ol>
+    </div>
+    
+    <div class="code-container">
+      <button class="copy-btn" onclick="copyCode('codigoBase')">Copiar Código</button>
+      <div id="codigoBase" class="code-block"><span class="comment"># 1. Importamos la herramienta para internet</span>
+<span class="keyword">import</span> requests
+
+<span class="comment"># 2. Pegá tu clave adentro de las comillas</span>
+API_KEY = <span class="string">"gsk_PEGA_TU_CLAVE_ACA_DENTRO"</span>
+URL = <span class="string">"https://api.groq.com/openai/v1/chat/completions"</span>
+
+<span class="comment"># 3. Armamos la configuración</span>
+headers = {
+  <span class="string">"Authorization"</span>: f<span class="string">"Bearer {API_KEY}"</span>,
+  <span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>
+}
+
+<span class="comment"># 4. Elegimos el modelo y le hacemos la pregunta</span>
+payload = {
+  <span class="string">"model"</span>: <span class="string">"llama-3.3-70b-versatile"</span>,
+  <span class="string">"messages"</span>: [
+    {<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"¿Quién es el villano principal de Batman en los cómics?"</span>}
+  ]
+}
+
+<span class="comment"># 5. Enviamos y mostramos la respuesta</span>
+response = requests.<span class="keyword">post</span>(URL, headers=headers, json=payload)
+data = response.json()
+
+<span class="keyword">print</span>(data[<span class="string">"choices"</span>][0][<span class="string">"message"</span>][<span class="string">"content"</span>])</div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 3: MODIFICAR VARIABLES -->
+  <div class="card c-eval">
+    <h2><span class="badge" style="background: var(--classroom);">3</span> EL DESAFÍO FINAL: EL ENTREVISTADOR</h2>
+    <p>Ahora vamos a hacer que la IA actúe como un personaje. Para que no reniegues escribiendo, el código ya está casi todo armado. ¡Vos solo tenés que cambiar los textos del principio!</p>
+    
+    <div class="action-box action-colab">
+      <strong>📝 Tarea en Colab: Tu turno</strong>
+      <ol style="margin-left: 20px; margin-top: 5px;">
+        <li>Creá una <strong>nueva celda de código</strong> en Colab (abajo de la que ya tenés).</li>
+        <li>Copiá este nuevo código y pegalo ahí.</li>
+        <li><strong>Modificá SOLO las primeras 3 líneas</strong> (Escribí qué personaje querés, qué tema querés preguntarle, y pegá tu API Key de nuevo).</li>
+        <li>Ejecutalo para ver qué te responde.</li>
+      </ol>
+    </div>
+
+    <div class="code-container">
+      <button class="copy-btn" onclick="copyCode('codigoVariables')">Copiar Código</button>
+      <div id="codigoVariables" class="code-block"><span class="keyword">import</span> requests
+
+<span class="comment"># --- ¡MODIFICÁ SOLO ESTAS TRES LÍNEAS! ---</span>
+personaje = <span class="string">"Iron Man"</span>
+tema = <span class="string">"qué pensás de la Inteligencia Artificial"</span>
+API_KEY = <span class="string">"gsk_PEGA_TU_CLAVE_ACA_DENTRO"</span>
+<span class="comment"># ----------------------------------------</span>
+
+<span class="comment"># Armamos la pregunta automática (NO TOCAR)</span>
+pregunta = f<span class="string">"Actuá como {personaje} y explicame {tema}."</span>
+
+<span class="comment"># Preparamos la conexión y el mensaje (NO TOCAR)</span>
+URL = <span class="string">"https://api.groq.com/openai/v1/chat/completions"</span>
+headers = {<span class="string">"Authorization"</span>: f<span class="string">"Bearer {API_KEY}"</span>, <span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>}
+payload = {
+  <span class="string">"model"</span>: <span class="string">"llama-3.3-70b-versatile"</span>,
+  <span class="string">"messages"</span>: [{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: pregunta}]
+}
+
+<span class="comment"># Enviamos y vemos el resultado (NO TOCAR)</span>
+response = requests.<span class="keyword">post</span>(URL, headers=headers, json=payload)
+data = response.json()
+<span class="keyword">print</span>(<span class="string">"\n🤖 RESPUESTA DE LA IA:"</span>)
+<span class="keyword">print</span>(data[<span class="string">"choices"</span>][0][<span class="string">"message"</span>][<span class="string">"content"</span>])</div>
+    </div>
+
+    <div class="action-box action-classroom" style="margin-top: 25px;">
+      <strong>📤 Tarea para el Classroom:</strong>
+      <ol style="margin-left: 20px;">
+        <li>Entregá el enlace de tu Colab.</li>
+        <li>Dejá un comentario en la tarea contando cuál fue la respuesta más rara o divertida que te dio la IA.</li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function copyCode(elementId) {
+    var codeElement = document.getElementById(elementId);
+    var textToCopy = codeElement.textContent || codeElement.innerText;
+    
+    navigator.clipboard.writeText(textToCopy).then(function() {
+      var btn = codeElement.previousElementSibling;
+      var originalText = btn.innerText;
+      btn.innerText = "¡Copiado!";
+      btn.style.background = "var(--teal)";
+      setTimeout(function() {
+        btn.innerText = originalText;
+        btn.style.background = "rgba(255,255,255,0.15)";
+        btn.style.borderColor = "rgba(255,255,255,0.3)";
+      }, 2000);
+    }).catch(function(err) {
+      console.error('No se pudo copiar el texto: ', err);
+    });
+  }
+</script>
+</body>
+</html>
