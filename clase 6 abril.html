@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de IA · Clase 6 (Abril)</title>
+<style>
+  :root {
+    --nav: #1A2C3A; --teal: #00949A; --grn: #2A6049; --amb: #D4873A; 
+    --vio: #3D5A99; --gris: #F3F6F9; --bd: #C5D2DC; --txt: #2C3E50;
+    --bco: #FFFFFF; --code-bg: #1E1E1E; --r: 12px;
+    --colab: #F9AB00; --classroom: #137333;
+    --rojo: #C62828;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #EEF3F7; color: var(--txt); line-height: 1.6; font-size: 20px; padding: 15px 0 40px 0; }
+  header { background: var(--nav); color: var(--bco); padding: 25px 20px; border-bottom: 5px solid var(--teal); }
+  header h1 { font-size: 28px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+  header p { font-size: 18px; opacity: 0.9; }
+  .container { width: 95%; max-width: 1400px; margin: 0 auto; padding: 0 15px; }
+  
+  /* Botón de volver */
+  .back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    background: var(--bco);
+    color: var(--nav);
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid var(--bd);
+    transition: all 0.2s;
+  }
+  .back-btn:hover {
+    border-color: var(--nav);
+    background: var(--gris);
+  }
+
+  .card { background: var(--bco); border-radius: var(--r); padding: 30px; margin-bottom: 30px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); border-left: 6px solid var(--bd); }
+  .c-repaso  { border-left-color: #4A6080; }
+  .c-teoria  { border-left-color: var(--teal); }
+  .c-setup   { border-left-color: var(--amb); }
+  .c-codigo  { border-left-color: var(--vio); background: #FAFCFF; }
+  .c-eval    { border-left-color: var(--classroom); background: #F6FEF8; }
+  
+  /* Estilo para la advertencia de Abril */
+  .c-alerta { border: 3px solid var(--rojo); background: #FFEBEE; border-left: 10px solid var(--rojo); }
+  .c-alerta h2 { color: var(--rojo); border-bottom-color: #FFCDD2; }
+
+  h2 { color: var(--nav); font-size: 24px; margin-bottom: 15px; text-transform: uppercase; border-bottom: 2px solid var(--gris); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .badge { background: var(--nav); color: var(--bco); padding: 5px 12px; border-radius: 6px; font-size: 18px; font-weight: bold; }
+  h3 { color: var(--nav); font-size: 22px; margin-top: 25px; margin-bottom: 10px; border-bottom: 1px solid var(--bd); padding-bottom: 5px; }
+  
+  .def-box { background: var(--gris); border: 1px solid var(--bd); padding: 20px; border-radius: var(--r); margin-bottom: 15px; }
+  .def-box strong { color: var(--teal); display: block; font-size: 20px; margin-bottom: 8px; text-transform: uppercase; }
+  .def-box.amb  { background: #FFF3E0; border-left: 4px solid var(--amb); }
+  .def-box.amb strong { color: var(--amb); }
+  .def-box.vio  { background: #F0EFFF; border-left: 4px solid var(--vio); }
+  .def-box.vio strong { color: var(--vio); }
+
+  /* Caja de ejemplo resuelto */
+  .ejemplo-box { background: #0F1E2A; border-radius: var(--r); padding: 22px 28px; margin: 20px 0; border-left: 6px solid var(--teal); }
+  .ejemplo-titulo { color: var(--teal); font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+  .ejemplo-paso { color: #B8D4E8; font-size: 18px; margin-bottom: 8px; }
+  .ejemplo-paso span { color: var(--colab); font-weight: bold; }
+
+  .code-container { position: relative; margin: 20px 0; width: 100%; }
+  .code-block { background: var(--code-bg); color: #D4D4D4; font-family: 'Consolas', monospace; padding: 50px 20px 20px 20px; border-radius: var(--r); font-size: 18px; border: 1px solid #000; overflow-x: auto; white-space: pre; }
+  .code-block.no-btn { padding-top: 20px; }
+  .keyword { color: #569CD6; } .string { color: #CE9178; } .comment { color: #6A9955; font-style: italic; }
+  
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); color: #FFF; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: bold; transition: 0.2s; z-index: 10; }
+  .copy-btn:hover { background: rgba(255,255,255,0.3); }
+  .action-box { padding: 20px; border-radius: var(--r); margin: 20px 0; font-size: 19px; border-left: 5px solid; }
+  .action-colab     { background: #FFF8E1; border-color: var(--colab);     color: #5D4000; }
+  .action-classroom { background: #E6F4EA; border-color: var(--classroom); color: #0D5323; }
+  .action-box strong { display: block; margin-bottom: 8px; font-size: 20px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CLASE 6: EL JSON Y LA TEMPERATURE</h1>
+  <p>Taller de IA | Material de Estudio - Abril Oreste | Lunes 13/04/2026</p>
+</header>
+
+<div class="container">
+
+<a href="index_abril.html" class="back-btn">⬅ Volver al Inicio</a>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 0 — REPASO                                              -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="card c-repaso">
+  <h2><span class="badge">0</span> REPASO: EL CÓDIGO CON VARIABLES</h2>
+  <p>En la clase pasada armamos una pregunta usando variables para no tener que escribir todo a mano cada vez.</p>
+
+  <p id="pistaOculta" style="font-style: italic; color: #666; font-size: 18px; margin-top: 10px;">(El código de ejemplo está oculto para que intentes resolverlo sin copiar. Pedile al profe el código para revelarlo).</p>
+
+  <div id="solucionOculta" style="display: none;">
+    <div class="ejemplo-box">
+      <div class="ejemplo-titulo">🔍 Así se resolvía — paso a paso</div>
+      <div class="ejemplo-paso"><span>Paso 1.</span> Ponés las variables arriba de todo.</div>
+      <div class="ejemplo-paso"><span>Paso 2.</span> Armás la pregunta con la letra <strong>f</strong> antes de las comillas.</div>
+      <div class="ejemplo-paso"><span>Paso 3.</span> En el diccionario, en vez del texto ponés la variable <code>pregunta</code>.</div>
+    </div>
+
+    <div class="code-container">
+      <button class="copy-btn" onclick="copyCode('codEjemploOculto')">Copiar Código</button>
+      <div id="codEjemploOculto" class="code-block"><span class="keyword">import</span> requests
+
+<span class="comment"># ── 1. Las variables que VOS elegís ──────────────────────────────</span>
+personaje = <span class="string">"Albert Einstein"</span>
+tema      = <span class="string">"los videojuegos"</span>
+API_KEY   = <span class="string">"gsk_PEGA_TU_CLAVE_ACÁ"</span>
+
+<span class="comment"># ── 2. Armamos la pregunta CON f-string ──────────────────────────</span>
+pregunta = f<span class="string">"Actuá como {personaje} y explicame qué pensás sobre {tema}."</span>
+
+<span class="comment"># ── 3. La conexión (igual que siempre) ───────────────────────────</span>
+URL     = <span class="string">"https://api.groq.com/openai/v1/chat/completions"</span>
+headers = {<span class="string">"Authorization"</span>: f<span class="string">"Bearer {API_KEY}"</span>, <span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>}
+
+payload = {
+  <span class="string">"model"</span>: <span class="string">"llama-3.3-70b-versatile"</span>,
+  <span class="string">"messages"</span>: [
+    {<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: pregunta}  <span class="comment"># ← Usamos la variable</span>
+  ]
+}
+
+response = requests.<span class="keyword">post</span>(URL, headers=headers, json=payload)
+data = response.json()
+<span class="keyword">print</span>(data[<span class="string">"choices"</span>][0][<span class="string">"message"</span>][<span class="string">"content"</span>])</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 1 — GLOSARIO NUEVO                                      -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="card c-teoria">
+  <h2><span class="badge">1</span> GLOSARIO NUEVO</h2>
+  <p>Hoy vamos a usar tres conceptos importantes. Leelos con atención:</p>
+
+  <div class="def-box">
+    <strong>El Paquete JSON</strong>
+    Cuando la IA nos responde, no manda solo el texto. Manda un "paquete" con mucha información: el texto, qué modelo se usó y cuántos tokens se gastaron en total.
+  </div>
+
+  <div class="def-box vio">
+    <strong>Temperature (Temperatura)</strong>
+    Es un número entre <code>0.0</code> y <code>2.0</code> que podemos sumarle al código. Si le ponemos 0.0, la IA es aburrida y exacta. Si le ponemos más de 1.0, se pone muy creativa (y a veces dice locuras).
+  </div>
+
+  <div class="def-box amb">
+    <strong>Alucinación</strong>
+    Es cuando la IA no sabe algo pero <strong>inventa la respuesta</strong> y te la dice con mucha seguridad, como si fuera verdad. Esto pasa porque la IA no busca en internet, solo adivina palabras.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 2 — ACTIVIDAD 1                                         -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="card c-codigo">
+  <h2><span class="badge">2</span> ACTIVIDAD 1: MIRANDO EL PAQUETE COMPLETO</h2>
+  <p>Vamos a conectarnos a la IA y pedirle que nos muestre los tokens que gastó.</p>
+
+  <div class="action-box action-colab">
+    <strong>PASO A PASO:</strong>
+    <ol style="margin-left: 20px;">
+      <li>Abrí <strong>Google Colab</strong> y creá un nuevo cuaderno.</li>
+      <li>Copiá el código de acá abajo y pegalo.</li>
+      <li>Reemplazá tu <strong>API Key</strong> en la línea 4.</li>
+      <li>Ejecutá el código y mirá lo que aparece al final.</li>
+    </ol>
+  </div>
+
+  <div class="code-container">
+    <button class="copy-btn" onclick="copyCode('codJSON')">Copiar Código</button>
+    <div id="codJSON" class="code-block"><span class="keyword">import</span> requests
+
+<span class="comment"># Configuración</span>
+API_KEY = <span class="string">"gsk_PEGA_TU_CLAVE_ACA"</span>
+URL = <span class="string">"https://api.groq.com/openai/v1/chat/completions"</span>
+
+headers = {<span class="string">"Authorization"</span>: f<span class="string">"Bearer {API_KEY}"</span>, <span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>}
+payload = {
+  <span class="string">"model"</span>: <span class="string">"llama-3.3-70b-versatile"</span>,
+  <span class="string">"messages"</span>: [{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"Escribí un chiste muy corto."</span>}]
+}
+
+<span class="comment"># Envío</span>
+response = requests.<span class="keyword">post</span>(URL, headers=headers, json=payload)
+data = response.json()
+
+<span class="comment"># Mostrar resultados</span>
+<span class="keyword">print</span>(<span class="string">"--- RESPUESTA DE LA IA ---"</span>)
+<span class="keyword">print</span>(data[<span class="string">"choices"</span>][0][<span class="string">"message"</span>][<span class="string">"content"</span>])
+
+<span class="keyword">print</span>(<span class="string">"\n--- TOKENS GASTADOS ---"</span>)
+<span class="keyword">print</span>(data[<span class="string">"usage"</span>])</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 3 — ACTIVIDAD 2                                         -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="card c-codigo">
+  <h2><span class="badge">3</span> ACTIVIDAD 2: EL NIVEL DE CREATIVIDAD</h2>
+  <p>Ahora vamos a probar cambiar la <code>temperature</code> para ver cómo se comporta la IA.</p>
+
+  <div class="action-box action-colab">
+    <strong>📝 Tu turno: Cambiá solo una línea</strong>
+    <ol style="margin-left: 20px;">
+      <li>Creá una nueva celda en Colab y copiá este código.</li>
+      <li>Ejecutalo primero así como está (con el nivel en 0.0).</li>
+      <li>Después, cambiá el <code>0.0</code> por <code>1.5</code> y fijate qué tan rara se pone la respuesta.</li>
+    </ol>
+  </div>
+
+  <div class="code-container">
+    <button class="copy-btn" onclick="copyCode('codTemp')">Copiar Código</button>
+    <div id="codTemp" class="code-block"><span class="keyword">import</span> requests
+
+API_KEY = <span class="string">"gsk_PEGA_TU_CLAVE_ACA"</span>
+URL = <span class="string">"https://api.groq.com/openai/v1/chat/completions"</span>
+headers = {<span class="string">"Authorization"</span>: f<span class="string">"Bearer {API_KEY}"</span>, <span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>}
+
+<span class="comment"># --- CAMBIÁ ESTE NÚMERO ACÁ (Probá 0.0 y después probá 1.5) ---</span>
+nivel_creatividad = 0.0
+<span class="comment"># --------------------------------------------------------------</span>
+
+payload = {
+  <span class="string">"model"</span>: <span class="string">"llama-3.3-70b-versatile"</span>,
+  <span class="string">"temperature"</span>: nivel_creatividad,
+  <span class="string">"messages"</span>: [{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"Describí la ciudad de Ushuaia en una oración."</span>}]
+}
+
+response = requests.<span class="keyword">post</span>(URL, headers=headers, json=payload)
+data = response.json()
+
+<span class="keyword">print</span>(<span class="string">"Respuesta con creatividad en"</span>, nivel_creatividad, <span class="string">":"</span>)
+<span class="keyword">print</span>(data[<span class="string">"choices"</span>][0][<span class="string">"message"</span>][<span class="string">"content"</span>])</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 4 — ACTIVIDAD 3                                         -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="card c-eval">
+  <h2><span class="badge" style="background: var(--classroom);">4</span> ACTIVIDAD 3: CUANDO LA IA INVENTA</h2>
+  <p>La IA suele alucinar (inventar) cuando le pedimos datos locales o muy específicos.</p>
+
+  <div class="action-box action-colab">
+    <strong>📝 Prueba de mentiras</strong>
+    <p>En el código de arriba, cambiá la pregunta sobre Ushuaia por alguna de estas:</p>
+    <ul style="margin-left: 20px; margin-top: 5px;">
+      <li><em>"¿En qué año exacto se inauguró el aeropuerto de Ushuaia?"</em></li>
+      <li><em>"¿Quién ganó el torneo de fútbol de la liga fueguina el año pasado?"</em></li>
+    </ul>
+    <p style="margin-top: 10px;">Leé la respuesta. ¿Te parece que te está diciendo la verdad o inventó datos?</p>
+  </div>
+
+  <div class="action-box action-classroom">
+    <strong>📤 Tarea para el Classroom:</strong>
+    <p>Entregá el enlace de tu Colab y contanos en un comentario si pudiste hacer que la IA diga una alucinación (una mentira).</p>
+  </div>
+</div>
+
+</div>
+
+<script>
+  function copyCode(elementId) {
+    var codeElement = document.getElementById(elementId);
+    var textToCopy = codeElement.textContent || codeElement.innerText;
+    navigator.clipboard.writeText(textToCopy).then(function() {
+      var btn = codeElement.previousElementSibling;
+      var originalText = btn.innerText;
+      btn.innerText = "¡Copiado!";
+      btn.style.background = "var(--teal)";
+      setTimeout(function() {
+        btn.innerText = originalText;
+        btn.style.background = "rgba(255,255,255,0.15)";
+        btn.style.borderColor = "rgba(255,255,255,0.3)";
+      }, 2000);
+    }).catch(function(err) { console.error('Error:', err); });
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'u') {
+      var sol = document.getElementById('solucionOculta');
+      var pista = document.getElementById('pistaOculta');
+      if (sol.style.display === 'none') {
+        sol.style.display = 'block';
+        if (pista) pista.style.display = 'none';
+      } else {
+        sol.style.display = 'none';
+        if (pista) pista.style.display = 'block';
+      }
+    }
+  });
+</script>
+</body>
+</html>
