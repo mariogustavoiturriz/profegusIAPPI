@@ -3,53 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IA Aplicada | Material de Abril</title>
+<title>Taller de IA | Material de Abril</title>
 <style>
   :root {
-    --nav: #1A2C3A; --teal: #00949A; --amb: #D4873A; --gris: #F3F6F9; --bd: #C5D2DC; --txt: #2C3E50; --bco: #FFFFFF; --r: 12px;
+    --nav: #1A2C3A; --teal: #00949A; --amb: #D4873A; --gris: #F3F6F9; 
+    --bd: #C5D2DC; --txt: #2C3E50; --bco: #FFFFFF; --r: 12px;
+    --vio: #3D5A99;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-  body { background: #EEF3F7; color: var(--txt); line-height: 1.6; padding-bottom: 60px; font-size: 20px; }
-  header { background: var(--nav); color: var(--bco); padding: 40px 20px; text-align: center; border-bottom: 6px solid var(--amb); }
-  header h1 { font-size: 32px; margin-bottom: 10px; text-transform: uppercase; }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  
+  body { 
+    background: #EEF3F7; 
+    color: var(--txt); 
+    line-height: 1.6; 
+    padding-bottom: 60px; 
+    font-size: 20px; 
+  }
+  
+  header { 
+    background: var(--nav); 
+    color: var(--bco); 
+    padding: 40px 20px; 
+    text-align: center;
+    border-bottom: 6px solid var(--amb); 
+  }
+  header h1 { font-size: 32px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
   header p { font-size: 22px; opacity: 0.9; max-width: 600px; margin: 0 auto; font-weight: bold; color: #FFF8E1; }
+  
   .container { width: 95%; max-width: 1400px; margin: 40px auto; padding: 0 15px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; }
-  .card { background: var(--bco); border-radius: var(--r); padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,.08); border-top: 5px solid var(--bd); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform 0.2s ease; }
-  .card:hover { transform: translateY(-5px); }
-  .c-pasada { border-top-color: #4A6080; }
-  .c-actual { border-top-color: var(--amb); background: #FFFDF8; }
-  .clase-num { font-size: 18px; font-weight: bold; color: #666; text-transform: uppercase; margin-bottom: 8px; }
-  .c-actual .clase-num { color: var(--amb); }
-  .card h2 { color: var(--nav); font-size: 26px; margin-bottom: 12px; }
-  .card p { font-size: 19px; color: #444; flex-grow: 1; }
-  .btn { display: inline-block; margin-top: 20px; padding: 12px 15px; border-radius: 8px; font-weight: bold; text-align: center; background: var(--amb); color: white; font-size: 19px; }
-  .section-title { font-size: 30px; color: var(--nav); margin: 40px 0 20px 0; padding-bottom: 10px; border-bottom: 3px solid var(--bd); }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 30px;
+  }
+  
+  .card { 
+    background: var(--bco); 
+    border-radius: var(--r); 
+    padding: 35px; 
+    box-shadow: 0 6px 15px rgba(0,0,0,.1); 
+    border-top: 8px solid var(--bd);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,.15);
+  }
+  
+  /* Estados de las tarjetas */
+  .c-pasada { border-top-color: #4A6080; background: #FAFBFC; }
+  .c-actual { border-top-color: var(--teal); background: #F4FDFF; }
+  
+  .clase-num { 
+    font-size: 16px; 
+    font-weight: bold; 
+    color: #666; 
+    text-transform: uppercase; 
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  
+  .c-actual .clase-num { color: var(--teal); }
+  
+  .card h2 { 
+    color: var(--nav); 
+    font-size: 28px; 
+    margin-bottom: 15px; 
+    line-height: 1.2;
+  }
+  
+  .card p { 
+    font-size: 20px; 
+    color: #444; 
+    flex-grow: 1;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
+    transition: background 0.2s;
+  }
+  
+  .c-pasada .btn { background: #E1E8EE; color: #4A6080; }
+  .c-actual .btn { background: var(--teal); color: white; }
+  
+  .section-title {
+    font-size: 28px;
+    color: var(--nav);
+    margin: 50px 0 25px 0;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--bd);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    header h1 { font-size: 26px; }
+  }
 </style>
 </head>
 <body>
+
 <header>
-  <h1>Taller de IA Aplicada</h1>
+  <h1>Taller de IA</h1>
   <p>Material de Estudio - Abril Oreste</p>
 </header>
+
 <div class="container">
-  <h2 class="section-title">Lunes 13/04/26</h2>
+
+  <h2 class="section-title">Clase de Hoy</h2>
   <div class="grid">
     <a href="clase_6_abril.html" class="card c-actual">
-      <div class="clase-num">Semana 4 • Clase 6</div>
-      <h2>La IA que no olvida</h2>
-      <p>Aprendemos a crear un chat que recuerda lo que hablamos usando listas y bucles.</p>
+      <div class="clase-num">Lunes 13/04 • Clase 6</div>
+      <h2>El JSON y la Temperature</h2>
+      <p>Aprendemos a ver los tokens que gasta la IA y a controlar qué tan creativa es al responder.</p>
       <div class="btn">Abrir Clase 6</div>
     </a>
   </div>
+
   <h2 class="section-title">Clases Anteriores</h2>
   <div class="grid">
+    
     <a href="clase_5_abril.html" class="card c-pasada">
-      <div class="clase-num">10/04/26 • Clase 5</div>
+      <div class="clase-num">10/04 • Clase 5</div>
       <h2>La Primera Llamada</h2>
-      <div class="btn" style="background: #4A6080;">Repasar</div>
+      <p>Cómo conectar Python con el cerebro de la IA usando una API Key.</p>
+      <div class="btn">Repasar Clase 5</div>
     </a>
+
+    <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
+      <div class="clase-num">Semana 2 • Clase 4</div>
+      <h2>Controlando Errores</h2>
+      <p>Aprendimos a usar try/except para que el programa no falle.</p>
+      <div class="btn">No disponible</div>
+    </a>
+
+    <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
+      <div class="clase-num">Semana 2 • Clase 3</div>
+      <h2>El Idioma de la IA</h2>
+      <p>Listas y Diccionarios: la forma en la que se guarda la información.</p>
+      <div class="btn">No disponible</div>
+    </a>
+
+    <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
+      <div class="clase-num">Semana 1 • Clase 2</div>
+      <h2>El Agente Inteligente</h2>
+      <p>Sensor, Programa y Actuador: las tres partes de la IA.</p>
+      <div class="btn">No disponible</div>
+    </a>
+
+    <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
+      <div class="clase-num">Semana 1 • Clase 1</div>
+      <h2>El Desafío Imposible</h2>
+      <p>Vimos cómo la IA aprende de fotos usando Teachable Machine.</p>
+      <div class="btn">No disponible</div>
+    </a>
+
   </div>
+
 </div>
+
 </body>
 </html>
