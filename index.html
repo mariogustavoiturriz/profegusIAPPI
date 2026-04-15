@@ -8,7 +8,7 @@
   :root {
     --nav: #1A2C3A; --teal: #00949A; --amb: #D4873A; --gris: #F3F6F9; 
     --bd: #C5D2DC; --txt: #2C3E50; --bco: #FFFFFF; --r: 12px;
-    --vio: #3D5A99;
+    --vio: #3D5A99; --tp: #8E24AA;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
   
@@ -58,7 +58,7 @@
   
   /* Estados de las tarjetas */
   .c-pasada { border-top-color: #4A6080; background: #FAFBFC; }
-  .c-actual { border-top-color: var(--teal); background: #F4FDFF; }
+  .c-actual { border-top-color: var(--tp); background: #FAF5FF; }
   
   .clase-num { 
     font-size: 16px; 
@@ -69,7 +69,7 @@
     letter-spacing: 1px;
   }
   
-  .c-actual .clase-num { color: var(--teal); }
+  .c-actual .clase-num { color: var(--tp); }
   
   .card h2 { 
     color: var(--nav); 
@@ -96,7 +96,7 @@
   }
   
   .c-pasada .btn { background: #E1E8EE; color: #4A6080; }
-  .c-actual .btn { background: var(--teal); color: white; }
+  .c-actual .btn { background: var(--tp); color: white; }
   
   .section-title {
     font-size: 28px;
@@ -124,47 +124,55 @@
 
   <h2 class="section-title">Clase de Hoy</h2>
   <div class="grid">
-    <a href="clase_6_abril.html" class="card c-actual">
-      <div class="clase-num">Lunes 13/04 • Clase 6</div>
-      <h2>El JSON y la Temperature</h2>
-      <p>Aprendemos a ver los tokens que gasta la IA y a controlar qué tan creativa es al responder.</p>
-      <div class="btn">Abrir Clase 6</div>
+    <a href="clase_7_abril_TP1.html" class="card c-actual">
+      <div class="clase-num">Viernes 17/04 • Clase 7</div>
+      <h2>Trabajo Práctico N° 1</h2>
+      <p>Llegó el momento de integrar todo. Analizamos un programa completo con inputs, conexión y manejo de errores.</p>
+      <div class="btn">Abrir Trabajo Práctico</div>
     </a>
   </div>
 
   <h2 class="section-title">Clases Anteriores</h2>
   <div class="grid">
     
+    <a href="clase_6_abril.html" class="card c-pasada">
+      <div class="clase-num">Lunes 13/04 • Clase 6</div>
+      <h2>El JSON y la Temperature</h2>
+      <p>Aprendemos a ver los tokens que gasta la IA y a controlar qué tan creativa es al responder.</p>
+      <div class="btn">Repasar Clase 6</div>
+    </a>
+
     <a href="clase_5_abril.html" class="card c-pasada">
-      <div class="clase-num">10/04 • Clase 5</div>
+      <div class="clase-num">Viernes 10/04 • Clase 5</div>
       <h2>La Primera Llamada</h2>
       <p>Cómo conectar Python con el cerebro de la IA usando una API Key.</p>
       <div class="btn">Repasar Clase 5</div>
     </a>
 
-    <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
-      <div class="clase-num">Semana 2 • Clase 4</div>
-      <h2>Controlando Errores</h2>
-      <p>Aprendimos a usar try/except para que el programa no falle.</p>
-      <div class="btn">No disponible</div>
+    <a href="clase_4_abril.html" class="card c-pasada">
+      <div class="clase-num">Clase 4</div>
+      <h2>F-Strings y Try/Except</h2>
+      <p>Armamos mensajes dinámicos y creamos un escudo para atrapar errores rojos.</p>
+      <div class="btn">Repasar Clase 4</div>
     </a>
 
-    <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
-      <div class="clase-num">Semana 2 • Clase 3</div>
-      <h2>El Idioma de la IA</h2>
-      <p>Listas y Diccionarios: la forma en la que se guarda la información.</p>
-      <div class="btn">No disponible</div>
+    <a href="clase_3_abril.html" class="card c-pasada">
+      <div class="clase-num">Clase 3</div>
+      <h2>Listas y Diccionarios</h2>
+      <p>Las colecciones de datos donde guardamos el historial y las fichas de información.</p>
+      <div class="btn">Repasar Clase 3</div>
     </a>
 
+    <!-- Clases 1 y 2 se mantienen deshabilitadas hasta que haya material web específico -->
     <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
-      <div class="clase-num">Semana 1 • Clase 2</div>
+      <div class="clase-num">Clase 2</div>
       <h2>El Agente Inteligente</h2>
-      <p>Sensor, Programa y Actuador: las tres partes de la IA.</p>
+      <p>Sensor, Programa y Actuador: las tres partes fundamentales de la IA.</p>
       <div class="btn">No disponible</div>
     </a>
 
     <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
-      <div class="clase-num">Semana 1 • Clase 1</div>
+      <div class="clase-num">Clase 1</div>
       <h2>El Desafío Imposible</h2>
       <p>Vimos cómo la IA aprende de fotos usando Teachable Machine.</p>
       <div class="btn">No disponible</div>
