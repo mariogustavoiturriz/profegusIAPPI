@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de IA · TP1 (Abril)</title>
+<style>
+  :root {
+    --nav: #1A2C3A; --teal: #00949A; --grn: #2A6049; --amb: #D4873A;
+    --vio: #3D5A99; --gris: #F3F6F9; --bd: #C5D2DC; --txt: #2C3E50;
+    --bco: #FFFFFF; --code-bg: #1E1E1E; --r: 12px;
+    --colab: #F9AB00; --classroom: #137333;
+    --exito: #2E7D32;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #EEF3F7; color: var(--txt); line-height: 1.6; font-size: 20px; padding: 15px 0 40px 0; }
+  header { background: var(--nav); color: var(--bco); padding: 25px 20px; border-bottom: 5px solid var(--amb); }
+  header h1 { font-size: 28px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+  header p { font-size: 18px; opacity: 0.9; }
+  .container { width: 95%; max-width: 1400px; margin: 0 auto; padding: 0 15px; }
+  .back-btn { display: inline-block; margin-top: 20px; margin-bottom: 10px; padding: 10px 20px; background: var(--bco); color: var(--nav); text-decoration: none; font-weight: bold; border-radius: 8px; border: 2px solid var(--bd); transition: all 0.2s; }
+  .back-btn:hover { border-color: var(--nav); background: var(--gris); }
+  
+  .card { background: var(--bco); border-radius: var(--r); padding: 30px; margin-bottom: 30px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); border-left: 6px solid var(--bd); }
+  .c-tp     { border-left-color: var(--amb); background: #FFFBF5; }
+  .c-resumen{ border-left-color: #4A6080; background: #F4F6F9; }
+  .c-req    { border-left-color: var(--teal); }
+  .c-doc    { border-left-color: var(--vio); background: #FAFAFF; }
+  .c-entrega{ border-left-color: var(--classroom); background: #F0FFF4; }
+  
+  h2 { color: var(--nav); font-size: 24px; margin-bottom: 15px; text-transform: uppercase; border-bottom: 2px solid var(--gris); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .badge { background: var(--nav); color: var(--bco); padding: 5px 12px; border-radius: 6px; font-size: 18px; font-weight: bold; }
+  
+  .mensaje-amigable { background: #E8F5E9; border-left: 5px solid var(--exito); padding: 20px; color: #1B5E20; border-radius: 8px; margin-bottom: 20px; font-size: 20px; }
+  .mensaje-amigable strong { display: block; margin-bottom: 8px; font-size: 22px; }
+
+  .def-box { background: var(--gris); border: 1px solid var(--bd); border-left: 5px solid var(--teal); padding: 18px 20px; border-radius: var(--r); margin-bottom: 16px; }
+  .def-box strong { color: var(--teal); display: block; font-size: 20px; margin-bottom: 6px; }
+
+  .code-container { position: relative; margin: 20px 0; }
+  .code-block { background: var(--code-bg); color: #D4D4D4; font-family: 'Consolas', monospace; padding: 50px 20px 20px 20px; border-radius: var(--r); font-size: 17px; border: 1px solid #000; overflow-x: auto; white-space: pre; }
+  .keyword { color: #569CD6; } .string { color: #CE9178; } .comment { color: #6A9955; font-style: italic; }
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); color: #FFF; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: bold; transition: 0.2s; z-index: 10; }
+  .copy-btn:hover { background: rgba(255,255,255,0.3); }
+
+  .action-box { padding: 20px; border-radius: var(--r); margin: 20px 0; font-size: 19px; border-left: 5px solid; }
+  .action-colab     { background: #FFF8E1; border-color: var(--colab);     color: #5D4000; }
+  .action-classroom { background: #E6F4EA; border-color: var(--classroom); color: #0D5323; }
+  .action-box strong { display: block; margin-bottom: 8px; font-size: 20px; text-transform: uppercase; }
+
+  .pregunta-doc { background: var(--gris); border-left: 4px solid var(--vio); border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; }
+  .pregunta-doc .num { color: var(--vio); font-weight: bold; font-size: 20px; margin-bottom: 6px; display: block; }
+
+  .resumen-list { list-style: none; padding: 0; }
+  .resumen-list li { margin-bottom: 15px; background: var(--bco); padding: 15px; border-radius: 8px; border: 1px solid var(--bd); }
+  .resumen-list strong { color: #4A6080; font-size: 20px; display: inline-block; margin-bottom: 5px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>TRABAJO PRÁCTICO N° 1</h1>
+  <p>Taller de IA | Material de Estudio - Abril Oreste | Viernes 17/04/2026</p>
+</header>
+
+<div class="container">
+<a href="index_abril.html" class="back-btn">⬅ Volver al Inicio</a>
+
+<!-- ════════════════════ OBJETIVO ════════════════════════════════ -->
+<div class="card c-tp">
+  <h2><span class="badge">!</span> TU PRIMER TRABAJO PRÁCTICO</h2>
+  
+  <div class="mensaje-amigable">
+    <strong>🌟 ¡Tu momento de brillar, Abril!</strong>
+    Esta actividad es individual para que puedas mostrarme todo lo que aprendiste estas semanas. No hace falta que estudies nada de memoria: podés usar tus apuntes, tus códigos anteriores y la hoja de trucos de abajo. Lo que más me importa es que entiendas cómo armaste tu código y qué hace cada línea. ¡Vos podés!
+  </div>
+
+  <p>Hoy vas a analizar y completar un programa que junta todo: le pide datos al usuario (input), arma la pregunta (f-string), se conecta a la IA y maneja los errores si algo falla (try/except).</p>
+  
+  <ol style="margin-left: 25px; margin-top: 15px; line-height: 2.4;">
+    <li><strong>Leé el código con atención.</strong></li>
+    <li><strong>Completá los comentarios</strong> marcados con <code style="background:#E8E6FF; color:var(--vio); padding:1px 6px; border-radius:3px; font-family:Consolas;"># ← COMPLETAR: ...</code> escribiendo con tus propias palabras qué hace esa parte.</li>
+    <li><strong>Ejecutalo y probalo</strong> chateando con la IA.</li>
+  </ol>
+</div>
+
+<!-- ════════════════════ RESUMEN PARA AYUDAR ══════════════════════ -->
+<div class="card c-resumen">
+  <h2><span class="badge" style="background: #4A6080;">📖</span> TU HOJA DE TRUCOS (AYUDA PARA HOY)</h2>
+  <p style="margin-bottom: 15px;">Leé este resumen antes de ir al código. Acá tenés todas las pistas que vas a necesitar para rellenar los huecos y contestar las preguntas.</p>
+  
+  <ul class="resumen-list">
+    <li>
+      <strong>🔑 API Key:</strong> Es tu DNI o contraseña secreta para el servidor. Le dice a la empresa Groq quién sos para dejarte pasar.
+    </li>
+    <li>
+      <strong>⌨️ input():</strong> Abre una cajita para que el usuario escriba algo desde el teclado.
+    </li>
+    <li>
+      <strong>📝 F-String (<code>f"..."</code>):</strong> Esa letra 'f' antes de las comillas permite meter variables adentro de un texto usando llaves <code>{ }</code>, armando oraciones de forma automática.
+    </li>
+    <li>
+      <strong>🛡️ Try / Except:</strong> Es nuestro escudo protector. El programa <em>intenta</em> conectarse. Si falla (por ejemplo, nos quedamos sin internet), ataja el error y avisa con un mensaje amigable en vez de romperse con letras rojas.
+    </li>
+    <li>
+      <strong>🪙 Tokens:</strong> La IA no lee palabras completas, lee "pedacitos" de palabras llamados tokens. Cada vez que le preguntamos algo, gastamos tokens.
+    </li>
+  </ul>
+</div>
+
+<!-- ════════════════════ EL CÓDIGO ═══════════════════════════════ -->
+<div class="card c-req">
+  <h2><span class="badge">1</span> EL CÓDIGO — COMPLETÁ LOS COMENTARIOS</h2>
+
+  <div class="action-box action-colab">
+    <strong>PASO A PASO:</strong>
+    <ol style="margin-left: 20px; margin-top: 5px;">
+      <li>Creá un cuaderno nuevo en Colab llamado <code>TP1_Oreste_Abril</code>.</li>
+      <li>Copiá el código de abajo y pegalo en tu cuaderno.</li>
+      <li>Pegá tu API Key real en la línea 5.</li>
+      <li>Buscá todas las líneas que dicen <code># ← COMPLETAR</code> y escribí tu explicación (ayudate con la hoja de trucos).</li>
+      <li>¡Ejecutalo! Te va a aparecer una cajita preguntándote qué personaje querés.</li>
+    </ol>
+  </div>
+
+  <div class="code-container">
+    <button class="copy-btn" onclick="copyCode('codTP')">Copiar Código</button>
+    <div id="codTP" class="code-block"><span class="keyword">import</span> requests
+
+<span class="comment"># ── 1. CONFIGURACIÓN ───────────────────────────────────────────</span>
+<span class="comment"># ← COMPLETAR: ¿Para qué sirve la API_KEY?</span>
+API_KEY = <span class="string">"gsk_PEGA_TU_CLAVE_ACA"</span>
+URL     = <span class="string">"https://api.groq.com/openai/v1/chat/completions"</span>
+
+headers = {
+    <span class="string">"Authorization"</span>: f<span class="string">"Bearer {API_KEY}"</span>,
+    <span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>
+}
+
+<span class="comment"># ── 2. ENTRADAS DEL USUARIO ────────────────────────────────────</span>
+<span class="keyword">print</span>(<span class="string">"¡Bienvenida! Vamos a preparar a la IA."</span>)
+
+personaje = <span class="keyword">input</span>(<span class="string">"¿Qué personaje querés que sea la IA? "</span>)
+tema = <span class="keyword">input</span>(<span class="string">"¿Sobre qué tema querés que te hable? "</span>)
+
+<span class="comment"># ← COMPLETAR: ¿Qué hace la letra 'f' antes de las comillas acá?</span>
+pregunta = f<span class="string">"Actuá como {personaje} y explicame {tema}."</span>
+
+<span class="comment"># ── 3. ARMADO DEL PAQUETE ──────────────────────────────────────</span>
+payload = {
+    <span class="string">"model"</span>: <span class="string">"llama-3.3-70b-versatile"</span>,
+    <span class="string">"messages"</span>: [{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: pregunta}],
+    <span class="string">"temperature"</span>: 0.7
+}
+
+<span class="comment"># ── 4. CONEXIÓN SEGURA ─────────────────────────────────────────</span>
+<span class="comment"># ← COMPLETAR: ¿Por qué usamos try y except en esta parte?</span>
+<span class="keyword">try</span>:
+    response = requests.<span class="keyword">post</span>(URL, headers=headers, json=payload)
+    data = response.json()
+    
+    <span class="comment"># ← COMPLETAR: ¿Qué información estamos sacando de 'data' en estas dos líneas?</span>
+    respuesta = data[<span class="string">"choices"</span>][0][<span class="string">"message"</span>][<span class="string">"content"</span>]
+    tokens = data[<span class="string">"usage"</span>][<span class="string">"total_tokens"</span>]
+    
+    <span class="keyword">print</span>(f<span class="string">"\n🤖 {personaje} te responde:"</span>)
+    <span class="keyword">print</span>(respuesta)
+    <span class="keyword">print</span>(f<span class="string">"\n(Se gastaron {tokens} tokens en total)"</span>)
+
+<span class="keyword">except</span> Exception <span class="keyword">as</span> e:
+    <span class="keyword">print</span>(<span class="string">"⚠️ Uy, falló la conexión. Revisá que tu API Key esté bien pegada o que haya internet."</span>)</div>
+  </div>
+</div>
+
+<!-- ════════════════════ DOCUMENTACIÓN ═══════════════════════════ -->
+<div class="card c-doc">
+  <h2><span class="badge">2</span> DOS PREGUNTAS PARA RESPONDER EN EL COLAB</h2>
+  <p>Agregá una <strong>celda de texto</strong> abajo de tu código y respondé estas dos preguntas con tus palabras. Podés charlarlo con Edith antes de escribirlo.</p>
+
+  <div class="pregunta-doc">
+    <span class="num">Pregunta 1</span>
+    Vimos que la IA a veces <strong>inventa respuestas</strong> aunque suenen verdaderas y te lo dice muy segura. ¿Cómo se llama eso en tecnología y por qué pasa?
+  </div>
+
+  <div class="pregunta-doc">
+    <span class="num">Pregunta 2</span>
+    En la línea 23 del código dice <code>"temperature": 0.7</code>. Si vos probás el programa y ves que la IA te responde siempre lo mismo y es muy aburrida... ¿qué número le pondrías a la temperatura para que sea más creativa?
+  </div>
+</div>
+
+<!-- ════════════════════ ENTREGA ═════════════════════════════════ -->
+<div class="card c-entrega">
+  <h2><span class="badge">3</span> ¡LISTO PARA ENTREGAR!</h2>
+  <div class="action-box action-classroom">
+    <strong>📤 Pasos finales:</strong>
+    <ol style="margin-left: 20px; margin-top: 5px;">
+      <li>Asegurate de que todos los comentarios <code># ← COMPLETAR</code> tengan tu explicación.</li>
+      <li>Ejecutá el código una vez más para chequear que funcione todo lindo.</li>
+      <li>Copiá el enlace de tu Colab <code>TP1_Oreste_Abril</code> y entregalo en la tarea de Classroom.</li>
+      <li>Si te animás, dejame en un comentario de Classroom la respuesta más rara que te dio la IA hoy.</li>
+    </ol>
+  </div>
+  <p style="text-align: center; margin-top: 15px; font-weight: bold; color: var(--nav);">¡Excelente trabajo! Nos vemos el lunes para charlar sobre tu código. 🚀</p>
+</div>
+
+</div>
+<script>
+  function copyCode(id) {
+    var el = document.getElementById(id);
+    navigator.clipboard.writeText(el.textContent || el.innerText).then(function() {
+      var btn = el.previousElementSibling;
+      var orig = btn.innerText;
+      btn.innerText = "¡Copiado!";
+      btn.style.background = "var(--teal)";
+      setTimeout(function() { btn.innerText = orig; btn.style.background = "rgba(255,255,255,0.15)"; btn.style.borderColor = "rgba(255,255,255,0.3)"; }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
