@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de IA · Clase 8 (Abril)</title>
+<style>
+  :root {
+    --nav: #1A2C3A; --teal: #00949A; --grn: #2A6049; --amb: #D4873A;
+    --vio: #3D5A99; --gris: #F3F6F9; --bd: #C5D2DC; --txt: #2C3E50;
+    --bco: #FFFFFF; --code-bg: #1E1E1E; --r: 12px;
+    --colab: #F9AB00; --classroom: #137333;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #EEF3F7; color: var(--txt); line-height: 1.6; font-size: 20px; padding: 15px 0 40px 0; }
+  header { background: var(--nav); color: var(--bco); padding: 25px 20px; border-bottom: 5px solid var(--teal); }
+  header h1 { font-size: 28px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+  header p { font-size: 18px; opacity: 0.9; }
+  .container { width: 95%; max-width: 1400px; margin: 0 auto; padding: 0 15px; }
+  .back-btn { display: inline-block; margin-top: 20px; margin-bottom: 10px; padding: 10px 20px; background: var(--bco); color: var(--nav); text-decoration: none; font-weight: bold; border-radius: 8px; border: 2px solid var(--bd); transition: all 0.2s; }
+  .back-btn:hover { border-color: var(--nav); background: var(--gris); }
+  
+  .card { background: var(--bco); border-radius: var(--r); padding: 30px; margin-bottom: 30px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); border-left: 6px solid var(--bd); }
+  .c-tp { border-left-color: var(--amb); background: #FFFBF5; }
+  .c-qa { border-left-color: #4A6080; background: #F4F6F9; }
+  .c-req { border-left-color: var(--teal); }
+  .c-estilo { border-left-color: var(--vio); background: #FAFAFF; }
+  
+  h2 { color: var(--nav); font-size: 24px; margin-bottom: 15px; text-transform: uppercase; border-bottom: 2px solid var(--gris); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .badge { background: var(--nav); color: var(--bco); padding: 5px 12px; border-radius: 6px; font-size: 18px; font-weight: bold; }
+  
+  .mensaje-amigable { background: #E8F5E9; border-left: 5px solid var(--grn); padding: 20px; color: #1B5E20; border-radius: 8px; margin-bottom: 20px; font-size: 20px; }
+  .mensaje-amigable strong { display: block; margin-bottom: 8px; font-size: 22px; }
+
+  .def-box { background: var(--gris); border: 1px solid var(--bd); border-left: 5px solid var(--teal); padding: 18px 20px; border-radius: var(--r); margin-bottom: 16px; }
+  .def-box strong { color: var(--teal); display: block; font-size: 20px; margin-bottom: 6px; }
+
+  .code-container { position: relative; margin: 20px 0; }
+  .code-block { background: var(--code-bg); color: #D4D4D4; font-family: 'Consolas', monospace; padding: 50px 20px 20px 20px; border-radius: var(--r); font-size: 17px; border: 1px solid #000; overflow-x: auto; white-space: pre; }
+  .keyword { color: #569CD6; } .string { color: #CE9178; } .comment { color: #6A9955; font-style: italic; }
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); color: #FFF; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: bold; transition: 0.2s; z-index: 10; }
+  .copy-btn:hover { background: rgba(255,255,255,0.3); }
+
+  .action-box { padding: 20px; border-radius: var(--r); margin: 20px 0; font-size: 19px; border-left: 5px solid; }
+  .action-colab { background: #FFF8E1; border-color: var(--colab); color: #5D4000; }
+  .action-box strong { display: block; margin-bottom: 8px; font-size: 20px; text-transform: uppercase; }
+
+  .pregunta-doc { background: var(--bco); border-left: 4px solid var(--vio); border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; border: 1px solid var(--bd); }
+  .pregunta-doc .num { color: var(--vio); font-weight: bold; font-size: 20px; margin-bottom: 6px; display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CLASE 8: EL ESCUDO PROTECTOR</h1>
+  <p>Taller de IA | Material de Estudio - Abril Oreste | Lunes 20/04/2026 | 120 min</p>
+</header>
+
+<div class="container">
+<a href="index_abril.html" class="back-btn">⬅ Volver al Inicio</a>
+
+<!-- ════════════════════ OBJETIVO ════════════════════════════════ -->
+<div class="card c-tp">
+  <h2><span class="badge">!</span> ¿QUÉ HACEMOS HOY?</h2>
+  
+  <div class="mensaje-amigable">
+    El viernes pasado armaste un chat increíble. Hoy vamos a hacer dos cosas: primero vas a evaluar tu propio trabajo haciendo un <strong>Reporte de QA</strong>. Después, vamos a mejorar tu programa agregándole un <strong>Escudo Protector</strong> para que tu IA no responda sobre temas prohibidos.
+    <br><br><em>Aviso importante: El viernes que viene (Clase 9) vas a ayudarme a probar todos los códigos de tus compañeros. ¡Hoy nos enfocamos al 100% en dejar el tuyo perfecto!</em>
+  </div>
+</div>
+
+<!-- ════════════════════ PARTE 1: REPORTE QA ═════════════════════ -->
+<div class="card c-qa">
+  <h2><span class="badge" style="background: #4A6080;">1</span> REPORTE DE CALIDAD (QA) DE TU CHATBOT</h2>
+  <p>En las empresas de tecnología, antes de agregarle cosas nuevas a un programa, los Testers hacen un reporte de calidad (QA) para confirmar que la versión anterior funciona bien.</p>
+
+  <div class="action-box action-colab">
+    <strong>📝 TAREA: TU PRIMER REPORTE</strong>
+    <ol style="margin-left: 20px; margin-top: 5px;">
+      <li>Abrí tu Colab <code>TP1_Oreste_Abril</code> de la clase pasada.</li>
+      <li>Al final de todo, agregá una <strong>CELDA DE TEXTO (+ Texto)</strong>.</li>
+      <li>Copiá el reporte de acá abajo, pegalo en esa celda y <strong>respondé las 3 preguntas</strong> según lo que pasó cuando chateaste con tu IA el viernes.</li>
+    </ol>
+  </div>
+
+  <div class="code-container">
+    <button class="copy-btn" onclick="copyCode('codQA')">Copiar Reporte</button>
+    <div id="codQA" class="code-block">REPORTE DE CALIDAD (QA) - MI CHATBOT
+Tester Oficial: Abril Oreste
+
+1. ¿Qué personaje elegiste el viernes que te pareció el más divertido y de qué hablaron?
+Respuesta: 
+
+2. ¿En algún momento la IA te mintió (alucinó) o se confundió con alguna pregunta rara que le hiciste?
+Respuesta: 
+
+3. VEREDICTO FINAL: ¿Tu programa está aprobado y listo para recibir mejoras hoy?
+Respuesta: </div>
+  </div>
+</div>
+
+<!-- ════════════════════ PARTE 2: EL ESCUDO ══════════════════════ -->
+<div class="card c-req">
+  <h2><span class="badge">2</span> EL ESCUDO PROTECTOR</h2>
+  
+  <div class="def-box">
+    <strong>¿Qué es un Escudo Protector?</strong>
+    La IA sabe de todo, pero nosotros ponemos las reglas. Un escudo es una condición (un <code>if</code>) que revisa lo que el usuario escribió ANTES de mandarlo a internet. Si el usuario escribe una mala palabra o un tema que no querés, el programa lo frena.
+  </div>
+
+  <div class="action-box action-colab">
+    <strong>🛑 REGLA DE ORO: ¡NO BORRES NADA!</strong>
+    <p>Para no perder tu trabajo anterior:</p>
+    <ol style="margin-left: 20px; margin-top: 5px;">
+      <li>Debajo del Reporte QA que acabas de hacer, agregá una <strong>CELDA DE CÓDIGO NUEVA (+ Código)</strong>.</li>
+      <li>Pegá este nuevo código en esa celda vacía.</li>
+      <li>Pegá tu <strong>API Key</strong> en la línea 4.</li>
+    </ol>
+  </div>
+
+  <div class="code-container">
+    <button class="copy-btn" onclick="copyCode('codFiltro')">Copiar Código</button>
+    <div id="codFiltro" class="code-block"><span class="keyword">import</span> requests
+
+<span class="comment"># ── 1. LA CONEXIÓN (BACKEND) ──────────────────────────────────────</span>
+API_KEY = <span class="string">"gsk_PEGA_TU_CLAVE_ACA"</span>
+
+<span class="keyword">def</span> consultar_ia(personaje, tema):
+    pregunta = f<span class="string">"Actuá como {personaje} y explicame {tema}."</span>
+    payload = {
+        <span class="string">"model"</span>: <span class="string">"llama-3.3-70b-versatile"</span>,
+        <span class="string">"temperature"</span>: 0.7,
+        <span class="string">"messages"</span>: [{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: pregunta}]
+    }
+    headers = {<span class="string">"Authorization"</span>: f<span class="string">"Bearer {API_KEY}"</span>, <span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>}
+    
+    <span class="keyword">try</span>:
+        response = requests.<span class="keyword">post</span>(<span class="string">"https://api.groq.com/openai/v1/chat/completions"</span>, headers=headers, json=payload)
+        <span class="keyword">return</span> response.json()[<span class="string">"choices"</span>][0][<span class="string">"message"</span>][<span class="string">"content"</span>]
+    <span class="keyword">except</span>:
+        <span class="keyword">return</span> <span class="string">"⚠️ Error: No pude conectarme a internet."</span>
+
+<span class="comment"># ── 2. EL PROGRAMA (FRONTEND) ────────────────────────────────────</span>
+<span class="keyword">print</span>(<span class="string">"========================================"</span>)
+<span class="keyword">print</span>(<span class="string">" 🤖 SÚPER CHATBOT INICIADO "</span>)
+<span class="keyword">print</span>(<span class="string">" Escribí 'salir' cuando quieras terminar"</span>)
+<span class="keyword">print</span>(<span class="string">"========================================\n"</span>)
+
+<span class="keyword">while</span> <span class="keyword">True</span>:
+    personaje = <span class="keyword">input</span>(<span class="string">"🎭 ¿Qué personaje querés? "</span>)
+    <span class="keyword">if</span> personaje.lower() == <span class="string">"salir"</span>: 
+        <span class="keyword">print</span>(<span class="string">"👋 ¡Chau! Nos vemos pronto."</span>)
+        <span class="keyword">break</span>
+
+    tema = <span class="keyword">input</span>(<span class="string">"💬 ¿Sobre qué tema querés hablar? "</span>)
+    <span class="keyword">if</span> tema.lower() == <span class="string">"salir"</span>: 
+        <span class="keyword">print</span>(<span class="string">"👋 ¡Chau! Nos vemos pronto."</span>)
+        <span class="keyword">break</span>
+
+    <span class="comment"># --- 🛡️ EL ESCUDO PROTECTOR ---</span>
+    <span class="comment"># ← COMPLETAR: Cambiá "trampa" y "pelear" por dos palabras prohibidas tuyas.</span>
+    <span class="keyword">if</span> <span class="string">"trampa"</span> <span class="keyword">in</span> tema.lower() <span class="keyword">or</span> <span class="string">"pelear"</span> <span class="keyword">in</span> tema.lower():
+        <span class="keyword">print</span>(<span class="string">"🛑 ¡ALERTA! Escudo activado. No hablo de esos temas."</span>)
+        <span class="keyword">print</span>(<span class="string">"Por favor, elegí otro tema.\n"</span>)
+        <span class="keyword">continue</span> <span class="comment"># Vuelve al principio sin mandar el mensaje a la IA</span>
+    <span class="comment"># --------------------------------</span>
+
+    <span class="keyword">print</span>(<span class="string">"⏳ Conectando con la IA..."</span>)
+    respuesta = consultar_ia(personaje, tema)
+    <span class="keyword">print</span>(f<span class="string">"\n{personaje}: {respuesta}\n"</span>)
+    <span class="keyword">print</span>(<span class="string">"----------------------------------------\n"</span>)</div>
+  </div>
+</div>
+
+<!-- ════════════════════ PARTE 3: PRUEBAS ════════════════════════ -->
+<div class="card c-estilo">
+  <h2><span class="badge" style="background: var(--vio);">3</span> PRUEBAS DE FUNCIONAMIENTO</h2>
+  
+  <p style="margin-bottom: 15px;">Ahora que le pusiste el escudo y toques de diseño a tu programa, ¡es hora de testearlo para ver si resiste!</p>
+
+  <div class="action-box action-colab">
+    <strong>📝 TAREA: COMPROBACIÓN FINAL</strong>
+    <ol style="margin-left: 20px; margin-top: 5px;">
+      <li>Ejecutá tu nuevo código.</li>
+      <li>Creá <strong>otra celda de texto</strong> al final de tu Colab.</li>
+      <li>Copiá las 3 preguntas de abajo, pegalas en esa celda y respondelas haciendo las pruebas en vivo.</li>
+    </ol>
+  </div>
+
+  <div class="pregunta-doc">
+    <span class="num">Prueba 1: El Escudo</span>
+    Intentá hablar sobre una de las palabras prohibidas que le pusiste a tu escudo. ¿Qué hizo el programa? ¿Te dejó pasar o te bloqueó?
+  </div>
+
+  <div class="pregunta-doc">
+    <span class="num">Prueba 2: Continuidad</span>
+    Después de que el escudo te frenó por usar una palabra prohibida... ¿el programa se rompió y se cerró, o te volvió a preguntar el personaje para seguir chateando?
+  </div>
+
+  <div class="pregunta-doc">
+    <span class="num">Prueba 3: Salida (Exit)</span>
+    Escribí la palabra "salir". ¿Apareció el mensaje de despedida y se apagó el sistema correctamente?
+  </div>
+
+  <div class="mensaje-amigable" style="margin-top: 20px; background: #FFF3E0; border-color: #FF9800; color: #E65100;">
+    <strong>🎨 Desafío Extra (Diseño Libre):</strong>
+    Si ya respondiste todo y te sobra tiempo, podés personalizar tu programa. Cambiá los textos de los <code>print()</code>, agregá emojis diferentes usando la tecla [Windows] + [Punto], o cambiá las líneas de separadores <code>"====="</code> por estrellitas <code>"*****"</code>. ¡Hacelo a tu gusto!
+  </div>
+
+</div>
+
+</div>
+<script>
+  function copyCode(id) {
+    var el = document.getElementById(id);
+    navigator.clipboard.writeText(el.textContent || el.innerText).then(function() {
+      var btn = el.previousElementSibling;
+      var orig = btn.innerText;
+      btn.innerText = "¡Copiado!";
+      btn.style.background = "var(--teal)";
+      setTimeout(function() { btn.innerText = orig; btn.style.background = "rgba(255,255,255,0.15)"; btn.style.borderColor = "rgba(255,255,255,0.3)"; }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
