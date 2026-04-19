@@ -58,7 +58,7 @@
   
   /* Estados de las tarjetas */
   .c-pasada { border-top-color: #4A6080; background: #FAFBFC; }
-  .c-actual { border-top-color: var(--tp); background: #FAF5FF; }
+  .c-actual { border-top-color: var(--teal); background: #F4FAFC; }
   
   .clase-num { 
     font-size: 16px; 
@@ -69,7 +69,7 @@
     letter-spacing: 1px;
   }
   
-  .c-actual .clase-num { color: var(--tp); }
+  .c-actual .clase-num { color: var(--teal); }
   
   .card h2 { 
     color: var(--nav); 
@@ -96,7 +96,7 @@
   }
   
   .c-pasada .btn { background: #E1E8EE; color: #4A6080; }
-  .c-actual .btn { background: var(--tp); color: white; }
+  .c-actual .btn { background: var(--teal); color: white; }
   
   .section-title {
     font-size: 28px;
@@ -124,16 +124,23 @@
 
   <h2 class="section-title">Clase de Hoy</h2>
   <div class="grid">
-    <a href="clase_7_abril_TP1.html" class="card c-actual">
-      <div class="clase-num">Viernes 17/04 • Clase 7</div>
-      <h2>Trabajo Práctico N° 1</h2>
-      <p>Llegó el momento de integrar todo. Analizamos un programa completo con inputs, conexión y manejo de errores.</p>
-      <div class="btn">Abrir Trabajo Práctico</div>
+    <a href="clase_8_abril.html" class="card c-actual">
+      <div class="clase-num">Lunes 20/04 • Clase 8</div>
+      <h2>El Escudo Protector</h2>
+      <p>Mejoramos tu chatbot agregando un Escudo Protector para bloquear palabras y evaluamos tu trabajo con un Reporte QA.</p>
+      <div class="btn">Abrir Clase 8</div>
     </a>
   </div>
 
   <h2 class="section-title">Clases Anteriores</h2>
   <div class="grid">
+
+    <a href="clase_7_abril.html" class="card c-pasada" style="border-top-color: var(--tp);">
+      <div class="clase-num" style="color: var(--tp);">Viernes 17/04 • Clase 7</div>
+      <h2>Trabajo Práctico N° 1</h2>
+      <p>Llegó el momento de integrar todo. Analizamos un programa completo con inputs, conexión y manejo de errores.</p>
+      <div class="btn" style="background: #FAF5FF; color: var(--tp); border: 2px solid var(--tp);">Repasar TP1</div>
+    </a>
     
     <a href="clase_6_abril.html" class="card c-pasada">
       <div class="clase-num">Lunes 13/04 • Clase 6</div>
@@ -163,7 +170,6 @@
       <div class="btn">Repasar Clase 3</div>
     </a>
 
-    <!-- Clases 1 y 2 se mantienen deshabilitadas hasta que haya material web específico -->
     <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
       <div class="clase-num">Clase 2</div>
       <h2>El Agente Inteligente</h2>
