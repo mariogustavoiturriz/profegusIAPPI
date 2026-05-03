@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de IA · Clase 9</title>
+<style>
+  :root {
+    --nav: #1A2C3A; --teal: #00949A; --amb: #D4873A; 
+    --vio: #3D5A99; --gris: #F3F6F9; --bd: #C5D2DC; --txt: #2C3E50;
+    --bco: #FFFFFF; --r: 12px; --rojo: #C62828; --verde: #2E7D32;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #EEF3F7; color: var(--txt); line-height: 1.6; font-size: 20px; padding: 15px 0 40px 0; }
+  header { background: var(--nav); color: var(--bco); padding: 25px 20px; border-bottom: 5px solid var(--rojo); }
+  header h1 { font-size: 28px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+  header p { font-size: 18px; opacity: 0.9; }
+  .container { width: 95%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+  
+  .back-btn { display: inline-block; margin-top: 20px; margin-bottom: 10px; padding: 10px 20px; background: var(--bco); color: var(--nav); text-decoration: none; font-weight: bold; border-radius: 8px; border: 2px solid var(--bd); transition: all 0.2s; }
+  .back-btn:hover { border-color: var(--nav); background: var(--gris); }
+
+  .card { background: var(--bco); border-radius: var(--r); padding: 30px; margin-bottom: 30px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); border-left: 6px solid var(--bd); }
+  .c-eval { border-left-color: var(--rojo); background: #FFEBEE; }
+  .c-juego { border-left-color: var(--verde); background: #F0FFF4; }
+  
+  h2 { color: var(--nav); font-size: 24px; margin-bottom: 15px; text-transform: uppercase; border-bottom: 2px solid var(--gris); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .badge { background: var(--nav); color: var(--bco); padding: 5px 12px; border-radius: 6px; font-size: 18px; font-weight: bold; }
+  
+  .info-box { background: white; padding: 20px; border-radius: var(--r); border: 1px solid var(--bd); margin-bottom: 15px; }
+  .info-box strong { color: var(--rojo); font-size: 22px; display: block; margin-bottom: 10px; }
+
+  .btn-juego { display: block; text-align: center; padding: 20px; background: #0F1E2A; color: #00FF41; text-decoration: none; border-radius: 12px; font-size: 24px; font-family: 'Courier New', Courier, monospace; font-weight: bold; margin-top: 20px; transition: 0.3s; border: 2px solid #00FF41; box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); }
+  .btn-juego:hover { background: #00FF41; color: #0F1E2A; box-shadow: 0 0 25px rgba(0, 255, 65, 0.6); }
+
+  ul { margin-left: 25px; margin-top: 10px; }
+  li { margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CLASE 9: DEFENSA Y CIBERSEGURIDAD</h1>
+  <p>Taller de IA | 7° Año TIC | CTP Antonio Martín Marte</p>
+</header>
+
+<div class="container">
+<a href="index.html" class="back-btn">⬅ Volver al Índice</a>
+
+<!-- BLOQUE 1: LA EVALUACIÓN -->
+<div class="card c-eval">
+  <h2><span class="badge" style="background: var(--rojo);">1</span> DEFENSA ORAL DEL TP1</h2>
+  
+  <div class="info-box">
+    <strong>📋 Defensa Técnica</strong>
+    <p>Hoy es el día de demostrar que no solo saben escribir código, sino que entienden cómo piensa la máquina. El profe Gus va a llamar a cada grupo de a uno al escritorio.</p>
+    <ul>
+      <li>Van a abrir su Google Colab.</li>
+      <li>Se les pedirá que expliquen los <code># comentarios</code> que dejaron en su código.</li>
+      <li>Deberán justificar por qué usaron ciertas herramientas (ej: <em>¿Qué pasaba si no ponían el try/except?</em>).</li>
+      <li>Si hicieron el Nivel 2 o 3, tendrán que hacer el "Pitch Comercial" vendiendo la identidad de su Chatbot.</li>
+    </ul>
+  </div>
+  <p style="text-align: center; color: #B71C1C; font-weight: bold; font-size: 22px;">Silencio y respeto mientras sus compañeros defienden su trabajo.</p>
+</div>
+
+<!-- BLOQUE 2: EL JUEGO EN LA SALA DE ESPERA -->
+<div class="card c-juego">
+  <h2><span class="badge" style="background: var(--verde);">2</span> SALA DE ESPERA: DESAFÍO JAILBREAK</h2>
+  <p>Mientras esperan su turno para dar la lección (o si ya terminaron), no se van a quedar de brazos cruzados. Van a aprender un concepto vital de la ciberseguridad en IA: <strong>La Inyección de Prompts (Jailbreak)</strong>.</p>
+  
+  <div class="info-box" style="border-color: var(--verde);">
+    <strong style="color: var(--verde);">¿De qué se trata?</strong>
+    <p>A las Inteligencias Artificiales comerciales se les pone un "System Prompt" estricto para que no digan groserías o no revelen secretos de la empresa. El <em>Jailbreak</em> es usar la psicología y las palabras para engañar a la IA y lograr que rompa sus propias reglas de seguridad.</p>
+    <p style="margin-top: 10px;">Les preparé un simulador de seguridad. La IA tiene una contraseña secreta y la orden estricta de <strong>NUNCA</strong> revelarla. Su misión es hablarle y usar la creatividad para engañarla hasta que se las diga.</p>
+  </div>
+
+  <p>Tengan a mano su <strong>API Key de Groq</strong> y hagan clic en el botón de abajo para entrar al simulador (se abre en una pestaña nueva).</p>
+
+  <a href="jailbreak.html" target="_blank" class="btn-juego">
+    >_ INICIAR_SIMULADOR_HACKEO
+  </a>
+</div>
+
+</div>
+
+</body>
+</html>
