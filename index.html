@@ -59,6 +59,7 @@
   /* Estados de las tarjetas */
   .c-pasada { border-top-color: #4A6080; background: #FAFBFC; }
   .c-actual { border-top-color: var(--teal); background: #F4FAFC; }
+  .c-futura { border-top-color: var(--amb); }
   
   .clase-num { 
     font-size: 16px; 
@@ -70,6 +71,7 @@
   }
   
   .c-actual .clase-num { color: var(--teal); }
+  .c-futura .clase-num { color: var(--amb); }
   
   .card h2 { 
     color: var(--nav); 
@@ -97,6 +99,10 @@
   
   .c-pasada .btn { background: #E1E8EE; color: #4A6080; }
   .c-actual .btn { background: var(--teal); color: white; }
+  .c-futura .btn { background: var(--amb); color: white; }
+  
+  /* Botón bloqueado */
+  .btn.locked { background: #E0E0E0 !important; color: #888 !important; border: 1px solid #ccc; cursor: not-allowed; }
   
   .section-title {
     font-size: 28px;
@@ -122,26 +128,44 @@
 
 <div class="container">
 
-  <h2 class="section-title">Clase de Hoy</h2>
+  <h2 class="section-title">Clases de la Semana</h2>
   <div class="grid">
-    <a href="clase_8_abril.html" class="card c-actual">
-      <div class="clase-num">Lunes 20/04 • Clase 8</div>
-      <h2>El Escudo Protector</h2>
-      <p>Mejoramos tu chatbot agregando un Escudo Protector para bloquear palabras y evaluamos tu trabajo con un Reporte QA.</p>
-      <div class="btn">Abrir Clase 8</div>
+    <!-- CLASE 10 -->
+    <a href="clase_10_abril.html" class="card c-futura" data-unlock="2026-05-04T09:45:00">
+      <div class="clase-num">Lunes 04/05 • Clase 10</div>
+      <h2>La IA que recuerda</h2>
+      <p>El problema de la memoria y cómo solucionarlo usando listas para guardar el historial de la conversación.</p>
+      <div class="btn">Abrir Clase 10</div>
+    </a>
+
+    <!-- CLASE 11 -->
+    <a href="clase_11_abril.html" class="card c-futura" data-unlock="2026-05-08T10:35:00">
+      <div class="clase-num">Viernes 08/05 • Clase 11</div>
+      <h2>Dale una personalidad</h2>
+      <p>Aprendemos qué es el System Prompt y le escribimos reglas y personalidad a tu propia IA.</p>
+      <div class="btn">Abrir Clase 11</div>
     </a>
   </div>
 
   <h2 class="section-title">Clases Anteriores</h2>
   <div class="grid">
+    <!-- CLASE 8 -->
+    <a href="clase_8_abril.html" class="card c-pasada">
+      <div class="clase-num">Lunes 20/04 • Clase 8</div>
+      <h2>El Escudo Protector</h2>
+      <p>Mejoramos tu chatbot agregando un Escudo Protector para bloquear palabras y evaluamos tu trabajo con un Reporte QA.</p>
+      <div class="btn">Repasar Clase 8</div>
+    </a>
 
-    <a href="clase_7_abril_TP1.html" class="card c-pasada" style="border-top-color: var(--tp);">
+    <!-- CLASE 7 -->
+    <a href="clase_7_abril.html" class="card c-pasada" style="border-top-color: var(--tp);">
       <div class="clase-num" style="color: var(--tp);">Viernes 17/04 • Clase 7</div>
       <h2>Trabajo Práctico N° 1</h2>
       <p>Llegó el momento de integrar todo. Analizamos un programa completo con inputs, conexión y manejo de errores.</p>
       <div class="btn" style="background: #FAF5FF; color: var(--tp); border: 2px solid var(--tp);">Repasar TP1</div>
     </a>
     
+    <!-- CLASE 6 -->
     <a href="clase_6_abril.html" class="card c-pasada">
       <div class="clase-num">Lunes 13/04 • Clase 6</div>
       <h2>El JSON y la Temperature</h2>
@@ -149,6 +173,7 @@
       <div class="btn">Repasar Clase 6</div>
     </a>
 
+    <!-- CLASE 5 -->
     <a href="clase_5_abril.html" class="card c-pasada">
       <div class="clase-num">Viernes 10/04 • Clase 5</div>
       <h2>La Primera Llamada</h2>
@@ -156,6 +181,7 @@
       <div class="btn">Repasar Clase 5</div>
     </a>
 
+    <!-- CLASE 4 -->
     <a href="clase_4_abril.html" class="card c-pasada">
       <div class="clase-num">Clase 4</div>
       <h2>F-Strings y Try/Except</h2>
@@ -163,6 +189,7 @@
       <div class="btn">Repasar Clase 4</div>
     </a>
 
+    <!-- CLASE 3 -->
     <a href="clase_3_abril.html" class="card c-pasada">
       <div class="clase-num">Clase 3</div>
       <h2>Listas y Diccionarios</h2>
@@ -170,6 +197,7 @@
       <div class="btn">Repasar Clase 3</div>
     </a>
 
+    <!-- CLASES 1 y 2 INACTIVAS -->
     <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
       <div class="clase-num">Clase 2</div>
       <h2>El Agente Inteligente</h2>
@@ -187,6 +215,83 @@
   </div>
 
 </div>
+
+<script>
+  let modoProfe = false;
+
+  function lockClasses() {
+    if (modoProfe) return; // Si el profe desbloqueó todo, no hacemos nada
+    
+    const now = new Date();
+    const cards = document.querySelectorAll('.card[data-unlock]');
+    
+    cards.forEach(card => {
+      const unlockTimeStr = card.getAttribute('data-unlock');
+      const unlockDate = new Date(unlockTimeStr);
+      const btn = card.querySelector('.btn');
+      
+      if (now < unlockDate) {
+        // Aún no es la hora, bloqueamos
+        card.style.pointerEvents = 'none';
+        card.style.opacity = '0.7';
+        btn.classList.add('locked');
+        
+        // Formatear la fecha para mostrar en el botón
+        const dia = String(unlockDate.getDate()).padStart(2, '0');
+        const mes = String(unlockDate.getMonth() + 1).padStart(2, '0');
+        const hora = String(unlockDate.getHours()).padStart(2, '0');
+        const min = String(unlockDate.getMinutes()).padStart(2, '0');
+        
+        btn.innerHTML = `🔒 Bloqueada hasta el ${dia}/${mes} a las ${hora}:${min} hs`;
+        btn.style.background = '#E0E0E0';
+        btn.style.color = '#888';
+      } else {
+        // Ya pasó la hora, desbloqueamos automáticamente
+        card.style.pointerEvents = 'auto';
+        card.style.opacity = '1';
+        btn.classList.remove('locked');
+        btn.innerHTML = 'Abrir Clase';
+        btn.style.background = ''; // Resetea al color original de CSS
+        btn.style.color = '';
+        
+        // Cambiamos el color de la tarjeta para que se vea como actual
+        card.classList.remove('c-futura');
+        card.classList.add('c-actual');
+      }
+    });
+  }
+
+  // Atajo de teclado oculto: Ctrl + Shift + U
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'u') {
+      modoProfe = !modoProfe; // Activar o desactivar
+      
+      if (modoProfe) {
+        const cards = document.querySelectorAll('.card[data-unlock]');
+        cards.forEach(card => {
+          const btn = card.querySelector('.btn');
+          card.style.pointerEvents = 'auto';
+          card.style.opacity = '1';
+          btn.classList.remove('locked');
+          btn.innerHTML = '🔓 Desbloqueada (Modo Profe)';
+          btn.style.background = '#8E24AA'; // Violeta para indicar que es bypass
+          btn.style.color = 'white';
+          
+          card.classList.remove('c-futura');
+          card.classList.add('c-actual');
+        });
+      } else {
+        // Si lo vuelve a tocar, vuelve a la normalidad
+        lockClasses();
+      }
+    }
+  });
+
+  // Ejecutamos la función apenas carga la página
+  window.onload = lockClasses;
+  // Revisamos cada 30 segundos por si se hacen las 09:45 estando en la página
+  setInterval(lockClasses, 30000); 
+</script>
 
 </body>
 </html>
