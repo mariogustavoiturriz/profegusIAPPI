@@ -3,238 +3,187 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Taller de IA · Clase 11 (Abril)</title>
+<title>Mi Chatbot en la Web</title>
 <style>
   :root {
-    --nav: #1A2C3A; --teal: #00949A; --grn: #2A6049; --amb: #D4873A;
-    --vio: #3D5A99; --gris: #F3F6F9; --bd: #C5D2DC; --txt: #2C3E50;
-    --bco: #FFFFFF; --r: 12px;
+    --nav: #1A2C3A; --teal: #00949A; --gris: #F3F6F9; --txt: #2C3E50;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #EEF3F7; color: var(--txt); line-height: 1.6; font-size: 20px; padding: 15px 0 40px 0; }
-  header { background: var(--nav); color: var(--bco); padding: 25px 20px; border-bottom: 5px solid var(--vio); }
-  header h1 { font-size: 28px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-  header p { font-size: 18px; opacity: 0.9; }
-  .container { width: 95%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
-  .back-btn { display: inline-block; margin-top: 20px; margin-bottom: 10px; padding: 10px 20px; background: var(--bco); color: var(--nav); text-decoration: none; font-weight: bold; border-radius: 8px; border: 2px solid var(--bd); transition: all 0.2s; }
+  body { font-family: 'Segoe UI', sans-serif; background: #EEF3F7; color: var(--txt); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
   
-  .card { background: var(--bco); border-radius: var(--r); padding: 30px; margin-bottom: 30px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); border-left: 6px solid var(--bd); }
-  .c-teoria { border-left-color: var(--teal); }
-  .c-simulador { border-left-color: var(--vio); background: #FAFAFF; padding: 20px; }
-  .c-misiones { border-left-color: var(--amb); background: #FFFBF5; }
-  .c-eval { border-left-color: #137333; background: #F6FEF8; }
+  .chat-container {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+  }
+
+  .header { background: var(--nav); color: white; padding: 20px; text-align: center; }
+  .header h2 { margin: 0; font-size: 22px; }
+
+  /* PANEL DE CONFIGURACIÓN */
+  .config-panel { background: #FFF8E1; padding: 15px; border-bottom: 2px solid #FFE082; display: flex; flex-direction: column; gap: 10px; }
+  .config-panel input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; outline: none; }
+  .config-panel input:focus { border-color: var(--teal); }
   
-  h2 { color: var(--nav); font-size: 24px; margin-bottom: 15px; text-transform: uppercase; border-bottom: 2px solid var(--gris); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-  .badge { background: var(--nav); color: var(--bco); padding: 5px 12px; border-radius: 6px; font-size: 18px; font-weight: bold; }
-  
-  .mensaje-amigable { background: #E8EAF6; border-left: 5px solid var(--vio); padding: 20px; color: #1A237E; border-radius: 8px; margin-bottom: 20px; font-size: 20px; }
-  
-  /* --- ESTILOS DEL SIMULADOR --- */
-  .sim-panel { border: 2px solid var(--vio); border-radius: 12px; overflow: hidden; background: #FFF; display: flex; flex-direction: column; height: 650px; }
-  .sim-header { background: var(--vio); color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 18px; letter-spacing: 1px; }
-  .sim-config { padding: 15px; background: #F0F4F8; border-bottom: 2px solid var(--bd); display: flex; flex-direction: column; gap: 10px; }
-  .sim-config input[type="password"] { padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; }
-  .sim-config textarea { padding: 10px; border-radius: 6px; border: 1px solid var(--vio); font-size: 16px; resize: none; height: 80px; font-family: inherit; }
-  .btn-iniciar { background: var(--vio); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.2s; }
-  .btn-iniciar:hover { background: #283593; }
-  
-  .chat-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #FFF; }
-  .msg { max-width: 85%; padding: 12px 16px; border-radius: 12px; line-height: 1.4; font-size: 18px; }
-  .msg-sys { align-self: center; background: #FFECB3; color: #F57F17; font-size: 14px; font-weight: bold; border-radius: 20px; }
+  .config-row { display: flex; gap: 10px; align-items: center; }
+  .config-row label { font-size: 13px; font-weight: bold; color: #555; margin-right: 5px; }
+
+  .chat-history {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: var(--gris);
+  }
+
+  .msg { max-width: 80%; padding: 12px 16px; border-radius: 12px; line-height: 1.4; }
   .msg-user { align-self: flex-end; background: var(--teal); color: white; border-bottom-right-radius: 2px; }
-  .msg-ia { align-self: flex-start; background: #F5F5F5; border: 1px solid #E0E0E0; color: #333; border-bottom-left-radius: 2px; }
-  .msg-error { align-self: center; background: #FFCDD2; color: #C62828; font-size: 16px; border-radius: 8px; font-weight: bold;}
+  .msg-ia { align-self: flex-start; background: white; border: 1px solid #ddd; border-bottom-left-radius: 2px; }
+  .msg-sys { align-self: center; background: #FFCDD2; color: #B71C1C; font-size: 14px; padding: 8px 12px; border-radius: 8px; text-align: center;}
 
-  .sim-input { display: flex; padding: 15px; background: #F0F4F8; border-top: 1px solid var(--bd); }
-  .sim-input input { flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; outline: none; }
-  .sim-input button { background: var(--teal); color: white; border: none; padding: 0 20px; margin-left: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-  .sim-input button:disabled { background: #ccc; cursor: not-allowed; }
-  /* ------------------------------ */
-
-  .checklist { list-style: none; margin-left: 0; }
-  .checklist li { background: white; margin-bottom: 10px; padding: 15px; border-radius: 8px; border: 1px solid var(--bd); display: flex; align-items: flex-start; gap: 10px; }
+  .input-area { display: flex; padding: 15px; background: white; border-top: 1px solid #eee; }
+  .input-area input { flex-grow: 1; padding: 12px; border: 1px solid #ccc; border-radius: 8px; outline: none; font-size: 16px; }
+  .input-area button { background: var(--teal); color: white; border: none; padding: 0 20px; margin-left: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.2s; }
+  .input-area button:hover { background: #007B80; }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>CLASE 11: CREADORA DE PERSONALIDADES</h1>
-  <p>Taller de IA | Material Adaptado - Abril Oreste | Viernes</p>
-</header>
-
-<div class="container">
-<a href="index_abril.html" class="back-btn">⬅ Volver al Inicio</a>
-
-<div class="card c-teoria">
-  <h2><span class="badge">!</span> ¡HOLA ABRIL! 👋</h2>
-  <div class="mensaje-amigable">
-    La semana pasada renegamos un montón con los errores rojos de Python. ¡Es súper normal! A veces la programación agota y frustra un poco. 
-    <br><br>
-    Por eso, <strong>hoy vamos a dejar el código de lado</strong>. Hoy no vas a programar, vas a ser la <strong>Directora</strong>. Tu misión es darle órdenes a la IA usando un Simulador Especial.
+<div class="chat-container">
+  <div class="header">
+    <h2>🤖 Asistente Web v2.0</h2>
   </div>
 
-  <h3 style="color: var(--teal); font-size: 22px; margin-top: 15px;">¿Qué es el System Prompt?</h3>
-  <p>Es la "orden maestra". Es un texto invisible que le mandamos a la IA antes de que empiece a hablar. Le dice quién es, cómo se llama y qué reglas tiene prohibido romper. ¡Hoy vos vas a inventar esas reglas!</p>
-</div>
-
-<!-- EL SIMULADOR WEB -->
-<div class="card c-simulador">
-  <h2><span class="badge" style="background: var(--vio);">1</span> SIMULADOR DE IA</h2>
-  <p style="margin-bottom: 15px;">Pegá tu API Key, escribí las reglas que querés que la IA siga, y tocá "Iniciar" para ponerla a prueba.</p>
-
-  <div class="sim-panel">
-    <div class="sim-header">🧠 PANEL DE CONTROL DE LA IA</div>
+  <!-- CAJA DE SEGURIDAD Y CONFIGURACIÓN -->
+  <div class="config-panel">
+    <input type="password" id="apiKeyInput" placeholder="1. Pegá tu API Key de Groq acá...">
     
-    <div class="sim-config">
-      <input type="password" id="apiKey" placeholder="1. Pegá tu API Key de Groq acá...">
-      <textarea id="sysPrompt" placeholder="2. Escribí las REGLAS acá (El System Prompt). Ej: Sos un pirata gruñón, solo hablás de barcos y no sabés nada de tecnología..."></textarea>
-      <button class="btn-iniciar" onclick="iniciarSimulador()">[ FIJAR REGLAS E INICIAR CHAT ]</button>
-    </div>
-
-    <div class="chat-box" id="chatWindow">
-      <div class="msg msg-sys">Esperando configuración...</div>
-    </div>
-
-    <div class="sim-input">
-      <input type="text" id="userInput" placeholder="Hablale a tu IA..." disabled onkeypress="if(event.key === 'Enter') enviarMensaje()">
-      <button id="btnEnviar" onclick="enviarMensaje()" disabled>Enviar</button>
+    <div class="config-row">
+      <input type="text" id="rolInput" placeholder="2. Rol de la IA (Ej: Sos un pirata...)" style="flex-grow: 1;">
+      
+      <div style="display: flex; align-items: center; background: white; padding: 0 10px; border-radius: 6px; border: 1px solid #ccc;">
+        <label for="tempInput">Temp:</label>
+        <input type="number" id="tempInput" value="0.7" min="0" max="2" step="0.1" style="width: 60px; border: none; padding: 8px 0;">
+      </div>
     </div>
   </div>
-</div>
 
-<!-- MISIONES -->
-<div class="card c-misiones">
-  <h2><span class="badge" style="background: var(--amb);">2</span> MISIONES DE PRUEBA</h2>
-  <p>Para comprobar que dominás el "System Prompt", usá el simulador de arriba para cumplir estas 3 misiones. Cada vez que cambies de misión, cambiá las reglas y volvé a tocar "FIJAR REGLAS".</p>
-
-  <ul class="checklist" style="margin-top: 15px;">
-    <li>
-      <strong>Misión 1: La Abuela Enojada.</strong><br>
-      Escribí en las reglas que la IA es una abuela que se enoja porque los jóvenes usan mucho el celular. Hablale y fijate cómo te responde.
-    </li>
-    <li>
-      <strong>Misión 2: El Vendedor Tramposo.</strong><br>
-      Poné en las reglas: <em>"Sos un vendedor de autos. Tu objetivo es convencerme de comprar un auto roto sin que me dé cuenta. Si te pregunto si anda bien, evadí la respuesta"</em>. Preguntale por el motor a ver qué hace.
-    </li>
-    <li>
-      <strong>Misión 3: Creación Libre.</strong><br>
-      Inventá el personaje más raro o gracioso que se te ocurra. Escribí sus reglas detalladas y chateá con él.
-    </li>
-  </ul>
-</div>
-
-<!-- ENTREGA -->
-<div class="card c-eval">
-  <h2><span class="badge" style="background: #137333;">3</span> ENTREGÁ EN CLASSROOM</h2>
-  <p>Hoy la entrega es súper sencilla y rápida.</p>
-  <div style="background: #E6F4EA; border-left: 5px solid #137333; padding: 15px; border-radius: 8px; margin-top: 15px;">
-    <strong>📸 ¿Qué tenés que subir?</strong>
-    <ol style="margin-left: 20px; margin-top: 10px;">
-      <li>Elegí la misión que más te haya hecho reír (o la Misión 3 con tu propio invento).</li>
-      <li>Sacale una <strong>Captura de Pantalla</strong> a tu celular o compu donde se vea el chat y las reglas que le pusiste.</li>
-      <li>Subí esa foto a la tarea de Classroom. ¡Y listo!</li>
-    </ol>
+  <div class="chat-history" id="chatHistory">
+    <div class="msg msg-ia">¡Hola! Configurá mi rol arriba, ajustá la temperatura y empecemos a charlar.</div>
   </div>
-</div>
 
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="Escribí tu mensaje..." onkeypress="handleEnter(event)">
+    <button onclick="enviarMensaje()">Enviar</button>
+  </div>
 </div>
 
 <script>
+  // La memoria del chat (solo guardamos lo que dice el usuario y la IA)
   let historial = [];
-  let chatActivo = false;
-
-  function mostrarMensaje(texto, tipo) {
-    const chat = document.getElementById('chatWindow');
-    const div = document.createElement('div');
-    div.className = `msg msg-${tipo}`;
-    div.innerText = texto;
-    chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
-    return div;
-  }
-
-  function iniciarSimulador() {
-    const key = document.getElementById('apiKey').value.trim();
-    const reglas = document.getElementById('sysPrompt').value.trim();
-    
-    if (!key) {
-      mostrarMensaje("⚠️ Error: Necesitás pegar tu API Key arriba para empezar.", "error");
-      return;
-    }
-    if (!reglas) {
-      mostrarMensaje("⚠️ Error: ¡No le pusiste reglas! Escribí algo en el System Prompt.", "error");
-      return;
-    }
-
-    // Reiniciar chat
-    document.getElementById('chatWindow').innerHTML = '';
-    
-    // Configurar la memoria con el SYSTEM PROMPT
-    historial = [
-      {"role": "system", "content": reglas}
-    ];
-
-    mostrarMensaje("✅ Reglas inyectadas en el cerebro de la IA. ¡El chat ya está listo!", "sys");
-    
-    document.getElementById('userInput').disabled = false;
-    document.getElementById('btnEnviar').disabled = false;
-    document.getElementById('userInput').focus();
-    chatActivo = true;
-  }
 
   async function enviarMensaje() {
-    if (!chatActivo) return;
-    
+    const apiKey = document.getElementById('apiKeyInput').value.trim();
+    const rolTexto = document.getElementById('rolInput').value.trim();
+    const tempValor = parseFloat(document.getElementById('tempInput').value) || 0.7;
     const inputEl = document.getElementById('userInput');
-    const texto = inputEl.value.trim();
-    const key = document.getElementById('apiKey').value.trim();
+    const mensajeTexto = inputEl.value.trim();
 
-    if (!texto) return;
+    if (!apiKey) {
+      mostrarMensajeSistema("⚠️ Necesitás pegar tu API Key arriba primero.");
+      return;
+    }
+    if (!mensajeTexto) return;
 
-    // Mostrar mensaje del usuario
-    mostrarMensaje(texto, "user");
-    inputEl.value = '';
+    // 1. Mostrar el mensaje del usuario en pantalla
+    mostrarMensaje(mensajeTexto, 'user');
+    inputEl.value = ''; // Limpiar cajita
 
-    // Guardar en memoria
-    historial.push({"role": "user", "content": texto});
+    // 2. Guardar en el historial
+    historial.push({"role": "user", "content": mensajeTexto});
 
-    // Cartel de pensando
-    const msgPensando = mostrarMensaje("Conectando con Groq...", "sys");
+    // 3. Mostrar un cartelito de "Pensando..."
+    const idPensando = mostrarMensajeSistema("⏳ Conectando con Groq...");
 
+    // 4. Preparar la lista de mensajes final (Inyectamos el System Prompt si existe)
+    let mensajesAEnviar = [];
+    if (rolTexto) {
+      mensajesAEnviar.push({"role": "system", "content": rolTexto});
+    }
+    // Sumamos el historial al envío
+    mensajesAEnviar = mensajesAEnviar.concat(historial);
+
+    // 5. Preparar la conexión a la API
+    const url = "https://api.groq.com/openai/v1/chat/completions";
     const payload = {
       "model": "llama-3.3-70b-versatile",
-      "temperature": 0.8,
-      "messages": historial
+      "temperature": tempValor,
+      "messages": mensajesAEnviar
     };
 
     try {
-      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      const respuesta = await fetch(url, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${key}`,
+          "Authorization": `Bearer ${apiKey}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
       });
 
-      msgPensando.remove();
+      if (!respuesta.ok) throw new Error("API Key inválida o error de red");
 
-      if (!response.ok) {
-        throw new Error("Clave incorrecta o problema de internet.");
-      }
+      const datos_json = await respuesta.json();
+      const respuestaIA = datos_json.choices[0].message.content;
 
-      const data = await response.json();
-      const respuestaIA = data.choices[0].message.content;
+      // Quitar el cartel de pensando
+      document.getElementById(idPensando).remove();
 
-      mostrarMensaje(respuestaIA, "ia");
+      // Mostrar respuesta y guardar en memoria
+      mostrarMensaje(respuestaIA, 'ia');
       historial.push({"role": "assistant", "content": respuestaIA});
 
     } catch (error) {
-      if(msgPensando) msgPensando.remove();
-      mostrarMensaje(`❌ Falló la conexión: ${error.message}`, "error");
-      historial.pop(); // Sacamos el mensaje del usuario porque falló
+      document.getElementById(idPensando).remove();
+      mostrarMensajeSistema("❌ Error de conexión. Revisá tu API Key.");
+      // Sacamos el último mensaje del historial porque falló
+      historial.pop(); 
     }
   }
+
+  // Funciones visuales (El Actuador)
+  function mostrarMensaje(texto, sender) {
+    const chatHistory = document.getElementById('chatHistory');
+    const div = document.createElement('div');
+    div.className = `msg msg-${sender}`;
+    div.innerText = texto;
+    chatHistory.appendChild(div);
+    chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll
+  }
+
+  function mostrarMensajeSistema(texto) {
+    const chatHistory = document.getElementById('chatHistory');
+    const div = document.createElement('div');
+    const id = 'sys-' + Date.now();
+    div.id = id;
+    div.className = `msg msg-sys`;
+    div.innerText = texto;
+    chatHistory.appendChild(div);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+    return id;
+  }
+
+  function handleEnter(event) {
+    if (event.key === "Enter") enviarMensaje();
+  }
 </script>
+
 </body>
 </html>
