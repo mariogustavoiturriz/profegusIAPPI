@@ -33,8 +33,11 @@
   .sim-panel { border: 2px solid var(--vio); border-radius: 12px; overflow: hidden; background: #FFF; display: flex; flex-direction: column; height: 650px; }
   .sim-header { background: var(--vio); color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 18px; letter-spacing: 1px; }
   .sim-config { padding: 15px; background: #F0F4F8; border-bottom: 2px solid var(--bd); display: flex; flex-direction: column; gap: 10px; }
-  .sim-config input[type="password"] { padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; }
-  .sim-config textarea { padding: 10px; border-radius: 6px; border: 1px solid var(--vio); font-size: 16px; resize: none; height: 80px; font-family: inherit; }
+  .sim-config input[type="password"], .sim-config input[type="text"] { padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; outline: none; }
+  .sim-config textarea { padding: 10px; border-radius: 6px; border: 1px solid var(--vio); font-size: 16px; resize: none; height: 80px; font-family: inherit; outline: none; }
+  
+  .sim-row { display: flex; gap: 10px; align-items: center; }
+  
   .btn-iniciar { background: var(--vio); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.2s; }
   .btn-iniciar:hover { background: #283593; }
   
@@ -80,14 +83,24 @@
 <!-- EL SIMULADOR WEB -->
 <div class="card c-simulador">
   <h2><span class="badge" style="background: var(--vio);">1</span> SIMULADOR DE IA</h2>
-  <p style="margin-bottom: 15px;">Pegá tu API Key, escribí las reglas que querés que la IA siga, y tocá "Iniciar" para ponerla a prueba.</p>
+  <p style="margin-bottom: 15px;">Pegá tu API Key, elegí la creatividad (temperatura), escribí el personaje y las reglas. Después tocá "Iniciar" para ponerla a prueba.</p>
 
   <div class="sim-panel">
     <div class="sim-header">🧠 PANEL DE CONTROL DE LA IA</div>
     
     <div class="sim-config">
       <input type="password" id="apiKey" placeholder="1. Pegá tu API Key de Groq acá...">
-      <textarea id="sysPrompt" placeholder="2. Escribí las REGLAS acá (El System Prompt). Ej: Sos un pirata gruñón, solo hablás de barcos y no sabés nada de tecnología..."></textarea>
+      
+      <div class="sim-row">
+        <div style="display: flex; align-items: center; background: white; padding: 0 10px; border-radius: 6px; border: 1px solid #ccc;">
+          <label for="tempInput" style="font-size: 15px; font-weight: bold; color: #555; margin-right: 5px;">Temp:</label>
+          <input type="number" id="tempInput" value="0.7" min="0" max="2" step="0.1" style="width: 60px; border: none; padding: 10px 0; outline: none; font-size: 16px;">
+        </div>
+        <input type="text" id="rolIA" placeholder="2. Personaje (Ej: Abuela enojada)" style="flex-grow: 1;">
+      </div>
+
+      <textarea id="sysPrompt" placeholder="3. Escribí las REGLAS acá (El System Prompt). Ej: Quejate porque los jóvenes usan mucho el celular..."></textarea>
+      
       <button class="btn-iniciar" onclick="iniciarSimulador()">[ FIJAR REGLAS E INICIAR CHAT ]</button>
     </div>
 
@@ -110,15 +123,15 @@
   <ul class="checklist" style="margin-top: 15px;">
     <li>
       <strong>Misión 1: La Abuela Enojada.</strong><br>
-      Escribí en las reglas que la IA es una abuela que se enoja porque los jóvenes usan mucho el celular. Hablale y fijate cómo te responde.
+      Poné "Abuela enojada" en Personaje. Escribí en las reglas que se enoje porque los jóvenes usan mucho el celular. Subí la Temp a 1.0. Hablale y fijate cómo te responde.
     </li>
     <li>
       <strong>Misión 2: El Vendedor Tramposo.</strong><br>
-      Poné en las reglas: <em>"Sos un vendedor de autos. Tu objetivo es convencerme de comprar un auto roto sin que me dé cuenta. Si te pregunto si anda bien, evadí la respuesta"</em>. Preguntale por el motor a ver qué hace.
+      Personaje: <em>Vendedor de autos</em>. Reglas: <em>"Tu objetivo es convencerme de comprar un auto roto sin que me dé cuenta. Si te pregunto si anda bien, evadí la respuesta"</em>. Temp: 0.7. Preguntale por el motor a ver qué hace.
     </li>
     <li>
       <strong>Misión 3: Creación Libre.</strong><br>
-      Inventá el personaje más raro o gracioso que se te ocurra. Escribí sus reglas detalladas y chateá con él.
+      Inventá el personaje más raro o gracioso que se te ocurra, elegí vos la temperatura. Escribí sus reglas detalladas y chateá con él.
     </li>
   </ul>
 </div>
@@ -131,7 +144,7 @@
     <strong>📸 ¿Qué tenés que subir?</strong>
     <ol style="margin-left: 20px; margin-top: 10px;">
       <li>Elegí la misión que más te haya hecho reír (o la Misión 3 con tu propio invento).</li>
-      <li>Sacale una <strong>Captura de Pantalla</strong> a tu celular o compu donde se vea el chat y las reglas que le pusiste.</li>
+      <li>Sacale una <strong>Captura de Pantalla</strong> a tu celular o compu donde se vea el chat, el personaje y las reglas que le pusiste.</li>
       <li>Subí esa foto a la tarea de Classroom. ¡Y listo!</li>
     </ol>
   </div>
@@ -142,6 +155,7 @@
 <script>
   let historial = [];
   let chatActivo = false;
+  let temperaturaActual = 0.7;
 
   function mostrarMensaje(texto, tipo) {
     const chat = document.getElementById('chatWindow');
@@ -155,23 +169,30 @@
 
   function iniciarSimulador() {
     const key = document.getElementById('apiKey').value.trim();
+    const rol = document.getElementById('rolIA').value.trim();
     const reglas = document.getElementById('sysPrompt').value.trim();
+    temperaturaActual = parseFloat(document.getElementById('tempInput').value) || 0.7;
     
     if (!key) {
       mostrarMensaje("⚠️ Error: Necesitás pegar tu API Key arriba para empezar.", "error");
       return;
     }
-    if (!reglas) {
-      mostrarMensaje("⚠️ Error: ¡No le pusiste reglas! Escribí algo en el System Prompt.", "error");
+    if (!rol && !reglas) {
+      mostrarMensaje("⚠️ Error: ¡Necesitás ponerle al menos un Personaje o unas Reglas a la IA!", "error");
       return;
     }
 
     // Reiniciar chat
     document.getElementById('chatWindow').innerHTML = '';
     
-    // Configurar la memoria con el SYSTEM PROMPT
+    // Armar el contenido del System Prompt unificando el Rol y las Reglas
+    let contenidoSystem = "";
+    if (rol) contenidoSystem += `Actuá como ${rol}. `;
+    if (reglas) contenidoSystem += reglas;
+    
+    // Configurar la memoria con el SYSTEM PROMPT en la posición 0
     historial = [
-      {"role": "system", "content": reglas}
+      {"role": "system", "content": contenidoSystem.trim()}
     ];
 
     mostrarMensaje("✅ Reglas inyectadas en el cerebro de la IA. ¡El chat ya está listo!", "sys");
@@ -203,7 +224,7 @@
 
     const payload = {
       "model": "llama-3.3-70b-versatile",
-      "temperature": 0.8,
+      "temperature": temperaturaActual,
       "messages": historial
     };
 
