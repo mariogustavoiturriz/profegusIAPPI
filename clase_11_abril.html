@@ -29,31 +29,24 @@
   
   .mensaje-amigable { background: #E8EAF6; border-left: 5px solid var(--vio); padding: 20px; color: #1A237E; border-radius: 8px; margin-bottom: 20px; font-size: 20px; }
   
-  /* --- ESTILOS DEL SIMULADOR --- */
   .sim-panel { border: 2px solid var(--vio); border-radius: 12px; overflow: hidden; background: #FFF; display: flex; flex-direction: column; height: 650px; }
   .sim-header { background: var(--vio); color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 18px; letter-spacing: 1px; }
   .sim-config { padding: 15px; background: #F0F4F8; border-bottom: 2px solid var(--bd); display: flex; flex-direction: column; gap: 10px; }
   .sim-config input[type="password"], .sim-config input[type="text"] { padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; outline: none; }
   .sim-config textarea { padding: 10px; border-radius: 6px; border: 1px solid var(--vio); font-size: 16px; resize: none; height: 80px; font-family: inherit; outline: none; }
-  
   .sim-row { display: flex; gap: 10px; align-items: center; }
-  
   .btn-iniciar { background: var(--vio); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.2s; }
   .btn-iniciar:hover { background: #283593; }
-  
   .chat-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #FFF; }
   .msg { max-width: 85%; padding: 12px 16px; border-radius: 12px; line-height: 1.4; font-size: 18px; }
   .msg-sys { align-self: center; background: #FFECB3; color: #F57F17; font-size: 14px; font-weight: bold; border-radius: 20px; }
   .msg-user { align-self: flex-end; background: var(--teal); color: white; border-bottom-right-radius: 2px; }
   .msg-ia { align-self: flex-start; background: #F5F5F5; border: 1px solid #E0E0E0; color: #333; border-bottom-left-radius: 2px; }
   .msg-error { align-self: center; background: #FFCDD2; color: #C62828; font-size: 16px; border-radius: 8px; font-weight: bold;}
-
   .sim-input { display: flex; padding: 15px; background: #F0F4F8; border-top: 1px solid var(--bd); }
   .sim-input input { flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; outline: none; }
   .sim-input button { background: var(--teal); color: white; border: none; padding: 0 20px; margin-left: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
   .sim-input button:disabled { background: #ccc; cursor: not-allowed; }
-  /* ------------------------------ */
-
   .checklist { list-style: none; margin-left: 0; }
   .checklist li { background: white; margin-bottom: 10px; padding: 15px; border-radius: 8px; border: 1px solid var(--bd); }
 </style>
@@ -71,12 +64,10 @@
 <div class="card c-teoria">
   <h2><span class="badge">!</span> ¡HOLA ABRIL! 👋</h2>
   <div class="mensaje-amigable">
-    La semana pasada renegamos un montón con los errores rojos de Python. ¡Es súper normal! A veces la programación agota y frustra un poco. 
-    <br><br>
-    Por eso, <strong>hoy vamos a dejar el código de lado</strong>. Hoy no vas a programar, vas a ser la <strong>Directora</strong>. Tu misión es darle órdenes a la IA usando un Simulador Especial.
+    Hoy tenemos algo distinto. <strong>No vas a programar</strong> — vas a ser la <strong>Directora</strong>. Tu misión es darle órdenes a la IA usando un Simulador Especial y ver cómo cambia su comportamiento según las instrucciones que le des.
     <br><br>
     <span style="display: block; background: #C5CAE9; padding: 15px; border-radius: 8px; font-size: 18px;">
-      💡 <strong>Un secreto:</strong> Esta aplicación web que vas a usar no es magia. ¡Está armada exactamente con el <strong>mismo código</strong> que vos misma programaste la semana pasada! En vez de usar la consola negra de texto en Colab, le pusimos un diseño con botones y colores, pero por detrás... ¡funciona exactamente igual a tu programa!
+      💡 <strong>Un secreto:</strong> Esta aplicación web que vas a usar no es magia. ¡Está armada exactamente con el <strong>mismo código</strong> que vos misma programaste en clases anteriores! En vez de usar la consola negra de texto en Colab, le pusimos un diseño con botones y colores, pero por detrás funciona exactamente igual.
     </span>
   </div>
 
@@ -191,15 +182,12 @@
       return;
     }
 
-    // Reiniciar chat
     document.getElementById('chatWindow').innerHTML = '';
     
-    // Armar el contenido del System Prompt unificando el Rol y las Reglas
     let contenidoSystem = "";
     if (rol) contenidoSystem += `Actuá como ${rol}. `;
     if (reglas) contenidoSystem += reglas;
     
-    // Configurar la memoria con el SYSTEM PROMPT en la posición 0
     historial = [
       {"role": "system", "content": contenidoSystem.trim()}
     ];
@@ -221,14 +209,11 @@
 
     if (!texto) return;
 
-    // Mostrar mensaje del usuario
     mostrarMensaje(texto, "user");
     inputEl.value = '';
 
-    // Guardar en memoria
     historial.push({"role": "user", "content": texto});
 
-    // Cartel de pensando
     const msgPensando = mostrarMensaje("Conectando con Groq...", "sys");
 
     const payload = {
@@ -262,7 +247,7 @@
     } catch (error) {
       if(msgPensando) msgPensando.remove();
       mostrarMensaje(`❌ Falló la conexión: ${error.message}`, "error");
-      historial.pop(); // Sacamos el mensaje del usuario porque falló
+      historial.pop();
     }
   }
 </script>
