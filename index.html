@@ -6,9 +6,9 @@
 <title>Taller de IA | Material de Abril</title>
 <style>
   :root {
-    --nav: #1A2C3A; --teal: #00949A; --amb: #D4873A; --gris: #F3F6F9; 
-    --bd: #C5D2DC; --txt: #2C3E50; --bco: #FFFFFF; --r: 12px;
-    --vio: #3D5A99; --tp: #8E24AA;
+    --nav: #1A2C3A; --teal: #00949A; --amb: #D4873A; 
+    --vio: #3D5A99; --gris: #F3F6F9; --bd: #C5D2DC; --txt: #2C3E50;
+    --bco: #FFFFFF; --r: 12px; --tp: #8E24AA; --rojo: #C62828;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
   
@@ -17,7 +17,7 @@
     color: var(--txt); 
     line-height: 1.6; 
     padding-bottom: 60px; 
-    font-size: 20px; 
+    font-size: 20px; /* Letra más grande para accesibilidad */
   }
   
   header { 
@@ -27,21 +27,30 @@
     text-align: center;
     border-bottom: 6px solid var(--amb); 
   }
-  header h1 { font-size: 32px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  header h1 { font-size: 34px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
   header p { font-size: 22px; opacity: 0.9; max-width: 600px; margin: 0 auto; font-weight: bold; color: #FFF8E1; }
   
-  .container { width: 95%; max-width: 1400px; margin: 40px auto; padding: 0 15px; }
+  .container { width: 95%; max-width: 1200px; margin: 40px auto; }
   
+  .section-title {
+    font-size: 28px;
+    color: var(--nav);
+    margin: 40px 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--bd);
+    text-transform: uppercase;
+  }
+
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 30px;
   }
   
   .card { 
     background: var(--bco); 
     border-radius: var(--r); 
-    padding: 35px; 
+    padding: 30px; 
     box-shadow: 0 6px 15px rgba(0,0,0,.1); 
     border-top: 8px solid var(--bd);
     text-decoration: none;
@@ -58,64 +67,67 @@
   
   /* Estados de las tarjetas */
   .c-pasada { border-top-color: #4A6080; background: #FAFBFC; }
-  .c-actual { border-top-color: var(--teal); background: #F4FAFC; }
+  .c-actual { border-top-color: var(--teal); background: #F0FAFA; }
   .c-futura { border-top-color: var(--amb); }
+  .c-tp-nuevo { border-top-color: var(--rojo); background: #FFEBEE; }
   
-  .clase-num { 
+  .badge-date { 
     font-size: 16px; 
     font-weight: bold; 
     color: #666; 
     text-transform: uppercase; 
     margin-bottom: 10px;
+    display: block;
     letter-spacing: 1px;
   }
   
-  .c-actual .clase-num { color: var(--teal); }
-  .c-futura .clase-num { color: var(--amb); }
+  .c-actual .badge-date { color: var(--teal); }
+  .c-futura .badge-date { color: var(--amb); }
+  .c-tp-nuevo .badge-date { color: var(--rojo); }
   
   .card h2 { 
     color: var(--nav); 
-    font-size: 28px; 
+    font-size: 26px; 
     margin-bottom: 15px; 
-    line-height: 1.2;
+    line-height: 1.3;
   }
   
   .card p { 
     font-size: 20px; 
     color: #444; 
     flex-grow: 1;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
   }
   
   .btn {
-    display: inline-block;
+    display: block;
     padding: 15px 20px;
     border-radius: 10px;
     font-weight: bold;
     text-align: center;
     font-size: 20px;
-    transition: background 0.2s;
+    transition: background 0.3s;
+    color: white;
   }
   
-  .c-pasada .btn { background: #E1E8EE; color: #4A6080; }
-  .c-actual .btn { background: var(--teal); color: white; }
-  .c-futura .btn { background: var(--amb); color: white; }
+  .c-pasada .btn { background: #4A6080; }
+  .c-pasada .btn:hover { background: #2C3E50; }
+  
+  .c-actual .btn { background: var(--teal); }
+  .c-actual .btn:hover { background: #007B80; }
+  
+  .c-futura .btn { background: var(--amb); }
+  
+  .c-tp-nuevo .btn { background: var(--rojo); }
+  .c-tp-nuevo .btn:hover { background: #B71C1C; }
   
   /* Botón bloqueado */
-  .btn.locked { background: #E0E0E0 !important; color: #888 !important; border: 1px solid #ccc; cursor: not-allowed; }
-  
-  .section-title {
-    font-size: 28px;
-    color: var(--nav);
-    margin: 50px 0 25px 0;
-    padding-bottom: 10px;
-    border-bottom: 3px solid var(--bd);
-    text-transform: uppercase;
-  }
+  .locked { background: #E0E0E0 !important; color: #888 !important; border: 1px solid #ccc !important; cursor: not-allowed; box-shadow: none !important; }
+  .card-locked { pointer-events: none; opacity: 0.8; }
 
   @media (max-width: 600px) {
     .grid { grid-template-columns: 1fr; }
-    header h1 { font-size: 26px; }
+    header h1 { font-size: 28px; }
   }
 </style>
 </head>
@@ -128,88 +140,113 @@
 
 <div class="container">
 
-  <h2 class="section-title">Clases de la Semana</h2>
+  <h2 class="section-title">Próximas Clases y Evaluaciones</h2>
   <div class="grid">
-    <!-- CLASE 10 -->
-    <a href="clase_10_abril.html" class="card c-futura" data-unlock="2026-05-04T09:45:00">
-      <div class="clase-num">Lunes 04/05 • Clase 10</div>
-      <h2>La IA que recuerda</h2>
-      <p>El problema de la memoria y cómo solucionarlo usando listas para guardar el historial de la conversación.</p>
-      <div class="btn">Abrir Clase 10</div>
+
+    <!-- CLASE 12 (Lunes) — habilita el lunes 11 a las 09:45 -->
+    <a href="clase_12_abril.html" class="card c-futura"
+       data-unlock="2026-05-11T09:45:00-03:00"
+       data-label="Abrir Clase">
+      <span class="badge-date">Lunes 11 de Mayo</span>
+      <h2>Clase 12: El juego y la memoria guardada</h2>
+      <p>Jugamos con la "IA Misteriosa" y usamos el nuevo botón de Guardar para exportar nuestra conversación.</p>
+      <div class="btn">Abrir Clase</div>
     </a>
 
-    <!-- CLASE 11 -->
-    <a href="clase_11_abril.html" class="card c-futura" data-unlock="2026-05-08T10:35:00">
-      <div class="clase-num">Viernes 08/05 • Clase 11</div>
-      <h2>Dale una personalidad</h2>
-      <p>Aprendemos qué es el System Prompt y le escribimos reglas y personalidad a tu propia IA.</p>
-      <div class="btn">Abrir Clase 11</div>
+    <!-- TP2 (Viernes) — habilita el viernes 15 a las 10:35 -->
+    <a href="tp2_abril.html" class="card c-futura"
+       data-unlock="2026-05-15T10:35:00-03:00"
+       data-label="Abrir Evaluación">
+      <span class="badge-date">Viernes 15 de Mayo</span>
+      <h2 style="color: var(--rojo);">Trabajo Práctico N° 2</h2>
+      <p>Evaluación integradora de la Unidad 3. Simulador de System Prompt, Misiones y Exportación.</p>
+      <div class="btn">Abrir Evaluación</div>
+    </a>
+
+  </div>
+
+  <h2 class="section-title">Unidad 3: NLP y Sistemas Expertos</h2>
+  <div class="grid">
+    
+    <a href="clase_11_abril.html" class="card c-pasada">
+      <span class="badge-date">Viernes 08 de Mayo</span>
+      <h2>Clase 11: Creadora de Personalidades</h2>
+      <p>Aprendimos qué es el System Prompt y usamos el Simulador Especial para darle reglas a tu propia IA.</p>
+      <div class="btn">Repasar Clase</div>
+    </a>
+
+    <a href="clase_10_abril.html" class="card c-pasada">
+      <span class="badge-date">Lunes 04 de Mayo</span>
+      <h2>Clase 10: La IA que recuerda</h2>
+      <p>El problema de la memoria y cómo solucionarlo usando listas para guardar el historial.</p>
+      <div class="btn">Repasar Clase</div>
     </a>
   </div>
 
-  <h2 class="section-title">Clases Anteriores</h2>
+  <h2 class="section-title">Unidades Anteriores</h2>
   <div class="grid">
+
     <!-- CLASE 8 -->
-    <a href="clase_8_abril.html" class="card c-pasada">
-      <div class="clase-num">Lunes 20/04 • Clase 8</div>
-      <h2>El Escudo Protector</h2>
-      <p>Mejoramos tu chatbot agregando un Escudo Protector para bloquear palabras y evaluamos tu trabajo con un Reporte QA.</p>
-      <div class="btn">Repasar Clase 8</div>
+    <a href="tp1_fase2_abril.html" class="card c-pasada">
+      <span class="badge-date">Lunes 20 de Abril</span>
+      <h2>Fase 2: Control de Calidad (QA)</h2>
+      <p>Evaluamos el trabajo de los compañeros haciendo el Test de Estrés como una verdadera Tester Profesional.</p>
+      <div class="btn">Repasar Clase</div>
     </a>
 
     <!-- CLASE 7 -->
-    <a href="clase_7_abril.html" class="card c-pasada" style="border-top-color: var(--tp);">
-      <div class="clase-num" style="color: var(--tp);">Viernes 17/04 • Clase 7</div>
+    <a href="Clase_7_tp1_abril.html" class="card c-pasada" style="border-top-color: var(--tp);">
+      <span class="badge-date" style="color: var(--tp);">Viernes 17 de Abril</span>
       <h2>Trabajo Práctico N° 1</h2>
-      <p>Llegó el momento de integrar todo. Analizamos un programa completo con inputs, conexión y manejo de errores.</p>
+      <p>Integramos todo. Analizamos el código de conexión, los inputs y los comentarios del programa.</p>
       <div class="btn" style="background: #FAF5FF; color: var(--tp); border: 2px solid var(--tp);">Repasar TP1</div>
     </a>
     
     <!-- CLASE 6 -->
     <a href="clase_6_abril.html" class="card c-pasada">
-      <div class="clase-num">Lunes 13/04 • Clase 6</div>
+      <span class="badge-date">Lunes 13 de Abril</span>
       <h2>El JSON y la Temperature</h2>
-      <p>Aprendemos a ver los tokens que gasta la IA y a controlar qué tan creativa es al responder.</p>
-      <div class="btn">Repasar Clase 6</div>
+      <p>Aprendimos a ver los tokens que gasta la IA y a controlar qué tan creativa es al responder.</p>
+      <div class="btn">Repasar Clase</div>
     </a>
 
     <!-- CLASE 5 -->
     <a href="clase_5_abril.html" class="card c-pasada">
-      <div class="clase-num">Viernes 10/04 • Clase 5</div>
+      <span class="badge-date">Viernes 10 de Abril</span>
       <h2>La Primera Llamada</h2>
-      <p>Cómo conectar Python con el cerebro de la IA usando una API Key.</p>
-      <div class="btn">Repasar Clase 5</div>
+      <p>Cómo conectar Python con el cerebro de la Inteligencia Artificial usando una API Key.</p>
+      <div class="btn">Repasar Clase</div>
     </a>
 
     <!-- CLASE 4 -->
     <a href="clase_4_abril.html" class="card c-pasada">
-      <div class="clase-num">Clase 4</div>
+      <span class="badge-date">Clase 4</span>
       <h2>F-Strings y Try/Except</h2>
-      <p>Armamos mensajes dinámicos y creamos un escudo para atrapar errores rojos.</p>
-      <div class="btn">Repasar Clase 4</div>
+      <p>Armamos mensajes dinámicos y creamos un escudo protector para atrapar errores rojos.</p>
+      <div class="btn">Repasar Clase</div>
     </a>
 
     <!-- CLASE 3 -->
     <a href="clase_3_abril.html" class="card c-pasada">
-      <div class="clase-num">Clase 3</div>
+      <span class="badge-date">Clase 3</span>
       <h2>Listas y Diccionarios</h2>
-      <p>Las colecciones de datos donde guardamos el historial y las fichas de información.</p>
-      <div class="btn">Repasar Clase 3</div>
+      <p>Las colecciones de datos donde guardamos la información y armamos el diccionario de nuestra película.</p>
+      <div class="btn">Repasar Clase</div>
     </a>
 
-    <!-- CLASES 1 y 2 INACTIVAS -->
-    <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
-      <div class="clase-num">Clase 2</div>
+    <!-- CLASES VIEJAS (Bloqueadas visualmente) -->
+    <a href="#" class="card c-pasada card-locked" style="opacity: 0.6;">
+      <span class="badge-date">Clase 2</span>
       <h2>El Agente Inteligente</h2>
       <p>Sensor, Programa y Actuador: las tres partes fundamentales de la IA.</p>
-      <div class="btn">No disponible</div>
+      <div class="btn locked">Clase Archivada</div>
     </a>
 
-    <a href="#" class="card c-pasada" style="opacity: 0.7; pointer-events: none;">
-      <div class="clase-num">Clase 1</div>
+    <a href="#" class="card c-pasada card-locked" style="opacity: 0.6;">
+      <span class="badge-date">Clase 1</span>
       <h2>El Desafío Imposible</h2>
       <p>Vimos cómo la IA aprende de fotos usando Teachable Machine.</p>
-      <div class="btn">No disponible</div>
+      <div class="btn locked">Clase Archivada</div>
     </a>
 
   </div>
@@ -219,44 +256,51 @@
 <script>
   let modoProfe = false;
 
-  function lockClasses() {
-    if (modoProfe) return; // Si el profe desbloqueó todo, no hacemos nada
-    
+  function lockClassesWithTime() {
+    if (modoProfe) return; // Si el profe desbloqueó todo, ignoramos la hora
+
     const now = new Date();
-    const cards = document.querySelectorAll('.card[data-unlock]');
-    
-    cards.forEach(card => {
-      const unlockTimeStr = card.getAttribute('data-unlock');
-      const unlockDate = new Date(unlockTimeStr);
-      const btn = card.querySelector('.btn');
-      
-      if (now < unlockDate) {
+    document.querySelectorAll('.card[data-unlock]').forEach(card => {
+      const unlockTime = new Date(card.getAttribute('data-unlock'));
+      const btn        = card.querySelector('.btn');
+      const label      = card.getAttribute('data-label') || 'Abrir';
+      const href       = card.getAttribute('data-href-orig') || card.getAttribute('href');
+
+      // Guardar href original la primera vez
+      if (!card.getAttribute('data-href-orig') && href && href !== '#') {
+        card.setAttribute('data-href-orig', href);
+      }
+
+      if (now < unlockTime) {
         // Aún no es la hora, bloqueamos
-        card.style.pointerEvents = 'none';
-        card.style.opacity = '0.7';
+        card.classList.add('card-locked');
+        card.removeAttribute('href');
         btn.classList.add('locked');
+        const d = String(unlockTime.getDate()).padStart(2,'0');
+        const m = String(unlockTime.getMonth()+1).padStart(2,'0');
+        const h = String(unlockTime.getHours()).padStart(2,'0');
+        const mn = String(unlockTime.getMinutes()).padStart(2,'0');
+        btn.textContent = `🔒 Se habilita el ${d}/${m} a las ${h}:${mn}`;
         
-        // Formatear la fecha para mostrar en el botón
-        const dia = String(unlockDate.getDate()).padStart(2, '0');
-        const mes = String(unlockDate.getMonth() + 1).padStart(2, '0');
-        const hora = String(unlockDate.getHours()).padStart(2, '0');
-        const min = String(unlockDate.getMinutes()).padStart(2, '0');
-        
-        btn.innerHTML = `🔒 Bloqueada hasta el ${dia}/${mes} a las ${hora}:${min} hs`;
-        btn.style.background = '#E0E0E0';
-        btn.style.color = '#888';
+        // Volvemos a color de clase "futura"
+        card.classList.remove('c-actual');
+        card.classList.remove('c-tp-nuevo');
+        card.classList.add('c-futura');
       } else {
-        // Ya pasó la hora, desbloqueamos automáticamente
-        card.style.pointerEvents = 'auto';
-        card.style.opacity = '1';
+        // Ya es la hora, desbloqueamos
+        card.classList.remove('card-locked');
+        const orig = card.getAttribute('data-href-orig');
+        if (orig) card.setAttribute('href', orig);
         btn.classList.remove('locked');
-        btn.innerHTML = 'Abrir Clase';
-        btn.style.background = ''; // Resetea al color original de CSS
-        btn.style.color = '';
+        btn.innerHTML = label;
         
-        // Cambiamos el color de la tarjeta para que se vea como actual
+        // Ponemos el color específico
         card.classList.remove('c-futura');
-        card.classList.add('c-actual');
+        if (label === 'Abrir Evaluación') {
+          card.classList.add('c-tp-nuevo');
+        } else {
+          card.classList.add('c-actual');
+        }
       }
     });
   }
@@ -267,30 +311,41 @@
       modoProfe = !modoProfe; // Activar o desactivar
       
       if (modoProfe) {
-        const cards = document.querySelectorAll('.card[data-unlock]');
-        cards.forEach(card => {
+        document.querySelectorAll('.card[data-unlock]').forEach(card => {
           const btn = card.querySelector('.btn');
-          card.style.pointerEvents = 'auto';
-          card.style.opacity = '1';
+          const orig = card.getAttribute('data-href-orig');
+          const label = card.getAttribute('data-label');
+          
+          card.classList.remove('card-locked');
+          if (orig) card.setAttribute('href', orig);
+          
           btn.classList.remove('locked');
           btn.innerHTML = '🔓 Desbloqueada (Modo Profe)';
-          btn.style.background = '#8E24AA'; // Violeta para indicar que es bypass
+          btn.style.background = '#8E24AA'; // Violeta para indicar que forzaste el acceso
           btn.style.color = 'white';
+          btn.style.borderColor = '#8E24AA';
           
           card.classList.remove('c-futura');
-          card.classList.add('c-actual');
+          if (label === 'Abrir Evaluación') {
+            card.classList.add('c-tp-nuevo');
+          } else {
+            card.classList.add('c-actual');
+          }
         });
       } else {
-        // Si lo vuelve a tocar, vuelve a la normalidad
-        lockClasses();
+        // Si vuelve a tocar el atajo, le sacamos los estilos en línea y volvemos a evaluar el reloj
+        document.querySelectorAll('.card[data-unlock] .btn').forEach(btn => {
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+        });
+        lockClassesWithTime();
       }
     }
   });
 
-  // Ejecutamos la función apenas carga la página
-  window.onload = lockClasses;
-  // Revisamos cada 30 segundos por si se hacen las 09:45 estando en la página
-  setInterval(lockClasses, 30000); 
+  window.onload   = lockClassesWithTime;
+  setInterval(lockClassesWithTime, 30000); // Chequea cada 30 segundos
 </script>
 
 </body>
