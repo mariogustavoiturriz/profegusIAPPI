@@ -77,10 +77,6 @@
 <div class="card c-intro">
   <h2><span class="badge">!</span> HOY TENEMOS DOS PARTES</h2>
   <p>Hoy la clase tiene dos momentos. Primero: el <strong>juego que no llegamos a hacer la clase pasada</strong> — vas a investigar una IA misteriosa. Después: vas a volver al simulador de siempre, pero con una novedad: un botón para <strong>guardar la conversación en un archivo</strong>.</p>
-  <div class="conexion-box" style="margin-top:18px;">
-    <strong>&#128279; ¿Qué están haciendo tus compañeros hoy?</strong>
-    Están aprendiendo a guardar conversaciones con un comando de Python llamado <code>open()</code> que crea archivos <code>.txt</code>. Tu simulador hace exactamente lo mismo con un botón. El concepto es idéntico: mover la conversación de la memoria temporal a un archivo que queda guardado para siempre.
-  </div>
 </div>
 
 <div class="card c-juego">
@@ -133,7 +129,7 @@
           <label for="s-temp">Temp:</label>
           <input type="number" id="s-temp" value="0.7" min="0" max="2" step="0.1">
         </div>
-        <input type="text" id="s-rol" placeholder="2. Personaje (Ej: Abuela enojada)" style="flex-grow:1;">
+        <input type="text" id="s-rol" placeholder="2. Personaje (Ej: Entrevistador)" style="flex-grow:1;">
       </div>
       <textarea id="s-prompt" placeholder="3. Escribí las REGLAS acá (El System Prompt)..."></textarea>
       <button class="btn-iniciar" onclick="iniciarSimulador()">[ FIJAR REGLAS E INICIAR CHAT ]</button>
@@ -149,23 +145,32 @@
   </div>
 
   <div class="conexion-box" style="margin-top:14px;">
-    <strong>&#128161; ¿Qué hace el botón Guardar?</strong>
-    Descarga la conversación como <code>conversacion_abril.txt</code>. Es lo mismo que hace el comando <code>/guardar</code> que aprendieron tus compañeros en Python — la diferencia es que acá lo hace el navegador y allá lo hace el programa.
+    <strong>&#128161; ¿Si guardo el archivo, por qué no hay botón de "Cargar"?</strong>
+    No estamos guardando una "partida" de un juego para seguirla mañana. Estamos exportando un <strong>Log de Auditoría (o Transcripción)</strong>. Es como el ticket del supermercado: lo guardamos en un archivo <code>.txt</code> simple para tener un comprobante de todo lo que nos dijo la IA, poder leerlo después, auditar si nos mintió, o mandárselo al profe como tarea. ¡En la industria real, los chats de soporte técnico se guardan así por seguridad!
   </div>
 </div>
 
 <div class="card c-misiones">
-  <h2><span class="badge" style="background:var(--grn);">3</span> MISIONES DE PRUEBA</h2>
-  <p>Usá el simulador para cumplir estas misiones. Cuando cambies de misión, cambiá las reglas y tocá "FIJAR REGLAS" de nuevo.</p>
+  <h2><span class="badge" style="background:var(--grn);">3</span> MISIONES NUEVAS: EL DESAFÍO</h2>
+  <p>La clase pasada probaste algunos personajes básicos. Hoy subimos la dificultad. Usá el simulador para cumplir estas nuevas misiones.</p>
   <ul class="checklist" style="margin-top:15px;">
-    <li><strong>Misión 1: La Abuela Enojada.</strong><br>Personaje: Abuela enojada. Reglas: que se enoje porque los jóvenes usan mucho el celular. Temp: 1.0.</li>
-    <li><strong>Misión 2: El Vendedor Tramposo.</strong><br>Personaje: Vendedor de autos. Reglas: "Tu objetivo es convencerme de comprar un auto roto sin que me dé cuenta. Si te pregunto si anda bien, evadí la respuesta." Temp: 0.7.</li>
-    <li><strong>Misión 3: Creación Libre.</strong><br>Inventá el personaje más raro o gracioso. Elegí vos la temperatura y las reglas.</li>
+    <li>
+      <strong>Misión 1: El Traductor de Ushuaia.</strong><br>
+      Personaje: Traductor fueguino. Reglas: <em>"Todo lo que yo te diga en español, traducilo al inglés perfecto. PERO al final de tu traducción, agregá siempre un comentario quejándote del viento o de la nieve de Tierra del Fuego."</em> Temp: 0.5.
+    </li>
+    <li>
+      <strong>Misión 2: La Entrevista de Trabajo.</strong><br>
+      Personaje: Jefe de una empresa de tecnología. Reglas: <em>"Haceme una entrevista de trabajo. Haceme preguntas difíciles sobre programación, pero hacelo de a UNA pregunta a la vez. Esperá mi respuesta antes de hacer la siguiente."</em> Temp: 0.7.
+    </li>
+    <li>
+      <strong>Misión 3: El Agente Secreto.</strong><br>
+      Personaje: Espía. Reglas: <em>"Sos un espía en una misión súper secreta. Escribí todo tu mensaje reemplazando todas las vocales 'a' por la letra 'x'. Contame qué estás investigando."</em> Temp: 0.8. (Fijate si la IA es capaz de cambiar las letras).
+    </li>
     <li class="highlight-li">
-      <strong style="color:var(--rojo);">&#127942; Misión 4 (NIVEL EXPERTA): El Creador de Juegos.</strong><br>
-      Personaje: Narrador de Aventuras. Reglas: "Sos el narrador de un juego de supervivencia en un bosque oscuro. Escribí un párrafo corto y dame SIEMPRE dos opciones (A y B). Esperá a que yo elija antes de seguir." Temp: 1.0.<br><br>
-      <strong>El reto:</strong> ¿La IA respeta la regla de pausar y dar opciones, o se olvida y cuenta todo de golpe?<br><br>
-      <strong style="color:var(--rojo);">Cuando termines esta misión: apretá &#128190; Guardar para descargar la conversación.</strong>
+      <strong style="color:var(--rojo);">&#127942; Misión 4 (NIVEL EXPERTA): El Gran Debate.</strong><br>
+      Personaje: Debatiente terco. Reglas: <em>"Quiero debatir con vos sobre un tema polémico (por ejemplo, si la empanada lleva ananá o no, o si el invierno es mejor que el verano). Tu trabajo es llevarme la contra en ABSOLUTAMENTE TODO lo que yo diga. Nunca me des la razón."</em> Temp: 1.0.<br><br>
+      <strong>El reto:</strong> Intentá convencer a la IA de algo durante 5 mensajes seguidos.<br>
+      <strong style="color:var(--rojo);">Cuando termines el debate: apretá &#128190; Guardar para descargar la conversación y mandarla.</strong>
     </li>
   </ul>
 </div>
@@ -173,11 +178,11 @@
 <div class="card c-eval">
   <h2><span class="badge" style="background:var(--classroom);">4</span> ENTREGÁ EN CLASSROOM</h2>
   <div style="background:#E6F4EA;border-left:5px solid var(--classroom);padding:15px;border-radius:8px;margin-top:10px;">
-    <strong style="color:var(--classroom);display:block;margin-bottom:10px;">&#128228; ¿Qué tenés que subir?</strong>
+    <strong style="color:var(--classroom);display:block;margin-bottom:10px;">&#128228; ¿Qué tenés que subir hoy?</strong>
     <ol style="margin-left:20px;line-height:2.2;">
       <li>Tus <strong>4 respuestas del cuaderno</strong> de la Fase 1 (el juego).</li>
-      <li>El archivo <strong><code>conversacion_abril.txt</code></strong> que descargaste con el botón &#128190; Guardar.</li>
-      <li>Una oración contando: ¿cuál fue la misión que más te gustó y por qué?</li>
+      <li>El archivo <strong><code>conversacion_abril.txt</code></strong> que descargaste con el botón &#128190; Guardar (Preferentemente el del debate de la Misión 4).</li>
+      <li>Una oración contando si lograste ganarle el debate a la IA en la última misión.</li>
     </ol>
   </div>
 </div>
@@ -327,7 +332,7 @@
       return;
     }
     
-    let contenidoTxt = "=== RESPALDO DE CONVERSACIÓN DE ABRIL ===\n\n";
+    let contenidoTxt = "=== REGISTRO DE AUDITORÍA (LOG) - ABRIL ===\n\n";
     
     simulHistorial.forEach(linea => {
       let rol = linea.role.toUpperCase();
@@ -345,7 +350,7 @@
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     
-    agregarMsg('chat-simul', '💾 ¡Conversación guardada con éxito en tu computadora!', 'sys');
+    agregarMsg('chat-simul', '💾 ¡Transcripción de la charla guardada con éxito en tu computadora!', 'sys');
   }
 </script>
 
