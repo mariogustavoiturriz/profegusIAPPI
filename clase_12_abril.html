@@ -85,12 +85,12 @@
 
 <div class="card c-juego">
   <h2><span class="badge" style="background:var(--vio);">1</span> EL JUEGO DE LA IA MISTERIOSA</h2>
-  <p style="margin-bottom:16px;">El profe configuró una IA con una <strong>personalidad secreta</strong>. Tu misión: descubrir qué instrucciones tiene solo hablando con ella.</p>
+  <p style="margin-bottom:16px;">La DAI configuró una IA con una <strong>personalidad secreta</strong>. Tu misión: descubrir qué instrucciones tiene solo hablando con ella.</p>
 
   <div id="setup-juego">
-    <h4>&#128295; Configuración del docente</h4>
+    <h4>&#128295; Configuración del docente (Edith)</h4>
     <input type="password" id="j-key" placeholder="API Key de Groq (gsk_...)">
-    <textarea id="j-prompt" placeholder="System prompt de la IA misteriosa...">Sos una guía turística llamada Mara, especialista en Tierra del Fuego. Hablás con entusiasmo y usás emojis. Siempre mencionás datos curiosos sobre Ushuaia. Si te preguntan algo fuera del turismo, lo redirigís amablemente.</textarea>
+    <textarea id="j-prompt" placeholder="Escribí un System Prompt secreto acá, o dejalo vacío para usar el personaje sorpresa del profe..."></textarea>
     <button id="btn-activar-juego" onclick="activarJuego()">&#9989; ACTIVAR JUEGO PARA ABRIL</button>
   </div>
 
@@ -115,14 +115,14 @@
     <div class="pregunta-card"><span class="num">Pregunta 3</span>¿Cómo habla — seria, divertida, formal? Describí su estilo.</div>
     <div class="pregunta-card"><span class="num">Pregunta 4</span>¿Qué instrucciones crees que le escribieron? Intentá reconstruirlas.</div>
     <div style="background:#FFF3E0;border-left:4px solid var(--amb);border-radius:8px;padding:13px 17px;margin-top:10px;font-size:18px;">
-      &#127919; <strong>La revelación:</strong> cuando termines de investigar, el profe te muestra el system prompt real. ¿Acertaste?
+      &#127919; <strong>La revelación:</strong> cuando termines de investigar, preguntale a Edith cuál era el system prompt real. ¿Acertaste?
     </div>
   </div>
 </div>
 
 <div class="card c-simul">
   <h2><span class="badge" style="background:var(--amb);">2</span> SIMULADOR — AHORA CON GUARDAR &#128190;</h2>
-  <p style="margin-bottom:14px;">El mismo simulador de la clase pasada, con una novedad: el botón <strong>&#128190; Guardar</strong> descarga toda la conversación como un archivo <code>conversacion_abril.txt</code> en tu computadora.</p>
+  <p style="margin-bottom:14px;">El mismo simulador de la clase pasada, con una novedad: el botón <strong>&#128190; Guardar</strong> descarga toda la conversación como un archivo <code>conversacion_abril.txt</code> en tu computadora o celular.</p>
 
   <div class="sim-panel sim-panel-amb">
     <div class="sim-header sim-header-amb">&#129504; PANEL DE CONTROL DE LA IA</div>
@@ -194,7 +194,11 @@
     var prompt = document.getElementById('j-prompt').value.trim();
     
     if(!key) { alert("Necesitás la API Key."); return; }
-    if(!prompt) { alert("Escribí el system prompt misterioso."); return; }
+    
+    // Si Edith lo deja vacío, usamos el personaje secreto del profe por defecto
+    if(!prompt) { 
+      prompt = "Sos una guía turística llamada Mara, especialista en Tierra del Fuego. Hablás con entusiasmo y usás emojis. Siempre mencionás datos curiosos sobre Ushuaia. Si te preguntan algo fuera del turismo, lo redirigís amablemente."; 
+    }
     
     juegoKey = key;
     juegoHistorial = [{role: "system", content: prompt}];
