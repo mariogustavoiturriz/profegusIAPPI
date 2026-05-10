@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de IA · Clase 12 (Abril)</title>
+<style>
+  :root {
+    --nav: #1A2C3A; --teal: #00949A; --grn: #2A6049; --amb: #D4873A;
+    --vio: #3D5A99; --gris: #F3F6F9; --bd: #C5D2DC; --txt: #2C3E50;
+    --bco: #FFFFFF; --r: 12px; --rojo: #C62828; --classroom: #137333;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #EEF3F7; color: var(--txt); line-height: 1.6; font-size: 20px; padding: 15px 0 40px 0; }
+  header { background: var(--nav); color: var(--bco); padding: 25px 20px; border-bottom: 5px solid var(--teal); }
+  header h1 { font-size: 28px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+  header p { font-size: 18px; opacity: 0.9; }
+  .container { width: 95%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+  .back-btn { display: inline-block; margin-top: 20px; margin-bottom: 10px; padding: 10px 20px; background: var(--bco); color: var(--nav); text-decoration: none; font-weight: bold; border-radius: 8px; border: 2px solid var(--bd); }
+  .card { background: var(--bco); border-radius: var(--r); padding: 30px; margin-bottom: 30px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); border-left: 6px solid var(--bd); }
+  .c-intro    { border-left-color: var(--teal); }
+  .c-juego    { border-left-color: var(--vio); background: #FAFAFF; padding: 20px; }
+  .c-simul    { border-left-color: var(--amb); background: #FFFBF5; padding: 20px; }
+  .c-misiones { border-left-color: var(--grn); background: #F5FAF7; }
+  .c-eval     { border-left-color: var(--classroom); background: #F6FEF8; }
+  h2 { color: var(--nav); font-size: 24px; margin-bottom: 15px; text-transform: uppercase; border-bottom: 2px solid var(--gris); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .badge { background: var(--nav); color: var(--bco); padding: 5px 12px; border-radius: 6px; font-size: 18px; font-weight: bold; }
+  #setup-juego { background: #0F1E2A; border-radius: var(--r); padding: 20px; margin-bottom: 15px; }
+  #setup-juego h4 { color: #A8D5B5; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; }
+  #setup-juego input, #setup-juego textarea { width: 100%; background: #000; color: #00CC44; border: 1px solid #00CC44; border-radius: 6px; padding: 9px 12px; font-family: 'Courier New', monospace; font-size: 15px; outline: none; margin-bottom: 8px; }
+  #setup-juego textarea { min-height: 90px; resize: vertical; }
+  #setup-juego input::placeholder, #setup-juego textarea::placeholder { color: #005515; }
+  #btn-activar-juego { width: 100%; background: #00CC44; color: #000; border: none; border-radius: 6px; padding: 11px; font-weight: bold; font-size: 16px; cursor: pointer; }
+  .sim-panel { border: 2px solid var(--vio); border-radius: 12px; overflow: hidden; background: #FFF; display: flex; flex-direction: column; height: 500px; }
+  .sim-panel-amb { border-color: var(--amb); height: 580px; }
+  .sim-header { background: var(--vio); color: white; padding: 13px 18px; font-weight: bold; font-size: 18px; letter-spacing: 1px; display: flex; justify-content: space-between; align-items: center; }
+  .sim-header-amb { background: var(--amb); }
+  .chat-box { flex-grow: 1; padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; background: #FFF; }
+  .msg { max-width: 85%; padding: 11px 15px; border-radius: 12px; line-height: 1.4; font-size: 18px; }
+  .msg-sys   { align-self: center; background: #FFECB3; color: #F57F17; font-size: 14px; font-weight: bold; border-radius: 20px; padding: 8px 15px; text-align: center; }
+  .msg-user  { align-self: flex-end; background: var(--teal); color: white; border-bottom-right-radius: 2px; }
+  .msg-ia    { align-self: flex-start; background: #F5F5F5; border: 1px solid #E0E0E0; color: #333; border-bottom-left-radius: 2px; }
+  .msg-error { align-self: center; background: #FFCDD2; color: #C62828; font-size: 16px; border-radius: 8px; font-weight: bold; padding: 8px 15px; text-align: center; }
+  .sim-input { display: flex; padding: 12px 14px; background: #F0F4F8; border-top: 1px solid var(--bd); gap: 8px; }
+  .sim-input input { flex-grow: 1; padding: 11px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; outline: none; }
+  .btn-enviar  { background: var(--teal); color: white; border: none; padding: 0 18px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+  .btn-enviar:disabled { background: #ccc; cursor: not-allowed; }
+  .btn-guardar { background: var(--grn); color: white; border: none; padding: 0 14px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; white-space: nowrap; }
+  .btn-guardar:hover { background: #1B5E20; }
+  .sim-config { padding: 14px; background: #F0F4F8; border-bottom: 2px solid var(--bd); display: flex; flex-direction: column; gap: 9px; }
+  .sim-config input[type="password"], .sim-config input[type="text"] { padding: 9px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; outline: none; }
+  .sim-config textarea { padding: 9px; border-radius: 6px; border: 1px solid var(--vio); font-size: 16px; resize: none; height: 70px; font-family: inherit; outline: none; }
+  .sim-row { display: flex; gap: 9px; align-items: center; }
+  .btn-iniciar { background: var(--vio); color: white; border: none; padding: 11px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.2s; }
+  .btn-iniciar:hover { background: #283593; }
+  .temp-wrap { display: flex; align-items: center; background: white; padding: 0 10px; border-radius: 6px; border: 1px solid #ccc; }
+  .temp-wrap label { font-size: 15px; font-weight: bold; color: #555; margin-right: 5px; }
+  .temp-wrap input { width: 58px; border: none; padding: 9px 0; outline: none; font-size: 16px; }
+  .checklist { list-style: none; }
+  .checklist li { background: white; margin-bottom: 10px; padding: 15px; border-radius: 8px; border: 1px solid var(--bd); }
+  .highlight-li { border: 2px dashed var(--rojo) !important; background: #FFEBEE !important; }
+  .conexion-box { background: #E8F4F8; border-left: 5px solid var(--teal); border-radius: 8px; padding: 15px 18px; margin: 15px 0; font-size: 18px; }
+  .conexion-box strong { color: var(--teal); display: block; margin-bottom: 8px; font-size: 19px; }
+  .pregunta-card { background: var(--gris); border-left: 4px solid var(--vio); border-radius: 8px; padding: 15px 18px; margin-bottom: 11px; }
+  .pregunta-card .num { color: var(--vio); font-weight: bold; display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>CLASE 12: EL JUEGO Y LA MEMORIA GUARDADA</h1>
+  <p>Taller de IA | Material Práctico - Abril Oreste | Lunes</p>
+</header>
+
+<div class="container">
+<a href="index_abril.html" class="back-btn">&#8592; Volver al Inicio</a>
+
+<div class="card c-intro">
+  <h2><span class="badge">!</span> HOY TENEMOS DOS PARTES</h2>
+  <p>Hoy la clase tiene dos momentos. Primero: el <strong>juego que no llegamos a hacer la clase pasada</strong> — vas a investigar una IA misteriosa. Después: vas a volver al simulador de siempre, pero con una novedad: un botón para <strong>guardar la conversación en un archivo</strong>.</p>
+  <div class="conexion-box" style="margin-top:18px;">
+    <strong>&#128279; ¿Qué están haciendo tus compañeros hoy?</strong>
+    Están aprendiendo a guardar conversaciones con un comando de Python llamado <code>open()</code> que crea archivos <code>.txt</code>. Tu simulador hace exactamente lo mismo con un botón. El concepto es idéntico: mover la conversación de la memoria temporal a un archivo que queda guardado para siempre.
+  </div>
+</div>
+
+<div class="card c-juego">
+  <h2><span class="badge" style="background:var(--vio);">1</span> EL JUEGO DE LA IA MISTERIOSA</h2>
+  <p style="margin-bottom:16px;">El profe configuró una IA con una <strong>personalidad secreta</strong>. Tu misión: descubrir qué instrucciones tiene solo hablando con ella.</p>
+
+  <div id="setup-juego">
+    <h4>&#128295; Configuración del docente</h4>
+    <input type="password" id="j-key" placeholder="API Key de Groq (gsk_...)">
+    <textarea id="j-prompt" placeholder="System prompt de la IA misteriosa...">Sos una guía turística llamada Mara, especialista en Tierra del Fuego. Hablás con entusiasmo y usás emojis. Siempre mencionás datos curiosos sobre Ushuaia. Si te preguntan algo fuera del turismo, lo redirigís amablemente.</textarea>
+    <button id="btn-activar-juego" onclick="activarJuego()">&#9989; ACTIVAR JUEGO PARA ABRIL</button>
+  </div>
+
+  <div class="sim-panel" id="panel-juego" style="display:none;">
+    <div class="sim-header">
+      <span>&#128373;&#65039; IA MISTERIOSA</span>
+      <span style="font-size:14px;opacity:.8;">Investigá quién es</span>
+    </div>
+    <div class="chat-box" id="chat-juego">
+      <div class="msg msg-sys">La IA ya está configurada. ¡Empezá a hablarle!</div>
+    </div>
+    <div class="sim-input">
+      <input type="text" id="j-input" placeholder="Preguntale algo...">
+      <button class="btn-enviar" onclick="enviarJuego()">Enviar</button>
+    </div>
+  </div>
+
+  <div id="preguntas-juego" style="display:none; margin-top:20px;">
+    <p style="margin-bottom:13px; font-weight:bold;">&#128211; Mientras charlás, anotá en tu cuaderno:</p>
+    <div class="pregunta-card"><span class="num">Pregunta 1</span>¿Quién creés que es esta IA? ¿Qué personalidad tiene?</div>
+    <div class="pregunta-card"><span class="num">Pregunta 2</span>¿Sobre qué temas sabe hablar bien? ¿Hay algo que no quiso o no pudo responder?</div>
+    <div class="pregunta-card"><span class="num">Pregunta 3</span>¿Cómo habla — seria, divertida, formal? Describí su estilo.</div>
+    <div class="pregunta-card"><span class="num">Pregunta 4</span>¿Qué instrucciones crees que le escribieron? Intentá reconstruirlas.</div>
+    <div style="background:#FFF3E0;border-left:4px solid var(--amb);border-radius:8px;padding:13px 17px;margin-top:10px;font-size:18px;">
+      &#127919; <strong>La revelación:</strong> cuando termines de investigar, el profe te muestra el system prompt real. ¿Acertaste?
+    </div>
+  </div>
+</div>
+
+<div class="card c-simul">
+  <h2><span class="badge" style="background:var(--amb);">2</span> SIMULADOR — AHORA CON GUARDAR &#128190;</h2>
+  <p style="margin-bottom:14px;">El mismo simulador de la clase pasada, con una novedad: el botón <strong>&#128190; Guardar</strong> descarga toda la conversación como un archivo <code>conversacion_abril.txt</code> en tu computadora.</p>
+
+  <div class="sim-panel sim-panel-amb">
+    <div class="sim-header sim-header-amb">&#129504; PANEL DE CONTROL DE LA IA</div>
+    <div class="sim-config">
+      <input type="password" id="s-key" placeholder="1. Pegá tu API Key de Groq acá...">
+      <div class="sim-row">
+        <div class="temp-wrap">
+          <label for="s-temp">Temp:</label>
+          <input type="number" id="s-temp" value="0.7" min="0" max="2" step="0.1">
+        </div>
+        <input type="text" id="s-rol" placeholder="2. Personaje (Ej: Abuela enojada)" style="flex-grow:1;">
+      </div>
+      <textarea id="s-prompt" placeholder="3. Escribí las REGLAS acá (El System Prompt)..."></textarea>
+      <button class="btn-iniciar" onclick="iniciarSimulador()">[ FIJAR REGLAS E INICIAR CHAT ]</button>
+    </div>
+    <div class="chat-box" id="chat-simul">
+      <div class="msg msg-sys">Esperando configuración...</div>
+    </div>
+    <div class="sim-input">
+      <input type="text" id="s-input" placeholder="Hablale a tu IA..." disabled>
+      <button class="btn-guardar" id="btn-guardar-simul" onclick="guardarConversacion()" disabled>&#128190; Guardar</button>
+      <button class="btn-enviar" id="btn-enviar-simul" onclick="enviarSimulador()" disabled>Enviar</button>
+    </div>
+  </div>
+
+  <div class="conexion-box" style="margin-top:14px;">
+    <strong>&#128161; ¿Qué hace el botón Guardar?</strong>
+    Descarga la conversación como <code>conversacion_abril.txt</code>. Es lo mismo que hace el comando <code>/guardar</code> que aprendieron tus compañeros en Python — la diferencia es que acá lo hace el navegador y allá lo hace el programa.
+  </div>
+</div>
+
+<div class="card c-misiones">
+  <h2><span class="badge" style="background:var(--grn);">3</span> MISIONES DE PRUEBA</h2>
+  <p>Usá el simulador para cumplir estas misiones. Cuando cambies de misión, cambiá las reglas y tocá "FIJAR REGLAS" de nuevo.</p>
+  <ul class="checklist" style="margin-top:15px;">
+    <li><strong>Misión 1: La Abuela Enojada.</strong><br>Personaje: Abuela enojada. Reglas: que se enoje porque los jóvenes usan mucho el celular. Temp: 1.0.</li>
+    <li><strong>Misión 2: El Vendedor Tramposo.</strong><br>Personaje: Vendedor de autos. Reglas: "Tu objetivo es convencerme de comprar un auto roto sin que me dé cuenta. Si te pregunto si anda bien, evadí la respuesta." Temp: 0.7.</li>
+    <li><strong>Misión 3: Creación Libre.</strong><br>Inventá el personaje más raro o gracioso. Elegí vos la temperatura y las reglas.</li>
+    <li class="highlight-li">
+      <strong style="color:var(--rojo);">&#127942; Misión 4 (NIVEL EXPERTA): El Creador de Juegos.</strong><br>
+      Personaje: Narrador de Aventuras. Reglas: "Sos el narrador de un juego de supervivencia en un bosque oscuro. Escribí un párrafo corto y dame SIEMPRE dos opciones (A y B). Esperá a que yo elija antes de seguir." Temp: 1.0.<br><br>
+      <strong>El reto:</strong> ¿La IA respeta la regla de pausar y dar opciones, o se olvida y cuenta todo de golpe?<br><br>
+      <strong style="color:var(--rojo);">Cuando termines esta misión: apretá &#128190; Guardar para descargar la conversación.</strong>
+    </li>
+  </ul>
+</div>
+
+<div class="card c-eval">
+  <h2><span class="badge" style="background:var(--classroom);">4</span> ENTREGÁ EN CLASSROOM</h2>
+  <div style="background:#E6F4EA;border-left:5px solid var(--classroom);padding:15px;border-radius:8px;margin-top:10px;">
+    <strong style="color:var(--classroom);display:block;margin-bottom:10px;">&#128228; ¿Qué tenés que subir?</strong>
+    <ol style="margin-left:20px;line-height:2.2;">
+      <li>Tus <strong>4 respuestas del cuaderno</strong> de la Fase 1 (el juego).</li>
+      <li>El archivo <strong><code>conversacion_abril.txt</code></strong> que descargaste con el botón &#128190; Guardar.</li>
+      <li>Una oración contando: ¿cuál fue la misión que más te gustó y por qué?</li>
+    </ol>
+  </div>
+</div>
+
+</div>
+
+<script>
+  var juegoKey = "", juegoHistorial = [];
+  var simulHistorial = [], simulTemp = 0.7;
+
+  // Lógica del Juego IA Misteriosa
+  function activarJuego() {
+    var key = document.getElementById('j-key').value.trim();
+    var prompt = document.getElementById('j-prompt').value.trim();
+    
+    if(!key) { alert("Necesitás la API Key."); return; }
+    if(!prompt) { alert("Escribí el system prompt misterioso."); return; }
+    
+    juegoKey = key;
+    juegoHistorial = [{role: "system", content: prompt}];
+    
+    document.getElementById('setup-juego').style.display = 'none';
+    document.getElementById('panel-juego').style.display = 'flex';
+    document.getElementById('preguntas-juego').style.display = 'block';
+    document.getElementById('j-input').focus();
+  }
+
+  document.getElementById('j-input').addEventListener('keypress', function(e){
+    if(e.key === 'Enter') enviarJuego();
+  });
+
+  document.getElementById('s-input').addEventListener('keypress', function(e){
+    if(e.key === 'Enter') enviarSimulador();
+  });
+
+  // Función general para llamar a la API
+  async function llamarAPI(key, hist, temp) {
+    var res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + key,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        temperature: temp,
+        messages: hist
+      })
+    });
+    
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    
+    var data = await res.json();
+    return data.choices[0].message.content;
+  }
+
+  // Función para agregar mensajes al chat HTML
+  function agregarMsg(chatId, texto, tipo) {
+    var chat = document.getElementById(chatId);
+    var div = document.createElement('div');
+    div.className = "msg msg-" + tipo;
+    div.innerText = texto;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+  }
+
+  // Enviar mensaje en el Juego
+  async function enviarJuego() {
+    var input = document.getElementById('j-input');
+    var msg = input.value.trim();
+    if(!msg || !juegoKey) return;
+    
+    input.value = '';
+    agregarMsg('chat-juego', msg, 'user');
+    juegoHistorial.push({role: "user", content: msg});
+    
+    var pens = agregarMsg('chat-juego', '...', 'sys');
+    
+    try {
+      var res = await llamarAPI(juegoKey, juegoHistorial, 0.8);
+      pens.remove();
+      juegoHistorial.push({role: "assistant", content: res});
+      agregarMsg('chat-juego', res, 'ia');
+    } catch(e) {
+      pens.remove();
+      agregarMsg('chat-juego', 'Error de conexión. Intentá de nuevo.', 'error');
+      juegoHistorial.pop();
+    }
+  }
+
+  // Lógica del Simulador
+  function iniciarSimulador() {
+    var key = document.getElementById('s-key').value.trim();
+    var rol = document.getElementById('s-rol').value.trim();
+    var reglas = document.getElementById('s-prompt').value.trim();
+    simulTemp = parseFloat(document.getElementById('s-temp').value) || 0.7;
+    
+    if(!key) { agregarMsg('chat-simul', 'Necesitás pegar tu API Key.', 'error'); return; }
+    if(!rol && !reglas) { agregarMsg('chat-simul', 'Necesitás un Personaje o Reglas.', 'error'); return; }
+    
+    document.getElementById('chat-simul').innerHTML = '';
+    var sys = (rol ? "Actuá como " + rol + ". " : "") + reglas;
+    simulHistorial = [{role: "system", content: sys.trim()}];
+    
+    agregarMsg('chat-simul', 'Reglas cargadas. ¡El chat está listo!', 'sys');
+    
+    document.getElementById('s-input').disabled = false;
+    document.getElementById('btn-enviar-simul').disabled = false;
+    document.getElementById('btn-guardar-simul').disabled = false;
+    document.getElementById('s-input').focus();
+  }
+
+  async function enviarSimulador() {
+    var input = document.getElementById('s-input');
+    var key = document.getElementById('s-key').value.trim();
+    var msg = input.value.trim();
+    
+    if(!msg || !key) return;
+    
+    input.value = '';
+    agregarMsg('chat-simul', msg, 'user');
+    simulHistorial.push({role: "user", content: msg});
+    
+    var pens = agregarMsg('chat-simul', 'Conectando con Groq...', 'sys');
+    
+    try {
+      var res = await llamarAPI(key, simulHistorial, simulTemp);
+      pens.remove();
+      simulHistorial.push({role: "assistant", content: res});
+      agregarMsg('chat-simul', res, 'ia');
+    } catch(e) {
+      pens.remove();
+      agregarMsg('chat-simul', 'Falló la conexión: ' + e.message, 'error');
+      simulHistorial.pop();
+    }
+  }
+
+  // Exportar el historial a .txt
+  function guardarConversacion() {
+    if (simulHistorial.length <= 1) {
+      alert("No hay suficientes mensajes para guardar.");
+      return;
+    }
+    
+    let contenidoTxt = "=== RESPALDO DE CONVERSACIÓN DE ABRIL ===\n\n";
+    
+    simulHistorial.forEach(linea => {
+      let rol = linea.role.toUpperCase();
+      let texto = linea.content;
+      contenidoTxt += `${rol}: ${texto}\n\n`;
+    });
+    
+    const blob = new Blob([contenidoTxt], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'conversacion_abril.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    agregarMsg('chat-simul', '💾 ¡Conversación guardada con éxito en tu computadora!', 'sys');
+  }
+</script>
+
+</body>
+</html>
