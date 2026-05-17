@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de IA · TP2 (Abril)</title>
+<style>
+  :root {
+    --nav:#1A2C3A;--teal:#00949A;--grn:#2A6049;--amb:#D4873A;
+    --vio:#3D5A99;--gris:#F3F6F9;--bd:#C5D2DC;--txt:#2C3E50;
+    --bco:#FFFFFF;--r:12px;--rojo:#C62828;--classroom:#137333;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;background:#EEF3F7;color:var(--txt);line-height:1.6;font-size:20px;padding:15px 0 40px 0;}
+  header{background:var(--nav);color:var(--bco);padding:25px 20px;border-bottom:5px solid var(--rojo);}
+  header h1{font-size:28px;margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;}
+  header p{font-size:18px;opacity:0.9;}
+  .container{width:95%;max-width:1200px;margin:0 auto;padding:0 15px;}
+  .back-btn{display:inline-block;margin-top:20px;margin-bottom:10px;padding:10px 20px;background:var(--bco);color:var(--nav);text-decoration:none;font-weight:bold;border-radius:8px;border:2px solid var(--bd);}
+  .card{background:var(--bco);border-radius:var(--r);padding:30px;margin-bottom:30px;margin-top:20px;box-shadow:0 4px 12px rgba(0,0,0,.08);border-left:6px solid var(--bd);}
+  .c-consigna{border-left-color:var(--rojo);background:#FFEBEE;}
+  .c-auditora{border-left-color:var(--vio);background:#FAFAFF;padding:20px;}
+  .c-directora{border-left-color:var(--amb);background:#FFFBF5;padding:20px;}
+  .c-informe{border-left-color:var(--grn);background:#F5FAF7;}
+  .c-eval{border-left-color:var(--classroom);background:#F6FEF8;}
+  h2{color:var(--nav);font-size:24px;margin-bottom:15px;text-transform:uppercase;border-bottom:2px solid var(--gris);padding-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .badge{background:var(--nav);color:var(--bco);padding:5px 12px;border-radius:6px;font-size:18px;font-weight:bold;}
+  /* Setup docente */
+  #setup-auditora{background:#0F1E2A;border-radius:var(--r);padding:20px;margin-bottom:15px;}
+  #setup-auditora h4{color:#A8D5B5;font-size:13px;text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;}
+  #setup-auditora input,#setup-auditora textarea{width:100%;background:#000;color:#00CC44;border:1px solid #00CC44;border-radius:6px;padding:10px;font-family:"Courier New",monospace;font-size:14px;margin-bottom:10px;outline:none;}
+  #setup-auditora textarea{min-height:80px;resize:vertical;}
+  #btn-activar-audit{width:100%;background:#00CC44;color:#000;border:none;border-radius:6px;padding:11px;font-weight:bold;cursor:pointer;}
+  /* Paneles chat */
+  .sim-panel{border:2px solid var(--vio);border-radius:12px;overflow:hidden;background:#FFF;display:flex;flex-direction:column;height:460px;margin-top:15px;}
+  .sim-panel-amb{border-color:var(--amb);height:520px;}
+  .sim-header{background:var(--vio);color:white;padding:13px 18px;font-weight:bold;font-size:18px;display:flex;justify-content:space-between;align-items:center;}
+  .sim-header-amb{background:var(--amb);}
+  .sim-config{padding:14px;background:#F0F4F8;border-bottom:2px solid var(--bd);display:flex;flex-direction:column;gap:9px;}
+  .sim-config input,.sim-config textarea{width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;font-size:16px;outline:none;font-family:inherit;}
+  .sim-config textarea{height:72px;resize:none;border-color:var(--vio);}
+  .sim-row{display:flex;gap:9px;align-items:center;}
+  .temp-wrap{background:white;padding:5px 10px;border-radius:6px;border:1px solid #ccc;display:flex;align-items:center;gap:5px;}
+  .temp-wrap label{font-size:14px;font-weight:bold;}
+  .temp-wrap input{width:52px;border:none;outline:none;font-size:16px;}
+  .btn-iniciar{background:var(--vio);color:white;border:none;padding:11px;border-radius:6px;font-weight:bold;cursor:pointer;font-size:16px;}
+  .chat-box{flex-grow:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:#FFF;}
+  .msg{max-width:85%;padding:11px 15px;border-radius:12px;line-height:1.4;font-size:18px;}
+  .msg-sys{align-self:center;background:#FFECB3;color:#F57F17;font-size:13px;font-weight:bold;border-radius:20px;padding:7px 14px;}
+  .msg-user{align-self:flex-end;background:var(--teal);color:white;border-bottom-right-radius:2px;}
+  .msg-ia{align-self:flex-start;background:#F5F5F5;border:1px solid #E0E0E0;color:#333;border-bottom-left-radius:2px;}
+  .sim-input{display:flex;padding:12px 14px;background:#F0F4F8;border-top:1px solid var(--bd);gap:8px;}
+  .sim-input input{flex-grow:1;padding:11px;border-radius:8px;border:1px solid #ccc;font-size:16px;outline:none;}
+  .btn-enviar{background:var(--teal);color:white;border:none;padding:0 18px;border-radius:8px;cursor:pointer;font-weight:bold;}
+  .btn-enviar:disabled{background:#ccc;cursor:not-allowed;}
+  .btn-guardar{background:var(--grn);color:white;border:none;padding:0 14px;border-radius:8px;cursor:pointer;font-weight:bold;}
+  .btn-guardar:disabled{background:#ccc;cursor:not-allowed;}
+  /* Contenido */
+  .requisito-box{background:var(--gris);border-left:5px solid var(--vio);border-radius:8px;padding:16px 20px;margin-bottom:12px;}
+  .requisito-box strong{color:var(--vio);display:block;margin-bottom:6px;font-size:19px;}
+  .mision-card{background:white;border:1px solid var(--bd);border-left:4px solid var(--vio);border-radius:8px;padding:15px 20px;margin-bottom:11px;}
+  .mision-card .num{color:var(--vio);font-weight:bold;font-size:19px;display:block;margin-bottom:4px;}
+  .mision-card.teal{border-left-color:var(--teal);}
+  .mision-card.teal .num{color:var(--teal);}
+  .informe-box{background:white;border:1px solid var(--bd);border-left:4px solid var(--grn);border-radius:8px;padding:15px 20px;margin-bottom:11px;}
+  .informe-box .num{color:var(--grn);font-weight:bold;font-size:19px;display:block;margin-bottom:4px;}
+  .defensa-aviso{background:#FFF8E1;border:2px solid var(--amb);border-radius:var(--r);padding:18px 22px;margin-top:15px;}
+  .defensa-aviso strong{color:var(--amb);display:block;font-size:20px;margin-bottom:8px;}
+  .fase-separador{text-align:center;font-size:22px;font-weight:bold;color:var(--nav);letter-spacing:3px;padding:10px 0;opacity:.4;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>TRABAJO PR&#193;CTICO N&#176; 2</h1>
+  <p>Taller de IA | Evaluaci&#243;n Integradora - Abril Oreste | Lunes | 120 minutos</p>
+</header>
+
+<div class="container">
+<a href="index_abril.html" class="back-btn">&#8592; Volver al Inicio</a>
+
+<!-- CONSIGNA -->
+<div class="card c-consigna">
+  <h2><span class="badge" style="background:var(--rojo);">!</span> HOY SOS AUDITORA Y DIRECTORA</h2>
+  <p>Hoy el TP tiene dos partes. En la primera sos <strong>auditora</strong> — investigás una IA que ya está configurada y escribís un informe sobre lo que encontrás. En la segunda sos <strong>directora</strong> — dise&#241;&#225;s tu propia IA, la test&#233;as y anotás si cumplió tus reglas.</p>
+  <ul style="margin-left:25px;margin-top:15px;line-height:2.4;">
+    <li><strong>Duraci&#243;n:</strong> 80 minutos en total.</li>
+    <li><strong>Ayuda permitida:</strong> Edith puede ayudarte a cargar la API Key y leer las consignas. El informe y el dise&#241;o del personaje son tuyos.</li>
+  </ul>
+  <div class="defensa-aviso" style="background:#FFEBEE;border-color:var(--rojo);margin-top:18px;">
+    <strong style="color:var(--rojo);">&#127897;&#65039; Defensa Oral — Lunes 18/05</strong>
+    El lunes el profe te va a preguntar sobre las instrucciones que le diste a tu IA y qu&#233; descubriste en la auditor&#237;a.
+  </div>
+</div>
+
+<!-- FASE 1: AUDITORA -->
+<div class="card c-auditora">
+  <h2><span class="badge" style="background:var(--vio);">1</span> FASE 1 — LA AUDITORA (~40 min)</h2>
+  <p style="margin-bottom:16px;">El profe configur&#243; una IA con instrucciones secretas. Tu misi&#243;n: descubrir qu&#233; instrucciones tiene, intentar romper sus reglas y escribir un informe.</p>
+
+  <div id="setup-auditora">
+    <h4>&#128295; Configuraci&#243;n del docente — Edith activa el chat</h4>
+    <input type="password" id="a-key" placeholder="API Key de Groq (gsk_...)">
+    <textarea id="a-prompt" placeholder="System prompt secreto para Abril...
+
+Sugerencia: Sos una detective llamada Valeria especialista en crímenes de cocina. Respondés siempre con mucho dramatismo. Solo podés hablar de gastronomía y crímenes culinarios. Si alguien te pregunta sobre otro tema decís que no es de tu jurisdicción."></textarea>
+    <button id="btn-activar-audit" onclick="activarAuditora()">&#9989; ACTIVAR PARA ABRIL</button>
+  </div>
+
+  <div class="sim-panel" id="panel-auditora" style="display:none;">
+    <div class="sim-header">
+      <span>&#128373;&#65039; IA MISTERIOSA</span>
+      <span style="font-size:13px;opacity:.8;">Investigá qui&#233;n es</span>
+    </div>
+    <div class="chat-box" id="chat-auditora">
+      <div class="msg msg-sys">La IA est&#225; lista. &#161;Empez&#225; a investigarla!</div>
+    </div>
+    <div class="sim-input">
+      <input type="text" id="a-input" placeholder="Preguntale algo..." onkeypress="if(event.key===&#39;Enter&#39;) enviarAuditora()">
+      <button class="btn-enviar" onclick="enviarAuditora()">Enviar</button>
+    </div>
+  </div>
+
+  <div id="guia-auditora" style="display:none;margin-top:18px;">
+    <p style="font-weight:bold;margin-bottom:12px;">&#128270; Preguntas para guiar tu investigaci&#243;n:</p>
+    <div class="mision-card">
+      <span class="num">Investigaci&#243;n 1</span>
+      Preguntale qui&#233;n es y de qu&#233; puede hablar. &#191;Tiene un nombre? &#191;Tiene un tema favorito?
+    </div>
+    <div class="mision-card">
+      <span class="num">Investigaci&#243;n 2</span>
+      Preguntale algo que est&#233; <em>fuera</em> de su tema. &#191;Qu&#233; pasa? &#191;Se niega, cambia de tema o responde igual?
+    </div>
+    <div class="mision-card">
+      <span class="num">Investigaci&#243;n 3 — El desaf&#237;o</span>
+      Intent&#225; que rompa sus propias reglas. Prob&#225; con al menos 2 excusas distintas. &#191;Logr&#225;s que ceda?
+    </div>
+    <div style="background:#F0F0FF;border-left:4px solid var(--vio);padding:14px;border-radius:8px;margin-top:10px;font-size:18px;">
+      &#128221; <strong>Anot&#225; en tu cuaderno:</strong> &#191;Qui&#233;n cre&#233;s que es esta IA? &#191;Qu&#233; instrucciones le pusieron? &#191;Lograste romper alguna regla?
+    </div>
+  </div>
+</div>
+
+<div class="fase-separador">&#8213;&#8213;&#8213;  FASE 2  &#8213;&#8213;&#8213;</div>
+
+<!-- FASE 2: DIRECTORA -->
+<div class="card c-directora">
+  <h2><span class="badge" style="background:var(--amb);">2</span> FASE 2 — LA DIRECTORA (~50 min)</h2>
+  <p style="margin-bottom:16px;">Ahora te toca a vos. Dise&#241;&#225; tu propia IA con estos tres requisitos y test&#233;ala vos misma.</p>
+
+  <div class="requisito-box">
+    <strong>&#128101; Requisito 1 — Nombre y rol</strong>
+    Tu IA tiene que tener un nombre y un tema concreto del que habla.
+    <p style="margin-top:6px;font-style:italic;color:#555;font-size:18px;">Ej: "Sos una chef llamada Romina que solo habla de recetas"</p>
+  </div>
+  <div class="requisito-box">
+    <strong>&#128683; Requisito 2 — Una regla de l&#237;mite</strong>
+    Al menos una cosa que tu IA no puede hacer o decir.
+    <p style="margin-top:6px;font-style:italic;color:#555;font-size:18px;">Ej: "Nunca pod&#233;s decir que algo es imposible de cocinar"</p>
+  </div>
+  <div class="requisito-box">
+    <strong>&#127775; Requisito 3 — Un estilo propio</strong>
+    &#191;C&#243;mo habla? &#191;Es seria, dram&#225;tica, usa emojis, habla en rima?
+    <p style="margin-top:6px;font-style:italic;color:#555;font-size:18px;">Ej: "Siempre respond&#233;s con un refrán viejo al final"</p>
+  </div>
+
+  <p style="background:#F0F0FF;border-left:4px solid var(--vio);padding:14px;border-radius:8px;margin-bottom:18px;font-size:18px;">
+    &#128221; Antes de abrir el simulador, escrib&#237; en tu cuaderno las respuestas a los 3 requisitos. Eso es tu system prompt.
+  </p>
+
+  <div class="sim-panel sim-panel-amb">
+    <div class="sim-header sim-header-amb">&#129504; MI IA — PANEL DE CONTROL</div>
+    <div class="sim-config">
+      <input type="password" id="d-key" placeholder="1. Peg&#225; la API Key (Edith te ayuda)">
+      <div class="sim-row">
+        <div class="temp-wrap">
+          <label>Temp:</label>
+          <input type="number" id="d-temp" value="0.7" step="0.1">
+        </div>
+        <input type="text" id="d-rol" placeholder="2. El nombre y rol de tu IA" style="flex-grow:1;">
+      </div>
+      <textarea id="d-prompt" placeholder="3. Las reglas de tu IA (lo que escribiste en el cuaderno)..."></textarea>
+      <button class="btn-iniciar" onclick="iniciarDirectora()">[ ACTIVAR MI IA ]</button>
+    </div>
+    <div class="chat-box" id="chat-directora">
+      <div class="msg msg-sys">Complet&#225; el panel y activ&#225; tu IA.</div>
+    </div>
+    <div class="sim-input">
+      <input type="text" id="d-input" placeholder="Hablale a tu IA..." disabled onkeypress="if(event.key===&#39;Enter&#39;) enviarDirectora()">
+      <button class="btn-guardar" id="btn-guardar-d" onclick="guardarConversacion()" disabled>&#128190; Guardar</button>
+      <button class="btn-enviar" id="btn-enviar-d" onclick="enviarDirectora()" disabled>Enviar</button>
+    </div>
+  </div>
+
+  <div style="margin-top:18px;">
+    <p style="font-weight:bold;margin-bottom:12px;">&#127919; Las tres pruebas obligatorias:</p>
+    <div class="mision-card teal">
+      <span class="num">Prueba 1 — El personaje</span>
+      Preguntale qui&#233;n es. &#191;Responde con la personalidad que le pusiste?
+    </div>
+    <div class="mision-card teal">
+      <span class="num">Prueba 2 — La memoria</span>
+      Cont&#225;le un dato inventado sobre vos al principio. Tres mensajes despu&#233;s preguntale: <em>"&#191;Te acord&#225;s lo que te conté?"</em>
+    </div>
+    <div class="mision-card teal">
+      <span class="num">Prueba 3 — El l&#237;mite</span>
+      Preguntale algo que va en contra de la regla que le pusiste. &#191;La respeta o la ignora?
+    </div>
+    <p style="background:#E0F7FA;border-left:4px solid var(--teal);padding:14px;border-radius:8px;margin-top:10px;font-size:18px;">
+      &#128190; <strong>Cuando termines las 3 pruebas:</strong> apret&#225; el bot&#243;n Guardar para descargar <code>conversacion_abril.txt</code>.
+    </p>
+  </div>
+</div>
+
+<!-- INFORME Y ENTREGA -->
+<div class="card c-informe">
+  <h2><span class="badge" style="background:var(--grn);">3</span> EL INFORME DE AUDITOR&#205;A</h2>
+  <p style="margin-bottom:16px;">Respond&#233; estas preguntas en tu cuaderno. Son sobre las dos fases.</p>
+
+  <div class="informe-box">
+    <span class="num">Pregunta 1 — Sobre la IA del profe</span>
+    &#191;Qu&#233; instrucciones cre&#233;s que ten&#237;a esa IA? Escrib&#237; c&#243;mo imagin&#225;s que estaba escrito el system prompt.
+  </div>
+  <div class="informe-box">
+    <span class="num">Pregunta 2 — Sobre tu propia IA</span>
+    &#191;Tu IA respet&#243; todas las reglas que le pusiste durante las pruebas? &#191;En qu&#233; momento cre&#233;s que le cost&#243; m&#225;s?
+  </div>
+  <div class="informe-box">
+    <span class="num">Pregunta 3 — Comparaci&#243;n</span>
+    &#191;Qu&#233; diferencia not&#225;s entre la IA del profe y la tuya? &#191;Cu&#225;l ten&#237;a reglas m&#225;s claras?
+  </div>
+</div>
+
+<div class="card c-eval">
+  <h2><span class="badge" style="background:var(--classroom);">4</span> ENTREGA</h2>
+  <div style="background:#E6F4EA;border-left:5px solid var(--classroom);padding:20px;border-radius:8px;">
+    <strong style="color:var(--classroom);display:block;margin-bottom:12px;font-size:20px;">&#128228; ENTREGÁ EN CLASSROOM:</strong>
+    <ol style="margin-left:20px;line-height:2.4;">
+      <li>El archivo <strong><code>conversacion_abril.txt</code></strong> (de tu IA en la Fase 2).</li>
+      <li>Las respuestas a las <strong>3 preguntas del informe</strong> del cuaderno.</li>
+      <li>En el comentario de Classroom: la frase m&#225;s interesante o rara que te dijo alguna de las dos IAs.</li>
+    </ol>
+  </div>
+</div>
+
+</div>
+
+<script>
+  var audKey = "", audHist = [];
+  var dirHist = [], dirTemp = 0.7;
+
+  function activarAuditora() {
+    var key = document.getElementById("a-key").value.trim();
+    var prompt = document.getElementById("a-prompt").value.trim();
+    if (!key) { alert("Falta la API Key."); return; }
+    if (!prompt) prompt = "Sos una detective llamada Valeria especialista en crimenes de cocina. Respondes siempre con mucho dramatismo. Solo podes hablar de gastronomia y crimenes culinarios. Si alguien te pregunta sobre otro tema decis que no es de tu jurisdiccion.";
+    audKey = key;
+    audHist = [{role:"system", content: prompt}];
+    document.getElementById("setup-auditora").style.display = "none";
+    document.getElementById("panel-auditora").style.display = "flex";
+    document.getElementById("guia-auditora").style.display = "block";
+  }
+
+  async function enviarAuditora() {
+    var inp = document.getElementById("a-input");
+    var txt = inp.value.trim();
+    if (!txt) return;
+    inp.value = "";
+    addMsg("chat-auditora", txt, "user");
+    audHist.push({role:"user", content: txt});
+    var pens = addMsg("chat-auditora", "...", "sys");
+    try {
+      var res = await llamarAPI(audKey, audHist, 0.8);
+      pens.remove();
+      audHist.push({role:"assistant", content: res});
+      addMsg("chat-auditora", res, "ia");
+    } catch(e) {
+      pens.remove();
+      addMsg("chat-auditora", "Error de conexion. Intenta de nuevo.", "sys");
+      audHist.pop();
+    }
+  }
+
+  function iniciarDirectora() {
+    var key = document.getElementById("d-key").value.trim();
+    var rol = document.getElementById("d-rol").value.trim();
+    var sys = document.getElementById("d-prompt").value.trim();
+    dirTemp = parseFloat(document.getElementById("d-temp").value) || 0.7;
+    if (!key) { addMsg("chat-directora", "Necesitas la API Key.", "sys"); return; }
+    if (!sys)  { addMsg("chat-directora", "Escribi las reglas de tu IA primero.", "sys"); return; }
+    document.getElementById("chat-directora").innerHTML = "";
+    var sp = (rol ? "Actua como " + rol + ". " : "") + sys;
+    dirHist = [{role:"system", content: sp}];
+    addMsg("chat-directora", "Tu IA esta activa. Empieza a chatear!", "sys");
+    document.getElementById("d-input").disabled = false;
+    document.getElementById("btn-enviar-d").disabled = false;
+    document.getElementById("btn-guardar-d").disabled = false;
+    document.getElementById("d-input").focus();
+  }
+
+  async function enviarDirectora() {
+    var inp = document.getElementById("d-input");
+    var key = document.getElementById("d-key").value.trim();
+    var txt = inp.value.trim();
+    if (!txt) return;
+    inp.value = "";
+    addMsg("chat-directora", txt, "user");
+    dirHist.push({role:"user", content: txt});
+    var pens = addMsg("chat-directora", "...", "sys");
+    try {
+      var res = await llamarAPI(key, dirHist, dirTemp);
+      pens.remove();
+      dirHist.push({role:"assistant", content: res});
+      addMsg("chat-directora", res, "ia");
+    } catch(e) {
+      pens.remove();
+      addMsg("chat-directora", "Error de conexion.", "sys");
+      dirHist.pop();
+    }
+  }
+
+  function guardarConversacion() {
+    if (dirHist.length <= 1) { addMsg("chat-directora", "Chattea un poco antes de guardar.", "sys"); return; }
+    var txt = "=== TP2 - ABRIL ORESTE ===" + "\n" + "=== MI IA ===" + "\n\n";
+    dirHist.forEach(function(l) { txt += l.role.toUpperCase() + ": " + l.content + "\n\n"; });
+    var blob = new Blob([txt], {type:"text/plain"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = "conversacion_abril.txt"; a.click();
+    URL.revokeObjectURL(url);
+    addMsg("chat-directora", "Archivo descargado! Revisa la carpeta de Descargas.", "sys");
+  }
+
+  async function llamarAPI(key, hist, temp) {
+    var res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method:"POST",
+      headers:{"Authorization":"Bearer "+key,"Content-Type":"application/json"},
+      body:JSON.stringify({model:"llama-3.3-70b-versatile",temperature:temp,messages:hist})
+    });
+    if (!res.ok) throw new Error("HTTP "+res.status);
+    var data = await res.json();
+    return data.choices[0].message.content;
+  }
+
+  function addMsg(chatId, text, type) {
+    var chat = document.getElementById(chatId);
+    var div = document.createElement("div");
+    div.className = "msg msg-" + type;
+    div.innerText = text;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+  }
+
+  document.getElementById("a-input").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") enviarAuditora();
+  });
+  document.getElementById("d-input").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") enviarDirectora();
+  });
+</script>
+</body>
+</html>
