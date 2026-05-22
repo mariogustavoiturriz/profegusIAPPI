@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clase 13 — Abril</title>
 <style>
-  :root{--nav:#1A2C3A;--g:#2E6820;--gbg:#EFF8EE;--teal:#00949A;--amb:#D4873A;
+  :root{--nav:#1A2C3A;--g:#2E6820;--gbg:#EFF8EE;--teal:#00949A;--tbg:#E8F8F8;
+    --amb:#D4873A;--abg:#FFF8EE;--rpg:#5C2070;--rpgbg:#F8F3FF;
     --txt:#2C3E50;--bco:#FFFFFF;--bd:#C5D2DC;--gris:#F3F6F9;--r:12px;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#EEF3F7;color:var(--txt);line-height:1.75;font-size:21px;padding:15px 0 60px;}
@@ -13,124 +14,204 @@
   header h1{font-size:24px;margin-bottom:5px;text-transform:uppercase;}
   header p{font-size:17px;opacity:.85;}
   .container{width:95%;max-width:900px;margin:0 auto;padding:0 15px;}
-  .back-btn{display:inline-block;margin:15px 0;padding:10px 20px;background:#fff;color:var(--nav);text-decoration:none;font-weight:bold;border-radius:8px;border:2px solid var(--bd);}
-  .card{background:#fff;border-radius:var(--r);padding:28px;margin-bottom:24px;box-shadow:0 4px 12px rgba(0,0,0,.08);border-left:6px solid var(--bd);}
+  .card{background:#fff;border-radius:var(--r);padding:28px;margin-bottom:24px;margin-top:20px;box-shadow:0 4px 12px rgba(0,0,0,.08);border-left:6px solid var(--bd);}
   .c-intro{border-left-color:var(--g);background:var(--gbg);}
-  .c-concepto{border-left-color:var(--teal);}
-  .c-juego{border-left-color:var(--amb);background:#FFFBF5;}
-  .c-preguntas{border-left-color:var(--g);}
+  .c-narrador{border-left-color:var(--teal);background:var(--tbg);}
+  .c-imagen{border-left-color:var(--amb);background:var(--abg);}
+  .c-prueba{border-left-color:var(--rpg);background:var(--rpgbg);}
+  .c-reflexion{border-left-color:var(--g);}
   h2{color:var(--nav);font-size:22px;margin-bottom:14px;text-transform:uppercase;border-bottom:2px solid var(--gris);padding-bottom:8px;}
-  h3{color:var(--g);font-size:20px;margin:18px 0 10px;}
+  h3{color:var(--g);font-size:20px;margin:20px 0 10px;}
   .paso{background:#fff;border-radius:10px;border:2px solid var(--bd);border-left:5px solid var(--g);padding:16px 20px;margin-bottom:12px;font-size:20px;line-height:1.75;}
   .paso .num{color:var(--g);font-weight:bold;font-size:22px;margin-right:8px;}
-  .caja{background:var(--gris);border-radius:10px;padding:18px 20px;margin:14px 0;border-left:5px solid var(--teal);font-size:19px;line-height:1.75;}
-  .caja strong{color:var(--nav);display:block;margin-bottom:6px;font-size:20px;}
-  .comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
-  .comp-card{border-radius:10px;padding:18px;border:2px solid var(--bd);}
-  .comp-antes{background:#F4F7FA;border-color:#4A6080;}
-  .comp-despues{background:var(--gbg);border-color:var(--g);}
-  .comp-card h4{font-size:19px;margin-bottom:10px;}
-  .comp-antes h4{color:#4A6080;}
-  .comp-despues h4{color:var(--g);}
-  .comp-card p{font-size:18px;line-height:1.7;}
-  /* Demo */
-  .demo-wrap{background:#0d1321;border-radius:12px;border:2px solid #38bdf8;overflow:hidden;margin-top:15px;}
-  .demo-setup{padding:16px;background:#0d1321;}
-  .demo-setup p{color:#94a3b8;font-size:15px;margin-bottom:10px;}
-  .demo-setup input{width:100%;padding:10px;background:#1e293b;border:1px solid #475569;color:#fff;border-radius:6px;font-size:15px;margin-bottom:8px;}
-  .demo-setup button{width:100%;background:#38bdf8;color:#0d1321;border:none;border-radius:6px;padding:11px;font-weight:bold;cursor:pointer;font-size:16px;}
-  #demo-chat{height:360px;overflow-y:auto;background:#1a2235;padding:16px;display:flex;flex-direction:column;gap:14px;}
+  .caja{background:#fff;border-radius:10px;padding:18px 20px;margin:14px 0;border-left:5px solid;font-size:19px;line-height:1.75;}
+  .caja-teal{border-color:var(--teal);background:var(--tbg);}
+  .caja-amb{border-color:var(--amb);background:var(--abg);}
+  .caja-g{border-color:var(--g);background:var(--gbg);}
+  .caja-rpg{border-color:var(--rpg);background:var(--rpgbg);}
+  .caja strong{color:var(--nav);display:block;margin-bottom:8px;font-size:20px;}
+
+  /* Ficha del narrador */
+  .ficha{background:#fff;border:2px solid var(--teal);border-radius:12px;overflow:hidden;margin:16px 0;}
+  .ficha-header{background:var(--teal);color:#fff;padding:12px 18px;font-weight:bold;font-size:18px;}
+  .ficha-body{padding:18px;}
+  .ficha-campo{margin-bottom:18px;}
+  .ficha-campo label{display:block;font-weight:bold;color:var(--nav);margin-bottom:6px;font-size:18px;}
+  .ficha-campo textarea{width:100%;padding:12px;border:2px solid var(--bd);border-radius:8px;font-size:18px;font-family:inherit;resize:vertical;min-height:80px;outline:none;line-height:1.6;}
+  .ficha-campo textarea:focus{border-color:var(--teal);}
+  .ficha-campo .hint{font-size:15px;color:#777;margin-top:4px;font-style:italic;}
+
+  /* Prompt de imagen */
+  .prompt-box{background:#fff;border:2px solid var(--amb);border-radius:12px;overflow:hidden;margin:16px 0;}
+  .prompt-header{background:var(--amb);color:#fff;padding:12px 18px;font-weight:bold;font-size:18px;}
+  .prompt-body{padding:18px;}
+  .prompt-campo{margin-bottom:16px;}
+  .prompt-campo label{display:block;font-weight:bold;color:var(--nav);margin-bottom:6px;font-size:18px;}
+  .prompt-campo textarea{width:100%;padding:12px;border:2px solid var(--bd);border-radius:8px;font-size:18px;font-family:inherit;resize:vertical;min-height:70px;outline:none;line-height:1.6;}
+  .prompt-campo textarea:focus{border-color:var(--amb);}
+  .prompt-campo .hint{font-size:15px;color:#777;margin-top:4px;font-style:italic;}
+  .btn-link{display:inline-block;margin-top:10px;padding:12px 20px;border-radius:8px;font-weight:bold;font-size:17px;text-decoration:none;border:2px solid;}
+  .btn-bing{background:#0078D4;color:#fff;border-color:#0078D4;}
+  .btn-gem{background:#1A73E8;color:#fff;border-color:#1A73E8;margin-left:10px;}
+
+  /* Simulador */
+  .sim-wrap{background:#0d1321;border-radius:12px;border:2px solid #38bdf8;overflow:hidden;margin-top:16px;}
+  .sim-setup{padding:16px;}
+  .sim-setup p{color:#94a3b8;font-size:15px;margin-bottom:10px;}
+  .sim-setup input{width:100%;padding:10px;background:#1e293b;border:1px solid #475569;color:#fff;border-radius:6px;font-size:15px;margin-bottom:8px;outline:none;}
+  .sim-setup button{width:100%;background:#2E6820;color:#fff;border:none;border-radius:6px;padding:11px;font-weight:bold;cursor:pointer;font-size:16px;}
+  #sim-chat{height:360px;overflow-y:auto;background:#1a2235;padding:16px;display:flex;flex-direction:column;gap:14px;}
   .msg-ia{color:#38bdf8;font-size:18px;line-height:1.65;}
   .msg-ia strong{color:#7dd3fc;}
   .msg-user{color:#a78bfa;text-align:right;font-size:18px;}
   .msg-sys{color:#fbbf24;text-align:center;font-size:15px;font-weight:bold;}
-  .demo-inp{display:flex;gap:8px;padding:12px;background:#0d1321;border-top:1px solid #334155;}
-  .demo-inp input{flex:1;padding:11px;background:#1e293b;border:1px solid #475569;color:#fff;border-radius:6px;font-size:18px;}
-  .demo-inp button{background:#38bdf8;color:#0d1321;border:none;padding:0 18px;border-radius:6px;cursor:pointer;font-weight:bold;font-size:17px;}
-  .demo-inp button:disabled{background:#475569;cursor:not-allowed;}
-  /* Preguntas */
+  .sim-inp{display:flex;gap:8px;padding:12px;background:#0d1321;border-top:1px solid #334155;}
+  .sim-inp input{flex:1;padding:11px;background:#1e293b;border:1px solid #475569;color:#fff;border-radius:6px;font-size:18px;outline:none;}
+  .sim-inp button{background:#38bdf8;color:#0d1321;border:none;padding:0 18px;border-radius:6px;cursor:pointer;font-weight:bold;font-size:17px;}
+  .sim-inp button:disabled{background:#475569;cursor:not-allowed;}
+
+  /* Reflexión */
   .preg{background:#fff;border:2px solid var(--bd);border-left:5px solid var(--g);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
   .preg .label{color:var(--g);font-weight:bold;font-size:19px;display:block;margin-bottom:8px;}
-  @media(max-width:600px){.comp-grid{grid-template-columns:1fr;}}
+  .preg p{font-size:19px;line-height:1.7;}
 </style>
 </head>
 <body>
 <header style="margin-top:20px;">
-  <h1>CLASE 13 — LA IA QUE CUENTA HISTORIAS</h1>
-  <p>Taller de IA Aplicada · Abril Oreste · Viernes 22/05</p>
+  <h1>CLASE 13 — DISEÑÁ EL MUNDO DE TU AVENTURA</h1>
+  <p>Taller de IA Aplicada · Abril Oreste · Viernes 22/05 · Ingeniería de Prompt</p>
 </header>
 
 <div class="container">
-<a href="index_abril.html" class="back-btn">⬅ Volver</a>
 
 <!-- INTRO -->
 <div class="card c-intro">
   <h2>¿QUÉ HACEMOS HOY?</h2>
-  <p>Hasta ahora usaste la IA para preguntarle cosas y que te respondiera. Hoy vas a descubrir que la IA puede hacer algo completamente distinto: <strong>contar una historia interactiva</strong> donde vos tomás las decisiones y ella narra las consecuencias.</p>
-  <p style="margin-top:12px;">No es la misma IA de siempre. Es una IA <strong>con un rol diferente</strong>. Y eso cambia todo.</p>
-</div>
-
-<!-- CONCEPTO -->
-<div class="card c-concepto">
-  <h2>LA DIFERENCIA: ASISTENTE VS NARRADOR</h2>
-
-  <div class="comp-grid">
-    <div class="comp-card comp-antes">
-      <h4>🤖 La IA que ya conocés — Asistente</h4>
-      <p>Espera que vos hagas una pregunta. Responde lo que le preguntás. No avanza sola. Si no le preguntás nada, no pasa nada.</p>
-    </div>
-    <div class="comp-card comp-despues">
-      <h4>🌲 La IA de hoy — Narradora</h4>
-      <p>Tiene un mundo definido. Describe lo que pasa. Interpreta lo que decidís. Al final de cada turno te da siempre 3 opciones para continuar.</p>
-    </div>
-  </div>
-
-  <div class="caja">
-    <strong>¿Qué hace posible este cambio?</strong>
-    Las instrucciones que recibe la IA al inicio — el system prompt. En el TP2 le decías "sos un veterinario, respondé preguntas". Hoy el grupo le dice "sos el narrador de una aventura en Tierra del Fuego, describí el mundo, nunca decidas por el jugador, siempre ofrecé 3 opciones". La IA es la misma — lo que cambia es cómo la configuraron.
+  <p>En el TP2 diseñaste tu propia IA: le diste un nombre, reglas y un estilo. Eso es ingeniería de prompt — darle instrucciones tan precisas a la IA que se comporte exactamente como vos querés.</p>
+  <p style="margin-top:12px;">Hoy hacés lo mismo, pero para un juego de aventura. La IA va a ser el narrador de la historia. Y además vas a usar otra IA — generadora de imágenes — para crear el mundo visual de tu aventura.</p>
+  <div class="caja caja-g" style="margin-top:18px;">
+    <strong>📌 Hoy no escribís código. Escribís instrucciones.</strong>
+    Las instrucciones bien escritas son las que hacen que la IA funcione como vos querés. Eso es programar con palabras.
   </div>
 </div>
 
-<!-- JUEGO -->
-<div class="card c-juego">
-  <h2>TU TURNO — JUGÁ LA AVENTURA</h2>
+<!-- PARTE 1: EL NARRADOR -->
+<div class="card c-narrador">
+  <h2>PARTE 1 — DISEÑÁ EL NARRADOR</h2>
 
-  <div class="paso"><span class="num">1.</span> Edith activa el narrador con la API Key.</div>
-  <div class="paso"><span class="num">2.</span> Jugá al menos <strong>4 turnos</strong>. Probá distintas acciones — razonables e imposibles.</div>
-  <div class="paso"><span class="num">3.</span> Fijate: ¿el narrador decide por vos? ¿Siempre te da 3 opciones? ¿Recuerda lo que pasó antes?</div>
+  <p>El narrador es la IA que va a contar la historia. A diferencia del chatbot del TP2 que respondía preguntas, este narrador <strong>guía la aventura</strong>: describe el escenario, narra las consecuencias de tus decisiones y siempre te da 3 opciones para continuar.</p>
 
-  <div class="demo-wrap">
-    <div class="demo-setup" id="setup-abril">
-      <p>⚙️ <strong style="color:#94a3b8;">Configuración — Edith activa el narrador</strong></p>
-      <input type="password" id="abril-key" placeholder="API Key de Groq (gsk_...)">
-      <button onclick="activar()">✅ ACTIVAR NARRADOR PARA ABRIL</button>
+  <div class="caja caja-teal" style="margin-top:16px;">
+    <strong>Lo que define un buen narrador:</strong>
+    <ul style="margin-left:20px;line-height:2.2;">
+      <li><strong>El mundo:</strong> ¿Dónde transcurre la historia? ¿En qué época? ¿Qué hay de peligroso o misterioso?</li>
+      <li><strong>El tono:</strong> ¿Cómo habla el narrador? ¿Oscuro y tenso, épico y heroico, misterioso y lento?</li>
+      <li><strong>Las reglas:</strong> ¿Qué tiene que hacer siempre? ¿Qué no puede hacer nunca?</li>
+      <li><strong>El comienzo:</strong> ¿Dónde y cómo empieza el jugador la historia?</li>
+    </ul>
+  </div>
+
+  <h3>Completá la ficha de tu narrador</h3>
+  <p style="margin-bottom:12px;">Edith te ayuda a escribir si lo necesitás. Tomense el tiempo que necesiten — esta ficha es el corazón del juego.</p>
+
+  <div class="caja caja-teal" style="margin-top:16px;">
+    <strong>📋 Estas preguntas las respondés en Classroom</strong>
+    <ol style="margin-left:22px;line-height:2.4;margin-top:8px;">
+      <li><strong>El mundo:</strong> ¿Dónde y cuándo transcurre la aventura? Describilo con detalle — lugar, época, qué tiene de peligroso o misterioso.</li>
+      <li><strong>El tono:</strong> ¿Cómo habla el narrador? ¿Es oscuro y opresivo, épico y heroico, misterioso y pausado? Describí cómo querés que suene.</li>
+      <li><strong>Las reglas:</strong> ¿Qué tiene que hacer el narrador siempre? ¿Qué no puede hacer nunca? (Pista: siempre 3 opciones, nunca decidir por el jugador.)</li>
+      <li><strong>El comienzo:</strong> Describí la escena inicial de tu historia. ¿Dónde empieza el jugador? ¿Qué ve? ¿Qué primeras 3 opciones tiene?</li>
+    </ol>
+  </div>
+</div>
+
+<!-- PARTE 2: IMÁGENES -->
+<div class="card c-imagen">
+  <h2>PARTE 2 — GENERÁ EL MUNDO EN IMÁGENES</h2>
+
+  <p>Ahora que tenés el mundo definido en palabras, usás otra IA para visualizarlo. <strong>Bing Image Creator</strong> y <strong>Gemini</strong> generan imágenes a partir de descripciones de texto — exactamente el mismo principio que con el narrador: las instrucciones definen el resultado.</p>
+
+  <div class="caja caja-amb">
+    <strong>💡 La clave del prompt de imagen</strong>
+    Un prompt vago da una imagen genérica. Un prompt específico da exactamente lo que imaginaste. Cuanto más detallés — iluminación, época, estilo, colores, qué hay en primer plano — más cerca va a estar la imagen de tu visión.
+  </div>
+
+  <div class="caja caja-g" style="margin-top:10px;">
+    <strong>Comparación:</strong>
+    ❌ "Bosque de noche" → imagen genérica de pinos con luna<br>
+    ✅ "Bosque austral en Tierra del Fuego, de noche, niebla densa, luz verde fantasmal entre los árboles, estilo ilustración de libro de terror, sin personas" → imagen específica y atmosférica
+  </div>
+
+  <h3>Diseñá los prompts de tu aventura</h3>
+  <p style="margin-bottom:12px;">Completá al menos dos. Guardá las imágenes generadas en tu Drive — las vamos a usar más adelante.</p>
+
+  <div class="caja caja-amb" style="margin-top:16px;">
+    <strong>📋 Esto también lo entregás en Classroom</strong>
+    <p style="margin-top:8px;font-size:19px;">Para cada imagen que generes, escribí:</p>
+    <ol style="margin-left:22px;line-height:2.4;margin-top:8px;">
+      <li>¿Qué querías mostrar?</li>
+      <li>¿Cuál fue el primer prompt que escribiste?</li>
+      <li>¿El resultado fue lo que esperabas? Si no, ¿qué cambiaste en el prompt?</li>
+      <li>Adjuntá la imagen final que guardaste.</li>
+    </ol>
+    <p style="margin-top:12px;font-size:18px;">Hacé esto para al menos <strong>dos imágenes</strong>: el escenario principal y el personaje o una escena clave.</p>
+  </div>
+
+  <div style="margin-top:16px;">
+    <p style="font-size:18px;margin-bottom:12px;"><strong>Abrí una de estas herramientas para probar tus prompts:</strong></p>
+    <a href="https://www.bing.com/images/create" target="_blank" class="btn-link btn-bing">🎨 Bing Image Creator</a>
+    <a href="https://gemini.google.com" target="_blank" class="btn-link btn-gem">✨ Gemini</a>
+    <p style="font-size:16px;margin-top:12px;color:#666;">Si el primer resultado no es lo que querías, ajustá el prompt — agregá o quitá detalles — y volvé a generar. Eso es ingeniería de prompt.</p>
+  </div>
+</div>
+
+<!-- PARTE 3: PROBAR EL NARRADOR -->
+<div class="card c-prueba">
+  <h2>PARTE 3 — PROBÁ TU NARRADOR</h2>
+
+  <p>Edith carga la ficha que diseñaste en el simulador. Vos jugás 3 o 4 turnos para ver si el narrador se comporta como querías.</p>
+
+  <div class="caja caja-rpg" style="margin-top:12px;">
+    <strong>Preguntas para hacerte mientras jugás:</strong>
+    <ul style="margin-left:20px;line-height:2.2;">
+      <li>¿El narrador mantuvo el tono que definiste?</li>
+      <li>¿Te dio siempre 3 opciones al final?</li>
+      <li>¿Tomó decisiones por vos en algún momento?</li>
+      <li>¿Algo no funcionó como esperabas? ¿Qué cambiarías en las instrucciones?</li>
+    </ul>
+  </div>
+
+  <div class="sim-wrap">
+    <div class="sim-setup" id="setup-sim">
+      <p>⚙️ <strong style="color:#94a3b8;">Edith configura el narrador con la ficha de Abril</strong></p>
+      <textarea id="prompt-edith" style="width:100%;background:#1e293b;border:1px solid #475569;color:#e2e8f0;border-radius:6px;padding:10px;font-size:14px;min-height:120px;margin-bottom:8px;font-family:monospace;outline:none;" placeholder="Pegá acá el system prompt armado con la ficha de Abril..."></textarea>
+      <input type="password" id="sim-key" placeholder="API Key de Groq (gsk_...)">
+      <button onclick="activar()" style="margin-top:8px;">✅ ACTIVAR NARRADOR</button>
     </div>
-    <div id="demo-chat" style="display:none;"></div>
-    <div class="demo-inp" id="demo-inp" style="display:none;">
-      <input type="text" id="abril-input" placeholder="¿Qué hacés?" onkeypress="if(event.key==='Enter')enviar()">
-      <button id="abril-btn" onclick="enviar()">Jugar</button>
+    <div id="sim-chat" style="display:none;"></div>
+    <div class="sim-inp" id="sim-inp" style="display:none;">
+      <input type="text" id="sim-input" placeholder="¿Qué hacés en la historia?" onkeypress="if(event.key==='Enter')enviar()">
+      <button id="sim-btn" onclick="enviar()">Jugar</button>
     </div>
   </div>
 </div>
 
-<!-- PREGUNTAS -->
-<div class="card c-preguntas">
+<!-- REFLEXIÓN -->
+<div class="card c-reflexion">
   <h2>PARA PENSAR Y RESPONDER</h2>
-  <p style="margin-bottom:16px;">Respondé en tu cuaderno o en voz alta con Edith.</p>
+  <p style="margin-bottom:16px;">Respondé oralmente con Edith o en tu cuaderno.</p>
 
   <div class="preg">
-    <span class="label">Pregunta 1 — El rol</span>
-    ¿Qué hace el narrador que la IA del TP2 no hacía? Nombrá al menos dos diferencias que hayas notado jugando.
+    <span class="label">Pregunta 1 — El narrador</span>
+    <p>¿El narrador funcionó como lo diseñaste? Nombrá una cosa que salió bien y una que cambiarías en las instrucciones.</p>
   </div>
-
   <div class="preg">
-    <span class="label">Pregunta 2 — Las instrucciones</span>
-    El narrador siempre te da 3 opciones al final. Eso no pasaba solo — alguien se lo indicó en las instrucciones. ¿Por qué te parece que se diseñó así? ¿Qué pasaría si el narrador no te diera opciones?
+    <span class="label">Pregunta 2 — Las imágenes</span>
+    <p>¿La primera imagen que generaste fue lo que esperabas? ¿Qué tuviste que cambiar en el prompt para que se acercara más a tu visión?</p>
   </div>
-
   <div class="preg">
-    <span class="label">Pregunta 3 — La memoria</span>
-    ¿El narrador recordó lo que pasó en turnos anteriores? Describí un momento donde se notó que sí (o que no) lo recordó.
+    <span class="label">Pregunta 3 — La conexión</span>
+    <p>Diseñar las instrucciones del narrador y diseñar el prompt de imagen son dos cosas distintas, pero tienen algo en común. ¿Qué es?</p>
   </div>
 </div>
 
@@ -138,22 +219,23 @@
 
 <script>
 var narKey='', narHist=[];
-var PROMPT='Sos el narrador de una aventura ambientada en la Patagonia austral, Tierra del Fuego. Tu tono es misterioso y envolvente.\n\nREGLAS INQUEBRANTABLES:\n1. Describí la escena en 2 oraciones máximo. Sé concreto y evocador.\n2. NUNCA decidas por el jugador. No asumas que corrió, atacó ni eligió nada.\n3. Al final de CADA respuesta ofrecé exactamente 3 opciones (A, B, C) y preguntá cuál elige.\n4. Si el jugador hace algo imposible o sin sentido, narrá una consecuencia divertida y volvé a ofrecer opciones.\n\nEmpezás así: el jugador está en el muelle de Ushuaia, de noche, con niebla. Hay una lancha abandonada amarrada al muelle.';
 
 function activar(){
-  var k=document.getElementById('abril-key').value.trim();
+  var k=document.getElementById('sim-key').value.trim();
+  var prompt=document.getElementById('prompt-edith').value.trim();
   if(!k){alert('Falta la API Key.');return;}
+  if(!prompt){alert('Pegá primero el system prompt de Abril.');return;}
   narKey=k;
-  narHist=[{role:'system',content:PROMPT}];
-  document.getElementById('setup-abril').style.display='none';
-  document.getElementById('demo-chat').style.display='flex';
-  document.getElementById('demo-inp').style.display='flex';
+  narHist=[{role:'system',content:prompt}];
+  document.getElementById('setup-sim').style.display='none';
+  document.getElementById('sim-chat').style.display='flex';
+  document.getElementById('sim-inp').style.display='flex';
   enviarInicial();
 }
 
 async function enviarInicial(){
-  narHist.push({role:'user',content:'Estoy en el muelle. ¿Qué veo?'});
-  var p=addMsg('El narrador está pensando...','msg-sys');
+  var p=addMsg('El narrador está preparando la escena inicial...','msg-sys');
+  narHist.push({role:'user',content:'Comenzá la aventura. Describí la escena inicial.'});
   try{
     var r=await llamar();
     p.remove(); narHist.push({role:'assistant',content:r});
@@ -162,9 +244,9 @@ async function enviarInicial(){
 }
 
 async function enviar(){
-  var inp=document.getElementById('abril-input');
+  var inp=document.getElementById('sim-input');
   var txt=inp.value.trim(); if(!txt||!narKey)return;
-  inp.value=''; document.getElementById('abril-btn').disabled=true;
+  inp.value=''; document.getElementById('sim-btn').disabled=true;
   addMsg(txt,'msg-user');
   narHist.push({role:'user',content:txt});
   var p=addMsg('...','msg-sys');
@@ -173,7 +255,7 @@ async function enviar(){
     p.remove(); narHist.push({role:'assistant',content:r});
     addMsg(r,'msg-ia','Narrador');
   }catch(e){p.remove();addMsg('Error.','msg-sys');narHist.pop();}
-  document.getElementById('abril-btn').disabled=false;
+  document.getElementById('sim-btn').disabled=false;
 }
 
 async function llamar(){
@@ -183,15 +265,16 @@ async function llamar(){
     body:JSON.stringify({model:'llama-3.3-70b-versatile',temperature:0.8,messages:narHist})
   });
   var d=await res.json();
+  if(d.error) throw new Error(d.error.message);
   return d.choices[0].message.content;
 }
 
 function addMsg(txt,cls,quien){
-  var chat=document.getElementById('demo-chat');
+  var chat=document.getElementById('sim-chat');
   var d=document.createElement('div');
   d.className=cls;
   if(cls==='msg-ia'){
-    d.innerHTML='<strong>'+(quien||'')+':</strong> '+txt.replace(/\n/g,'<br>');
+    d.innerHTML='<strong>'+(quien||'')+':</strong><br>'+txt.replace(/\n/g,'<br>');
   } else {
     d.textContent=(cls==='msg-user'?'Vos: ':'')+txt;
   }
