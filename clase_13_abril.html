@@ -22,76 +22,66 @@
   .back-btn{display:inline-block;margin-top:20px;margin-bottom:10px;padding:10px 20px;background:var(--bco);color:var(--nav);text-decoration:none;font-weight:bold;border-radius:8px;border:2px solid var(--bd);}
 
   .card{background:#fff;border-radius:var(--r);padding:28px;margin-bottom:24px;margin-top:20px;box-shadow:0 4px 12px rgba(0,0,0,.08);border-left:6px solid var(--bd);}
-  .c-intro   {border-left-color:var(--teal);background:var(--tbg);}
-  .c-elegir  {border-left-color:var(--g);background:var(--gbg);}
-  .c-ficha   {border-left-color:var(--vio);background:var(--viobg);}
-  .c-simul   {border-left-color:var(--teal);}
-  .c-imagen  {border-left-color:var(--amb);background:var(--abg);}
-  .c-reflexion{border-left-color:var(--g);}
-  .c-entrega {border-left-color:var(--classroom);background:#F0FFF4;}
+  .c-intro  {border-left-color:var(--teal);background:var(--tbg);}
+  .c-elegir {border-left-color:var(--g);background:var(--gbg);}
+  .c-ficha  {border-left-color:var(--vio);background:var(--viobg);}
+  .c-simul  {border-left-color:var(--teal);}
+  .c-imagen {border-left-color:var(--amb);background:var(--abg);}
+  .c-entrega{border-left-color:var(--classroom);background:#F0FFF4;}
 
   h2{color:var(--nav);font-size:22px;margin-bottom:14px;text-transform:uppercase;border-bottom:2px solid var(--gris);padding-bottom:8px;}
-  h3{color:var(--g);font-size:20px;margin:20px 0 10px;}
 
-  .caja{background:#fff;border-radius:10px;padding:18px 20px;margin:14px 0;border-left:5px solid;font-size:19px;line-height:1.75;}
+  .caja{background:#fff;border-radius:10px;padding:16px 20px;margin:12px 0;border-left:5px solid;font-size:19px;line-height:1.7;}
   .caja-teal{border-color:var(--teal);background:var(--tbg);}
   .caja-g   {border-color:var(--g);background:var(--gbg);}
   .caja-amb {border-color:var(--amb);background:var(--abg);}
   .caja-vio {border-color:var(--vio);background:var(--viobg);}
-  .caja-rojo{border-color:var(--rojo);background:#FFEBEE;}
-  .caja strong{color:var(--nav);display:block;margin-bottom:8px;font-size:20px;}
+  .caja strong{color:var(--nav);display:block;margin-bottom:6px;font-size:19px;}
 
   /* Grilla de ejemplos */
-  .ejemplos-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
-  .ej-card{border:2px solid var(--bd);border-radius:var(--r);padding:18px;background:#fff;cursor:pointer;transition:.15s;}
+  .ejemplos-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+  .ej-card{border:2px solid var(--bd);border-radius:var(--r);padding:16px;background:#fff;cursor:pointer;transition:.15s;}
   .ej-card:hover{border-color:var(--teal);background:var(--tbg);}
   .ej-card.elegido{border-color:var(--g);background:var(--gbg);border-width:3px;}
-  .ej-card h4{color:var(--nav);font-size:19px;margin-bottom:6px;}
-  .ej-card p{font-size:17px;color:#555;line-height:1.6;}
-  .ej-ico{font-size:28px;margin-bottom:8px;display:block;}
+  .ej-ico{font-size:26px;margin-bottom:6px;display:block;}
+  .ej-card h4{color:var(--nav);font-size:18px;margin-bottom:4px;}
+  .ej-card p{font-size:16px;color:#555;line-height:1.5;}
 
   /* Ficha */
-  .ficha{border:2px solid var(--vio);border-radius:var(--r);overflow:hidden;margin:16px 0;}
-  .ficha-header{background:var(--vio);color:#fff;padding:12px 18px;font-weight:bold;font-size:18px;}
-  .ficha-body{padding:20px;display:flex;flex-direction:column;gap:16px;}
-  .campo label{display:block;font-weight:bold;color:var(--nav);margin-bottom:6px;font-size:18px;}
-  .campo textarea,.campo input[type=text]{width:100%;padding:12px;border:2px solid var(--bd);border-radius:8px;font-size:18px;font-family:inherit;resize:vertical;outline:none;line-height:1.6;}
-  .campo textarea{min-height:80px;}
-  .campo textarea:focus,.campo input[type=text]:focus{border-color:var(--vio);}
+  .ficha{border:2px solid var(--vio);border-radius:var(--r);overflow:hidden;margin:14px 0;}
+  .ficha-header{background:var(--vio);color:#fff;padding:11px 18px;font-weight:bold;font-size:18px;}
+  .ficha-body{padding:18px;display:flex;flex-direction:column;gap:14px;}
+  .campo label{display:block;font-weight:bold;color:var(--nav);margin-bottom:5px;font-size:18px;}
   .campo .hint{font-size:15px;color:#777;margin-top:4px;font-style:italic;}
 
   /* Simulador */
-  .sim-panel{border:2px solid var(--teal);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;height:520px;margin-top:16px;}
-  .sim-header-bar{background:var(--teal);color:#fff;padding:13px 18px;font-weight:bold;font-size:18px;display:flex;justify-content:space-between;align-items:center;}
-  .sim-config{padding:14px;background:#F0F4F8;border-bottom:2px solid var(--bd);display:flex;flex-direction:column;gap:10px;}
+  .sim-panel{border:2px solid var(--teal);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;height:500px;margin-top:14px;}
+  .sim-header-bar{background:var(--teal);color:#fff;padding:12px 18px;font-weight:bold;font-size:18px;}
+  .sim-config{padding:12px;background:#F0F4F8;border-bottom:2px solid var(--bd);display:flex;flex-direction:column;gap:8px;}
   .sim-config input{padding:10px;border-radius:6px;border:1px solid #ccc;font-size:17px;outline:none;width:100%;}
   .btn-activar{background:var(--teal);color:#fff;border:none;padding:11px;border-radius:6px;font-weight:bold;cursor:pointer;font-size:17px;width:100%;}
-  .chat-box{flex-grow:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:#fff;}
-  .msg{max-width:85%;padding:12px 15px;border-radius:12px;font-size:18px;line-height:1.5;}
-  .msg-sys{align-self:center;background:#FFF8E1;color:#E65100;font-size:14px;font-weight:bold;border-radius:20px;padding:7px 14px;}
+  .chat-box{flex-grow:1;padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;background:#fff;}
+  .msg{max-width:85%;padding:11px 14px;border-radius:12px;font-size:18px;line-height:1.5;}
+  .msg-sys{align-self:center;background:#FFF8E1;color:#E65100;font-size:14px;font-weight:bold;border-radius:20px;padding:6px 12px;}
   .msg-user{align-self:flex-end;background:var(--teal);color:#fff;border-bottom-right-radius:2px;}
   .msg-ia{align-self:flex-start;background:#F5F5F5;border:1px solid #E0E0E0;color:#333;border-bottom-left-radius:2px;}
-  .sim-input-row{display:flex;padding:12px;background:#F0F4F8;border-top:1px solid var(--bd);gap:8px;}
-  .sim-input-row input{flex:1;padding:11px;border-radius:8px;border:1px solid #ccc;font-size:17px;outline:none;}
-  .btn-enviar{background:var(--teal);color:#fff;border:none;padding:0 18px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:17px;}
+  .sim-input-row{display:flex;padding:10px;background:#F0F4F8;border-top:1px solid var(--bd);gap:8px;}
+  .sim-input-row input{flex:1;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:17px;outline:none;}
+  .btn-enviar{background:var(--teal);color:#fff;border:none;padding:0 16px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:17px;}
   .btn-enviar:disabled{background:#ccc;cursor:not-allowed;}
-  .btn-guardar{background:var(--g);color:#fff;border:none;padding:0 14px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:17px;}
+  .btn-guardar{background:var(--g);color:#fff;border:none;padding:0 12px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:17px;}
   .btn-guardar:disabled{background:#ccc;cursor:not-allowed;}
 
   /* Pruebas */
-  .prueba{background:#fff;border:2px solid var(--bd);border-left:5px solid var(--g);border-radius:10px;padding:16px 20px;margin-bottom:12px;font-size:19px;line-height:1.7;}
-  .prueba .num{color:var(--g);font-weight:bold;font-size:20px;display:block;margin-bottom:6px;}
+  .prueba{background:#fff;border:2px solid var(--bd);border-left:5px solid var(--g);border-radius:10px;padding:14px 18px;margin-bottom:10px;font-size:18px;line-height:1.65;}
+  .prueba .num{color:var(--g);font-weight:bold;font-size:19px;display:block;margin-bottom:4px;}
 
   /* Imagen */
   .btn-link{display:inline-block;margin-top:10px;padding:12px 20px;border-radius:8px;font-weight:bold;font-size:17px;text-decoration:none;border:2px solid;}
   .btn-bing{background:#0078D4;color:#fff;border-color:#0078D4;}
   .btn-gem{background:#1A73E8;color:#fff;border-color:#1A73E8;margin-left:10px;}
 
-  /* Reflexión */
-  .preg{background:#fff;border:2px solid var(--bd);border-left:5px solid var(--g);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
-  .preg .label{color:var(--g);font-weight:bold;font-size:19px;display:block;margin-bottom:8px;}
-  .preg p{font-size:19px;line-height:1.7;}
-
+  code{background:#E8E6FF;color:var(--vio);padding:2px 5px;border-radius:4px;font-family:'Consolas',monospace;font-size:17px;}
   @media(max-width:600px){.ejemplos-grid{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -99,7 +89,7 @@
 
 <header>
   <h1>CLASE 13 — DISEÑÁ TU ASISTENTE</h1>
-  <p>Taller de IA Aplicada · Abril Oreste · Lunes 09/06 · Ingeniería de Prompt</p>
+  <p>Taller de IA Aplicada · Abril Oreste · Lunes 09/06</p>
 </header>
 
 <div class="container">
@@ -108,100 +98,85 @@
 <!-- INTRO -->
 <div class="card c-intro">
   <h2>¿QUÉ HACEMOS HOY?</h2>
-  <p>En las clases anteriores ya diseñaste IAs con reglas propias, investigaste IAs misteriosas y generaste imágenes con prompts. Hoy hacemos todo eso junto — pero con un objetivo real: <strong>creás un asistente tuyo, sobre un tema que te importe a vos.</strong></p>
+  <p>Hoy creás tu propio asistente — sobre un tema que te interese a vos.</p>
 
-  <div class="caja caja-teal" style="margin-top:16px;">
-    <strong>📌 Hoy no escribís código. Sos la Directora.</strong>
-    Vos decidís quién es el asistente, qué sabe, cómo habla y qué no puede hacer. La IA obedece tus instrucciones. Edith te acompaña si necesitás ayuda para escribir.
+  <div class="caja caja-teal" style="margin-top:14px;">
+    <strong>📌 No escribís código. Escribís instrucciones.</strong>
+    Vos decidís quién es el asistente y qué puede hacer. La IA obedece.
   </div>
 
   <div class="caja caja-g" style="margin-top:0;">
-    <strong>Tres partes en orden:</strong>
-    <ol style="margin-left:22px;line-height:2.4;margin-top:6px;">
-      <li><strong>Diseñar</strong> — elegís el tema y escribís las reglas del asistente</li>
-      <li><strong>Probar</strong> — chateás con él en el simulador y ves si cumple tus reglas</li>
-      <li><strong>Visualizar</strong> — generás una imagen que represente tu asistente</li>
+    <strong>En orden:</strong>
+    <ol style="margin-left:20px;line-height:2.2;margin-top:4px;">
+      <li>Elegís el tema</li>
+      <li>Escribís las reglas</li>
+      <li>Lo probás en el simulador</li>
+      <li>Generás una imagen</li>
     </ol>
   </div>
 </div>
 
-<!-- PARTE 1: ELEGIR EL TEMA -->
+<!-- PARTE 1: ELEGIR -->
 <div class="card c-elegir">
-  <h2>PARTE 1 — ¿QUÉ ASISTENTE QUERÉS CREAR?</h2>
-  <p>Primero elegís el tema. Tiene que ser algo concreto y real — algo que puedas mostrarle a alguien y que esa persona le encuentre utilidad.</p>
-
-  <p style="margin-top:14px;font-weight:bold;">Algunos ejemplos para inspirarte — hacé clic en el que más te guste, o inventá el tuyo:</p>
+  <h2>PARTE 1 — ELEGÍ EL TEMA</h2>
+  <p>Hacé clic en el que más te guste. O inventá el tuyo.</p>
 
   <div class="ejemplos-grid" id="ej-grid">
-    <div class="ej-card" onclick="elegir(this,'Guía turística de Ushuaia','Sos una guía turística experta en Ushuaia y Tierra del Fuego. Hablás con entusiasmo y afecto por la ciudad. Solo respondés preguntas sobre qué hacer, qué visitar, qué comer y cómo moverse en Ushuaia y la región. Si te preguntan sobre otra ciudad decís amablemente que tu especialidad es Ushuaia. Siempre mencionás al menos un dato curioso o un consejo práctico en cada respuesta.')">
+    <div class="ej-card" onclick="elegir(this,'Guía de Ushuaia')">
       <span class="ej-ico">🏔️</span>
       <h4>Guía de Ushuaia</h4>
-      <p>Recomienda qué hacer, qué visitar y qué comer en la ciudad.</p>
+      <p>Qué hacer, visitar y comer en la ciudad.</p>
     </div>
-    <div class="ej-card" onclick="elegir(this,'Asistente de recetas','Sos un asistente de cocina simpático y práctico. Ayudás a elegir recetas según los ingredientes que tiene el usuario, explicás los pasos con claridad y das consejos de cocina. Usás lenguaje sencillo y alentador. Si el usuario no tiene algún ingrediente, sugerís cómo reemplazarlo. No hablás de otros temas que no sean cocina y recetas.')">
+    <div class="ej-card" onclick="elegir(this,'Asistente de recetas')">
       <span class="ej-ico">🍳</span>
       <h4>Asistente de recetas</h4>
-      <p>Ayuda a elegir qué cocinar según lo que tenés en casa.</p>
+      <p>Qué cocinar con lo que tenés en casa.</p>
     </div>
-    <div class="ej-card" onclick="elegir(this,'Consejero de películas y series','Sos un experto en cine y series. Recomendás películas y series según el estado de ánimo o los gustos del usuario. Hablás con pasión y siempre explicás brevemente por qué recomendás cada cosa. Si no conocés algo que te preguntan, lo decís con honestidad. Solo hablás de cine, series y entretenimiento audiovisual.')">
+    <div class="ej-card" onclick="elegir(this,'Consejero de pelis y series')">
       <span class="ej-ico">🎬</span>
       <h4>Consejero de pelis y series</h4>
-      <p>Recomienda qué ver según el ánimo o los gustos.</p>
+      <p>Qué ver según el ánimo o los gustos.</p>
     </div>
-    <div class="ej-card" onclick="elegir(this,'Asistente de estudio','Sos un asistente de estudio paciente y claro. Explicás conceptos difíciles con palabras sencillas y muchos ejemplos. Cuando el usuario no entiende algo, lo explicás de una manera distinta. Hacés preguntas para verificar que se entendió. Nunca das las respuestas directamente — ayudás a pensar. Solo hablás de temas de estudio y aprendizaje.')">
+    <div class="ej-card" onclick="elegir(this,'Asistente de estudio')">
       <span class="ej-ico">📚</span>
       <h4>Asistente de estudio</h4>
-      <p>Explica temas difíciles con ejemplos y mucha paciencia.</p>
+      <p>Explica temas difíciles con paciencia.</p>
     </div>
   </div>
 
-  <div class="caja caja-g" id="tema-elegido" style="display:none;margin-top:16px;">
-    <strong>✅ Tema elegido</strong>
+  <div class="caja caja-g" id="tema-elegido" style="display:none;margin-top:14px;">
+    <strong>✅ Elegiste:</strong>
     <span id="tema-texto"></span>
-  </div>
-
-  <div class="caja caja-vio" style="margin-top:14px;">
-    <strong>¿Otro tema? Escribilo acá</strong>
-    <p style="margin-top:6px;font-size:18px;">Si ninguno de los ejemplos te convence, escribí con Edith el tema que se te ocurra y armamos las reglas juntas.</p>
   </div>
 </div>
 
 <!-- PARTE 2: LA FICHA -->
 <div class="card c-ficha">
-  <h2>PARTE 2 — LAS REGLAS DEL ASISTENTE</h2>
-  <p>Estas cuatro preguntas definen quién es tu asistente. Lo que escribas acá son las instrucciones que le vas a dar a la IA. Edith te ayuda a escribir si lo necesitás.</p>
-
-  <div class="caja caja-vio" style="margin-top:14px;">
-    <strong>📋 Respondé en Classroom</strong>
-    Escribí las respuestas a estas cuatro preguntas en la tarea de Classroom. Cuando las tengas, usás esas respuestas para configurar el simulador.
-  </div>
+  <h2>PARTE 2 — LAS REGLAS</h2>
+  <p>Estas cuatro preguntas definen quién es tu asistente. Respondelas en Classroom.</p>
 
   <div class="ficha">
-    <div class="ficha-header">📋 Ficha de diseño — Mi Asistente</div>
+    <div class="ficha-header">📋 Ficha — Mi Asistente</div>
     <div class="ficha-body">
 
       <div class="campo">
-        <label>1. Nombre y rol</label>
-        <p style="font-size:17px;color:#555;margin-bottom:8px;">¿Cómo se llama tu asistente y cuál es su especialidad?</p>
-        <div class="hint">Ej: "Se llama Luna y es guía turística de Ushuaia" / "Se llama Max y sabe todo sobre recetas"</div>
+        <label>1. ¿Cómo se llama y qué hace?</label>
+        <div class="hint">Ej: "Se llama Luna, es guía turística de Ushuaia"</div>
       </div>
 
       <div class="campo">
-        <label>2. Cómo habla</label>
-        <p style="font-size:17px;color:#555;margin-bottom:8px;">¿Qué tono tiene? ¿Es formal, simpático, entusiasta, tranquilo? ¿Usa emojis? ¿Es corto o largo en sus respuestas?</p>
-        <div class="hint">Ej: "Habla con entusiasmo, usa emojis y sus respuestas no pasan de 3 oraciones"</div>
+        <label>2. ¿Cómo habla?</label>
+        <div class="hint">Ej: "Con entusiasmo, usa emojis, respuestas cortas"</div>
       </div>
 
       <div class="campo">
-        <label>3. De qué habla (y de qué NO)</label>
-        <p style="font-size:17px;color:#555;margin-bottom:8px;">¿Cuál es su tema? ¿Qué pasa si le preguntan algo fuera de ese tema?</p>
-        <div class="hint">Ej: "Solo habla de turismo en Ushuaia. Si le preguntan de otra ciudad, dice amablemente que su especialidad es Ushuaia"</div>
+        <label>3. ¿De qué habla y de qué NO?</label>
+        <div class="hint">Ej: "Solo de turismo en Ushuaia. Si le preguntan otra cosa, dice que no es su tema"</div>
       </div>
 
       <div class="campo">
         <label>4. Una regla especial tuya</label>
-        <p style="font-size:17px;color:#555;margin-bottom:8px;">Algo que lo haga único — una costumbre, una frase que siempre dice, algo que nunca puede hacer.</p>
-        <div class="hint">Ej: "Siempre termina cada respuesta con un dato curioso que empieza con ¿Sabías que...?" / "Nunca dice que algo es imposible"</div>
+        <div class="hint">Ej: "Siempre termina con ¿Sabías que...?" / "Nunca dice que algo es imposible"</div>
       </div>
 
     </div>
@@ -211,110 +186,82 @@
 <!-- PARTE 3: SIMULADOR -->
 <div class="card c-simul">
   <h2>PARTE 3 — PROBÁ TU ASISTENTE</h2>
-  <p>Cuando tengas escritas las cuatro respuestas de la ficha, usás el simulador para probar si el asistente cumple tus reglas. Edith carga la API Key.</p>
+  <p>Pegá las reglas en el simulador y activalo.</p>
 
   <div class="sim-panel">
-    <div class="sim-header-bar">
-      <span>🧠 MI ASISTENTE — PANEL DE CONTROL</span>
-      <span style="font-size:14px;opacity:.8;">Edith carga la API Key</span>
-    </div>
+    <div class="sim-header-bar">🧠 MI ASISTENTE</div>
     <div class="sim-config">
-      <input type="password" id="sim-key" placeholder="API Key de Groq (Edith la carga)">
-      <input type="text" id="sim-prompt-input" placeholder="Pegá acá las reglas de tu asistente (la ficha completa)..." style="min-height:0;">
-      <button class="btn-activar" onclick="activar()">✅ ACTIVAR MI ASISTENTE</button>
+      <input type="password" id="sim-key" placeholder="API Key de Groq">
+      <input type="text" id="sim-prompt-input" placeholder="Pegá acá las reglas de tu asistente...">
+      <button class="btn-activar" onclick="activar()">✅ ACTIVAR</button>
     </div>
     <div class="chat-box" id="chat-box">
       <div class="msg msg-sys">Completá el panel arriba para activar tu asistente.</div>
     </div>
     <div class="sim-input-row">
-      <input type="text" id="sim-input" placeholder="Hablale a tu asistente..." disabled onkeypress="if(event.key==='Enter')enviar()">
-      <button class="btn-guardar" id="btn-guardar" onclick="guardar()" disabled>💾 Guardar</button>
+      <input type="text" id="sim-input" placeholder="Hablale..." disabled onkeypress="if(event.key==='Enter')enviar()">
+      <button class="btn-guardar" id="btn-guardar" onclick="guardar()" disabled>💾</button>
       <button class="btn-enviar" id="btn-enviar" onclick="enviar()" disabled>Enviar</button>
     </div>
   </div>
 
-  <h3 style="margin-top:20px;">Las 3 pruebas obligatorias</h3>
-  <p style="margin-bottom:14px;">Hacé estas tres pruebas en orden para ver si el asistente funciona como lo diseñaste.</p>
-
-  <div class="prueba">
-    <span class="num">✅ Prueba 1 — Identidad</span>
-    Preguntale quién es y de qué puede hablar. ¿Responde con el nombre y el tema que le diste?<br>
-    <em style="color:#555;font-size:17px;">Si no: revisá que el nombre y el rol estén bien escritos en las reglas.</em>
-  </div>
-  <div class="prueba">
-    <span class="num">📋 Prueba 2 — El límite</span>
-    Preguntale algo que esté fuera de su tema. ¿Lo rechaza amablemente o responde igual?<br>
-    <em style="color:#555;font-size:17px;">Si no: la regla de "de qué NO habla" necesita ser más explícita.</em>
-  </div>
-  <div class="prueba">
-    <span class="num">✨ Prueba 3 — La regla especial</span>
-    Provocá la regla especial que inventaste. ¿La cumple?<br>
-    <em style="color:#555;font-size:17px;">Si no: reescribí esa regla siendo más específica y volvé a activar el asistente.</em>
+  <div style="margin-top:16px;">
+    <div class="prueba">
+      <span class="num">✅ Prueba 1 — Identidad</span>
+      Preguntale quién es. ¿Responde con el nombre y el tema que le diste?
+    </div>
+    <div class="prueba">
+      <span class="num">🚧 Prueba 2 — El límite</span>
+      Preguntale algo fuera de su tema. ¿Lo rechaza?
+    </div>
+    <div class="prueba">
+      <span class="num">✨ Prueba 3 — La regla especial</span>
+      Provocá la regla que inventaste. ¿La cumple?
+    </div>
   </div>
 
-  <div class="caja caja-g" style="margin-top:16px;">
-    <strong>💾 Cuando termines las 3 pruebas → Guardar</strong>
-    Apretá el botón <strong>Guardar</strong> para descargar el archivo <code>conversacion_abril.txt</code>. Lo vas a necesitar para la entrega.
+  <div class="caja caja-g" style="margin-top:14px;">
+    <strong>💾 Cuando termines las pruebas → apretá el botón Guardar</strong>
+    Se descarga el archivo <code>conversacion_abril.txt</code> — lo necesitás para la entrega.
   </div>
 </div>
 
 <!-- PARTE 4: IMAGEN -->
 <div class="card c-imagen">
-  <h2>PARTE 4 — VISUALIZÁ TU ASISTENTE</h2>
-  <p>Ahora que tu asistente tiene personalidad y reglas, dale una cara. Usás una IA generadora de imágenes para visualizarlo — el mismo principio de siempre: cuanto más específico es el prompt, más cerca está la imagen de lo que imaginaste.</p>
+  <h2>PARTE 4 — LA IMAGEN</h2>
+  <p>Generá una imagen que represente a tu asistente.</p>
 
-  <div class="caja caja-g" style="margin-top:14px;">
-    <strong>Comparación:</strong>
-    ❌ "Una guía turística" → foto genérica<br>
-    ✅ "Una guía turística joven y sonriente en el puerto de Ushuaia, con el canal Beagle de fondo, montañas nevadas, estilo ilustración digital cálida y moderna" → imagen específica y tuya
+  <div class="caja caja-g" style="margin-top:12px;">
+    <strong>Cuanto más específico el prompt, mejor la imagen:</strong>
+    ❌ "Una guía turística"<br>
+    ✅ "Guía turística joven en el puerto de Ushuaia, canal Beagle de fondo, montañas nevadas, ilustración digital cálida"
+  </div>
+
+  <div style="margin-top:14px;">
+    <a href="https://www.bing.com/images/create" target="_blank" class="btn-link btn-bing">🎨 Bing Image Creator</a>
+    <a href="https://gemini.google.com" target="_blank" class="btn-link btn-gem">✨ Gemini</a>
   </div>
 
   <div class="caja caja-amb" style="margin-top:14px;">
-    <strong>📋 Esto también lo entregás en Classroom</strong>
-    <ol style="margin-left:22px;line-height:2.4;margin-top:8px;">
-      <li>¿Qué querías mostrar en la imagen?</li>
-      <li>¿Cuál fue el primer prompt que escribiste?</li>
-      <li>¿El resultado fue lo que esperabas? ¿Qué cambiaste?</li>
+    <strong>📋 Para Classroom — anotá:</strong>
+    <ol style="margin-left:20px;line-height:2.2;margin-top:4px;">
+      <li>¿Qué querías mostrar?</li>
+      <li>¿Cuál fue el primer prompt?</li>
+      <li>¿Qué cambiaste para mejorar el resultado?</li>
       <li>Adjuntá la imagen final.</li>
     </ol>
-  </div>
-
-  <div style="margin-top:16px;">
-    <p style="font-size:18px;margin-bottom:12px;"><strong>Abrí una de estas herramientas:</strong></p>
-    <a href="https://www.bing.com/images/create" target="_blank" class="btn-link btn-bing">🎨 Bing Image Creator</a>
-    <a href="https://gemini.google.com" target="_blank" class="btn-link btn-gem">✨ Gemini</a>
-    <p style="font-size:16px;margin-top:12px;color:#666;">Guardá la imagen en tu Drive — la vamos a usar más adelante.</p>
-  </div>
-</div>
-
-<!-- REFLEXIÓN -->
-<div class="card c-reflexion">
-  <h2>PARA PENSAR — RESPONDÉ CON EDITH</h2>
-  <p style="margin-bottom:16px;">Respondé oralmente con Edith o en tu cuaderno.</p>
-
-  <div class="preg">
-    <span class="label">Pregunta 1 — Tu asistente</span>
-    <p>¿El asistente cumplió todas las reglas que le pusiste? Nombrá una cosa que salió bien y una que cambiarías.</p>
-  </div>
-  <div class="preg">
-    <span class="label">Pregunta 2 — Las instrucciones</span>
-    <p>¿Cuál de las cuatro preguntas de la ficha fue la más difícil de escribir? ¿Por qué?</p>
-  </div>
-  <div class="preg">
-    <span class="label">Pregunta 3 — La imagen</span>
-    <p>¿La imagen que generaste representa bien a tu asistente? ¿Qué tuviste que cambiar en el prompt para que se acercara más a lo que imaginabas?</p>
   </div>
 </div>
 
 <!-- ENTREGA -->
 <div class="card c-entrega">
   <h2>ENTREGÁ EN CLASSROOM</h2>
-  <div style="background:#E6F4EA;border-left:5px solid var(--classroom);padding:20px;border-radius:8px;">
-    <strong style="color:var(--classroom);display:block;margin-bottom:12px;font-size:20px;">📤 Antes de terminar la clase:</strong>
-    <ol style="margin-left:20px;line-height:2.6;">
-      <li>Las respuestas a las <strong>4 preguntas de la ficha</strong> (nombre, tono, temas, regla especial).</li>
-      <li>El archivo <strong><code>conversacion_abril.txt</code></strong> descargado con el botón Guardar.</li>
-      <li>La <strong>imagen generada</strong> + las respuestas a las 4 preguntas de imagen.</li>
+  <div style="background:#E6F4EA;border-left:5px solid var(--classroom);padding:18px;border-radius:8px;">
+    <strong style="color:var(--classroom);display:block;margin-bottom:10px;font-size:19px;">📤 Antes de terminar:</strong>
+    <ol style="margin-left:20px;line-height:2.4;">
+      <li>Las respuestas a las <strong>4 preguntas de la ficha</strong>.</li>
+      <li>El archivo <strong><code>conversacion_abril.txt</code></strong>.</li>
+      <li>La <strong>imagen</strong> + las 4 preguntas sobre el prompt.</li>
     </ol>
   </div>
 </div>
@@ -322,27 +269,26 @@
 </div>
 
 <script>
-// ─── Selección de ejemplos ────────────────────────────────────────────────
-function elegir(card, nombre, prompt) {
+function elegir(card, nombre) {
   document.querySelectorAll('.ej-card').forEach(function(c){ c.classList.remove('elegido'); });
   card.classList.add('elegido');
   document.getElementById('tema-elegido').style.display = 'block';
   document.getElementById('tema-texto').textContent = nombre;
-  document.getElementById('sim-prompt-input').value = prompt;
+  document.getElementById('sim-prompt-input').value = '';
+  document.getElementById('sim-prompt-input').placeholder = 'Escribí acá las reglas de tu asistente de ' + nombre + '...';
 }
 
-// ─── Simulador ───────────────────────────────────────────────────────────
 var KEY = '', HIST = [];
 
 function activar() {
   var k = document.getElementById('sim-key').value.trim();
   var prompt = document.getElementById('sim-prompt-input').value.trim();
-  if (!k) { alert('Edith tiene que cargar la API Key primero.'); return; }
+  if (!k) { alert('Falta la API Key.'); return; }
   if (!prompt) { alert('Primero escribí las reglas de tu asistente.'); return; }
   KEY = k;
   HIST = [{ role: 'system', content: prompt }];
   document.getElementById('chat-box').innerHTML = '';
-  addMsg('Tu asistente está listo. ¡Empezá a hablarle!', 'sys');
+  addMsg('Tu asistente está listo. ¡Empezá!', 'sys');
   document.getElementById('sim-input').disabled = false;
   document.getElementById('btn-enviar').disabled = false;
   document.getElementById('btn-guardar').disabled = false;
@@ -387,7 +333,7 @@ function guardar() {
   var a = document.createElement('a');
   a.href = url; a.download = 'conversacion_abril.txt'; a.click();
   URL.revokeObjectURL(url);
-  addMsg('💾 Archivo descargado. Revisá la carpeta de Descargas.', 'sys');
+  addMsg('💾 Archivo descargado.', 'sys');
 }
 
 function addMsg(txt, tipo) {
