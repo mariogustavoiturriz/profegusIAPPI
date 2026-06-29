@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 15 — Abril · La Voz de la IA</title>
+<style>
+  :root{
+    --nav:#1A2C3A;--g:#2E6820;--gbg:#EFF8EE;
+    --teal:#00949A;--tbg:#E0F7FA;
+    --amb:#D4873A;--abg:#FFF8EE;
+    --vio:#3D5A99;--viobg:#F0EFFF;
+    --txt:#2C3E50;--bco:#FFFFFF;--bd:#C5D2DC;--gris:#F3F6F9;--r:12px;
+    --rojo:#C62828;--rojo-bg:#FFEBEE;
+    --classroom:#137333;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#EEF3F7;color:var(--txt);line-height:1.75;font-size:21px;padding:15px 0 60px;}
+  header{background:var(--nav);color:#fff;padding:25px 20px;border-bottom:6px solid var(--vio);}
+  header h1{font-size:24px;margin-bottom:5px;text-transform:uppercase;}
+  header p{font-size:17px;opacity:.85;}
+  .container{width:95%;max-width:920px;margin:0 auto;padding:0 15px;}
+  .back-btn{display:inline-block;margin-top:20px;margin-bottom:10px;padding:10px 20px;background:var(--bco);color:var(--nav);text-decoration:none;font-weight:bold;border-radius:8px;border:2px solid var(--bd);}
+  .card{background:#fff;border-radius:var(--r);padding:28px;margin-bottom:24px;margin-top:20px;box-shadow:0 4px 12px rgba(0,0,0,.08);border-left:6px solid var(--bd);}
+  .c-intro {border-left-color:var(--vio);}
+  .c-textos{border-left-color:var(--teal);}
+  .c-reveal {border-left-color:var(--g);background:var(--gbg);}
+  .c-ficha  {border-left-color:var(--amb);background:var(--abg);}
+  .c-entrega{border-left-color:var(--classroom);background:#F0FFF4;}
+  h2{color:var(--nav);font-size:22px;margin-bottom:14px;text-transform:uppercase;border-bottom:2px solid var(--gris);padding-bottom:8px;}
+  .num-badge{display:inline-block;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:bold;font-size:17px;margin-right:8px;color:#fff;}
+  .caja{background:#fff;border-radius:10px;padding:16px 20px;margin:12px 0;border-left:5px solid;font-size:19px;line-height:1.7;}
+  .caja-vio {border-color:var(--vio);background:var(--viobg);}
+  .caja-teal{border-color:var(--teal);background:var(--tbg);}
+  .caja-g   {border-color:var(--g);background:var(--gbg);}
+  .caja-amb {border-color:var(--amb);background:var(--abg);}
+  .caja strong{color:var(--nav);display:block;margin-bottom:6px;}
+
+  /* Textos para clasificar */
+  .textos-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+  .texto-card{border:3px solid var(--bd);border-radius:var(--r);overflow:hidden;background:#fff;}
+  .texto-num{background:var(--nav);color:#fff;padding:8px 14px;font-weight:bold;font-size:16px;display:flex;justify-content:space-between;align-items:center;}
+  .texto-body{padding:16px 18px;font-size:18px;line-height:1.7;font-style:italic;color:#333;}
+  .texto-resp{padding:10px 14px;border-top:1px solid var(--gris);background:var(--gris);display:flex;gap:10px;align-items:center;}
+  .resp-btn{padding:7px 16px;border-radius:20px;border:2px solid var(--bd);background:#fff;cursor:pointer;font-size:15px;font-weight:bold;transition:.15s;}
+  .resp-btn:hover{background:var(--nav);color:#fff;border-color:var(--nav);}
+  .resp-btn.elegido-h{background:#1565C0;color:#fff;border-color:#1565C0;}
+  .resp-btn.elegido-ia{background:var(--vio);color:#fff;border-color:var(--vio);}
+  .resp-btn.correcto{background:var(--g);color:#fff;border-color:var(--g);}
+  .resp-btn.incorrecto{background:var(--rojo);color:#fff;border-color:var(--rojo);}
+  .texto-feedback{display:none;padding:10px 14px;font-size:15px;font-weight:bold;border-top:1px solid var(--bd);}
+  .tf-ok{background:#E8F5E9;color:var(--g);}
+  .tf-mal{background:var(--rojo-bg);color:var(--rojo);}
+
+  /* Pregunta de reflexión */
+  .preg-escrita{background:#fff;border:2px solid var(--bd);border-left:5px solid var(--vio);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+  .preg-escrita .label{color:var(--vio);font-weight:bold;font-size:19px;display:block;margin-bottom:10px;}
+  .preg-escrita textarea{width:100%;border:none;border-bottom:2px solid var(--bd);padding:8px 0;font-size:18px;font-family:inherit;resize:none;outline:none;min-height:65px;background:transparent;line-height:1.6;}
+  .preg-escrita textarea:focus{border-bottom-color:var(--vio);}
+
+  /* Ficha de identidad */
+  .ficha-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+  .ficha-campo{background:#fff;border:2px solid var(--bd);border-radius:10px;padding:16px 18px;}
+  .ficha-campo label{display:block;font-weight:bold;color:var(--amb);font-size:17px;margin-bottom:8px;}
+  .ficha-campo input,.ficha-campo textarea,.ficha-campo select{width:100%;border:none;border-bottom:2px solid var(--bd);padding:8px 0;font-size:18px;font-family:inherit;resize:none;outline:none;background:transparent;line-height:1.5;}
+  .ficha-campo input:focus,.ficha-campo textarea:focus,.ficha-campo select:focus{border-bottom-color:var(--amb);}
+  .ficha-campo.full{grid-column:1/-1;}
+  .ficha-campo textarea{min-height:55px;}
+  .btn-imprimir{background:var(--nav);color:#fff;border:none;padding:11px 24px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:17px;margin-top:14px;}
+
+  @media(max-width:700px){.textos-grid,.ficha-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CLASE 15 — LA VOZ DE LA IA</h1>
+  <p>Taller de IA Aplicada · Abril Oreste · CTP Antonio Martín Marte</p>
+</header>
+
+<div class="container">
+<a href="index.html" class="back-btn">⬅ Volver</a>
+
+<!-- INTRO -->
+<div class="card c-intro">
+  <h2>¿QUÉ HACEMOS HOY?</h2>
+  <p>Las IAs tienen una forma particular de hablar. Hoy vas a aprender a reconocerla — y después vas a decidir cómo querés que hable la tuya.</p>
+  <div class="caja caja-vio" style="margin-top:14px;">
+    <strong>En dos partes:</strong>
+    <ol style="margin-left:20px;line-height:2.4;margin-top:6px;">
+      <li>Leés 6 textos y decidís cuáles los escribió una persona y cuáles una IA.</li>
+      <li>Usás lo que aprendiste para armar la ficha de identidad de tu asistente.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- PARTE 1: TEXTOS -->
+<div class="card c-textos">
+  <h2><span class="num-badge" style="background:var(--teal);">1</span> ¿QUIÉN ESCRIBIÓ ESTO?</h2>
+  <p>Leé cada texto y elegí si lo escribió una <strong>persona</strong> o una <strong>IA</strong>. Después de elegir los 6, aparece el resultado.</p>
+  <div class="caja caja-teal" style="margin-top:12px;">
+    <strong>¿Qué pistas buscar?</strong>
+    Pensá en cómo escribe una persona cuando le manda un mensaje a una amiga. ¿Es igual a cómo escribe un texto de libro? La IA tiende a ser más "prolija", más formal, más completa — aunque no siempre.
+  </div>
+
+  <div class="textos-grid" id="textos-grid">
+
+    <div class="texto-card" id="t1">
+      <div class="texto-num">Texto 1</div>
+      <div class="texto-body">«Ayer intenté hacer una tortilla y quedó malísima, la yema quedó dura como piedra. Igual me la comí porque tenía hambre.»</div>
+      <div class="texto-resp">
+        <button class="resp-btn" onclick="elegir('t1','H',this)">👤 Persona</button>
+        <button class="resp-btn" onclick="elegir('t1','IA',this)">🤖 IA</button>
+      </div>
+      <div class="texto-feedback" id="fb-t1"></div>
+    </div>
+
+    <div class="texto-card" id="t2">
+      <div class="texto-num">Texto 2</div>
+      <div class="texto-body">«Para lograr una tortilla perfecta, es fundamental controlar la temperatura del aceite y utilizar huevos frescos de alta calidad. El proceso requiere atención constante durante la cocción.»</div>
+      <div class="texto-resp">
+        <button class="resp-btn" onclick="elegir('t2','H',this)">👤 Persona</button>
+        <button class="resp-btn" onclick="elegir('t2','IA',this)">🤖 IA</button>
+      </div>
+      <div class="texto-feedback" id="fb-t2"></div>
+    </div>
+
+    <div class="texto-card" id="t3">
+      <div class="texto-num">Texto 3</div>
+      <div class="texto-body">«Mi abuela hacía el mejor estofado, nunca le pregunté cómo. Ahora intento hacerlo de memoria y le pongo lo que creo que va.»</div>
+      <div class="texto-resp">
+        <button class="resp-btn" onclick="elegir('t3','H',this)">👤 Persona</button>
+        <button class="resp-btn" onclick="elegir('t3','IA',this)">🤖 IA</button>
+      </div>
+      <div class="texto-feedback" id="fb-t3"></div>
+    </div>
+
+    <div class="texto-card" id="t4">
+      <div class="texto-num">Texto 4</div>
+      <div class="texto-body">«La cocina representa una expresión cultural que combina ingredientes, técnicas y tradiciones transmitidas a través de generaciones, constituyendo una parte fundamental de la identidad de cada comunidad.»</div>
+      <div class="texto-resp">
+        <button class="resp-btn" onclick="elegir('t4','H',this)">👤 Persona</button>
+        <button class="resp-btn" onclick="elegir('t4','IA',this)">🤖 IA</button>
+      </div>
+      <div class="texto-feedback" id="fb-t4"></div>
+    </div>
+
+    <div class="texto-card" id="t5">
+      <div class="texto-num">Texto 5</div>
+      <div class="texto-body">«No sé cómo cocinar arroz sin que se pegue. Siempre me queda una pasta horrible y al final termino pidiendo comida.»</div>
+      <div class="texto-resp">
+        <button class="resp-btn" onclick="elegir('t5','H',this)">👤 Persona</button>
+        <button class="resp-btn" onclick="elegir('t5','IA',this)">🤖 IA</button>
+      </div>
+      <div class="texto-feedback" id="fb-t5"></div>
+    </div>
+
+    <div class="texto-card" id="t6">
+      <div class="texto-num">Texto 6</div>
+      <div class="texto-body">«El arroz es un ingrediente versátil presente en numerosas culturas culinarias. Su correcta preparación depende de la relación agua-arroz y del tiempo de cocción, que varía según la variedad utilizada.»</div>
+      <div class="texto-resp">
+        <button class="resp-btn" onclick="elegir('t6','H',this)">👤 Persona</button>
+        <button class="resp-btn" onclick="elegir('t6','IA',this)">🤖 IA</button>
+      </div>
+      <div class="texto-feedback" id="fb-t6"></div>
+    </div>
+
+  </div>
+
+  <div id="score-box" style="display:none;margin-top:18px;"></div>
+</div>
+
+<!-- REFLEXIÓN PUENTE -->
+<div class="card c-reveal">
+  <h2><span class="num-badge" style="background:var(--g);">2</span> ¿QUÉ DIFERENCIA NOTASTE?</h2>
+  <div class="preg-escrita" style="border-left-color:var(--g);">
+    <span class="label" style="color:var(--g);">¿Cómo te diste cuenta de cuáles eran de la IA? ¿Qué palabras o estilo te dieron la pista?</span>
+    <textarea placeholder="Escribí acá..."></textarea>
+  </div>
+  <div class="preg-escrita" style="border-left-color:var(--g);">
+    <span class="label" style="color:var(--g);">¿Tu asistente de cocina habla más parecido a una persona o más parecido a esos textos de IA? ¿Por qué creés que es así?</span>
+    <textarea placeholder="Escribí acá..."></textarea>
+  </div>
+</div>
+
+<!-- PARTE 2: FICHA DE IDENTIDAD -->
+<div class="card c-ficha">
+  <h2><span class="num-badge" style="background:var(--amb);">3</span> LA FICHA DE TU ASISTENTE</h2>
+  <p>Ahora que sabés cómo habla una IA, describí cómo habla <em>la tuya</em>. Esta ficha es la presentación de tu asistente para alguien que nunca lo conoció.</p>
+
+  <div class="ficha-grid">
+    <div class="ficha-campo">
+      <label>🍽 Nombre del asistente</label>
+      <input type="text" placeholder="¿Cómo se llama?">
+    </div>
+    <div class="ficha-campo">
+      <label>🎯 Para qué sirve</label>
+      <input type="text" placeholder="En una oración...">
+    </div>
+    <div class="ficha-campo full">
+      <label>📋 Sus 3 reglas más importantes</label>
+      <textarea placeholder="1. &#10;2. &#10;3."></textarea>
+    </div>
+    <div class="ficha-campo">
+      <label>🚫 Lo que NO hace</label>
+      <input type="text" placeholder="Una cosa que no hace...">
+    </div>
+    <div class="ficha-campo">
+      <label>🗣 Su tono — ¿cómo habla?</label>
+      <input type="text" placeholder="Formal, amigable, divertido, serio...">
+    </div>
+    <div class="ficha-campo full">
+      <label>💬 Una frase que diría — algo típico de tu asistente</label>
+      <textarea placeholder="Como si fuera él/ella hablando..."></textarea>
+    </div>
+  </div>
+
+  <button class="btn-imprimir" onclick="window.print()">🖨️ Guardar / Imprimir ficha</button>
+</div>
+
+<!-- ENTREGA -->
+<div class="card c-entrega">
+  <h2>ENTREGÁ EN CLASSROOM</h2>
+  <div style="background:#E6F4EA;border-left:5px solid var(--classroom);padding:18px;border-radius:8px;">
+    <strong style="color:var(--classroom);display:block;margin-bottom:10px;font-size:19px;">📤 Antes de terminar:</strong>
+    <ol style="margin-left:20px;line-height:2.4;">
+      <li>Las dos respuestas de reflexión (copiá el texto o tomá foto de la pantalla).</li>
+      <li>La ficha de identidad completa (imprimila o tomá captura).</li>
+    </ol>
+  </div>
+</div>
+
+</div>
+
+<script>
+var RESP = {t1:'H', t2:'IA', t3:'H', t4:'IA', t5:'H', t6:'IA'};
+var elegidas = {};
+
+var EXPLICACIONES = {
+  t1: {ok:'✅ Persona. Las personas cuentan lo que les pasó, con detalles personales ("tenía hambre") y sin buscar ser perfectas.', mal:'❌ Era Persona. Contiene detalles personales y una falla cotidiana — la IA raramente dice "igual me lo comí".'},
+  t2: {ok:'✅ IA. Palabras como "fundamental", "alta calidad" y "requiere atención constante" son muy típicas de la IA — siempre completa, siempre prolija.', mal:'❌ Era IA. Las palabras "fundamental", "alta calidad" y "atención constante" son señales claras de texto generado.'},
+  t3: {ok:'✅ Persona. Habla de su abuela, de un recuerdo, de "lo que creo que va" — eso es voz humana.', mal:'❌ Era Persona. Tiene memoria personal y emoción — la IA no recuerda a su abuela.'},
+  t4: {ok:'✅ IA. "Constituye una parte fundamental de la identidad" es el tipo de frase que la IA usa cuando quiere sonar importante.', mal:'❌ Era IA. Frases como "constituye una parte fundamental" y "transmitidas a través de generaciones" son muy características de la IA.'},
+  t5: {ok:'✅ Persona. "No sé cómo" y "termino pidiendo comida" son admisiones reales — la IA siempre sabe cómo hacer las cosas.', mal:'❌ Era Persona. La IA no termina "pidiendo comida" — las personas sí.'},
+  t6: {ok:'✅ IA. "Ingrediente versátil", "correcta preparación" y "varía según la variedad" son frases muy típicas de IA que quiere dar información completa.', mal:'❌ Era IA. Palabras como "versátil", "correcta preparación" y la estructura informativa son señales claras.'}
+};
+
+function elegir(id, resp, btn){
+  if(elegidas[id]) return;
+  elegidas[id] = resp;
+
+  // Marcar botones
+  var btns = btn.parentElement.querySelectorAll('.resp-btn');
+  var correcto = RESP[id] === resp;
+  btns.forEach(function(b){
+    b.disabled = true;
+    b.classList.remove('elegido-h','elegido-ia');
+  });
+  btn.classList.add(correcto ? 'correcto' : 'incorrecto');
+  // Mostrar el correcto si falló
+  if(!correcto){
+    btns.forEach(function(b){
+      if((resp==='H' && b.textContent.includes('IA')) || (resp==='IA' && b.textContent.includes('Persona'))){
+        b.classList.add('correcto');
+      }
+    });
+  }
+
+  // Feedback
+  var fb = document.getElementById('fb-'+id);
+  fb.style.display = 'block';
+  fb.className = 'texto-feedback ' + (correcto ? 'tf-ok' : 'tf-mal');
+  fb.textContent = correcto ? EXPLICACIONES[id].ok : EXPLICACIONES[id].mal;
+
+  // Score si terminó todo
+  if(Object.keys(elegidas).length === 6){
+    var aciertos = Object.keys(elegidas).filter(function(k){ return elegidas[k]===RESP[k]; }).length;
+    var box = document.getElementById('score-box');
+    box.style.display = 'block';
+    var emoji = aciertos >= 5 ? '🎉' : aciertos >= 3 ? '👍' : '🤔';
+    var msg = aciertos >= 5
+      ? 'Excelente — encontraste las señales clave del lenguaje de la IA.'
+      : aciertos >= 3
+      ? 'Bien — las diferencias son sutiles, pero ya sabés dónde buscar.'
+      : 'El lenguaje de la IA puede ser muy convincente. Mirá las explicaciones de cada texto.';
+    box.innerHTML = '<div class="caja caja-g"><strong>'+emoji+' '+aciertos+' de 6 correctos</strong>'+msg+'</div>';
+  }
+}
+</script>
+</body>
+</html>
