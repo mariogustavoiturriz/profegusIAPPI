@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 16 — Abril · El Asistente a Prueba</title>
+<style>
+  :root{
+    --nav:#1A2C3A;--g:#2E6820;--gbg:#EFF8EE;
+    --teal:#00949A;--tbg:#E0F7FA;
+    --amb:#D4873A;--abg:#FFF8EE;
+    --vio:#3D5A99;--viobg:#F0EFFF;
+    --txt:#2C3E50;--bco:#FFFFFF;--bd:#C5D2DC;--gris:#F3F6F9;--r:12px;
+    --rojo:#C62828;--rojo-bg:#FFEBEE;--classroom:#137333;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#EEF3F7;color:var(--txt);line-height:1.75;font-size:21px;padding:15px 0 60px;}
+  header{background:var(--nav);color:#fff;padding:25px 20px;border-bottom:6px solid var(--teal);}
+  header h1{font-size:24px;margin-bottom:5px;text-transform:uppercase;}
+  header p{font-size:17px;opacity:.85;}
+  .container{width:95%;max-width:920px;margin:0 auto;padding:0 15px;}
+  .back-btn{display:inline-block;margin-top:20px;margin-bottom:10px;padding:10px 20px;background:var(--bco);color:var(--nav);text-decoration:none;font-weight:bold;border-radius:8px;border:2px solid var(--bd);}
+  .card{background:#fff;border-radius:var(--r);padding:28px;margin-bottom:24px;margin-top:20px;box-shadow:0 4px 12px rgba(0,0,0,.08);border-left:6px solid var(--bd);}
+  .c-intro {border-left-color:var(--teal);}
+  .c-diseno{border-left-color:var(--amb);background:var(--abg);}
+  .c-sim   {border-left-color:var(--g);}
+  .c-eval  {border-left-color:var(--vio);background:var(--viobg);}
+  .c-entr  {border-left-color:var(--classroom);background:#F0FFF4;}
+  h2{color:var(--nav);font-size:22px;margin-bottom:14px;text-transform:uppercase;border-bottom:2px solid var(--gris);padding-bottom:8px;}
+  .num-badge{display:inline-block;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-weight:bold;font-size:17px;margin-right:8px;color:#fff;}
+  .caja{background:#fff;border-radius:10px;padding:16px 20px;margin:12px 0;border-left:5px solid;font-size:19px;line-height:1.7;}
+  .caja-teal{border-color:var(--teal);background:var(--tbg);}
+  .caja-amb {border-color:var(--amb);background:var(--abg);}
+  .caja-g   {border-color:var(--g);background:var(--gbg);}
+  .caja strong{color:var(--nav);display:block;margin-bottom:6px;}
+
+  /* Selección de cliente */
+  .clientes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;}
+  .cliente-card{border-radius:var(--r);border:3px solid var(--bd);cursor:pointer;overflow:hidden;transition:.15s;}
+  .cliente-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1);}
+  .cliente-card.elegido{border-color:var(--amb);box-shadow:0 4px 14px rgba(0,0,0,.15);}
+  .cc-header{background:var(--nav);color:#fff;padding:10px 14px;font-weight:bold;font-size:17px;}
+  .cc-body{padding:12px 14px;font-size:17px;line-height:1.6;background:#fff;}
+  .cliente-detalle{display:none;margin-top:12px;}
+  .cliente-detalle.visible{display:block;}
+
+  /* Simulador */
+  .sim-panel{border:2px solid var(--g);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;height:440px;margin-top:14px;}
+  .sim-header-bar{background:var(--g);color:#fff;padding:12px 18px;font-weight:bold;font-size:18px;}
+  .sim-config{padding:12px;background:#F0F4F8;border-bottom:2px solid var(--bd);display:flex;flex-direction:column;gap:8px;}
+  .sim-config input,.sim-config textarea{padding:10px;border-radius:6px;border:1px solid #ccc;font-size:17px;outline:none;width:100%;font-family:inherit;}
+  .sim-config textarea{min-height:70px;resize:vertical;}
+  .btn-activar{background:var(--g);color:#fff;border:none;padding:10px;border-radius:6px;font-weight:bold;cursor:pointer;font-size:17px;width:100%;}
+  .chat-box{flex-grow:1;padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;background:#fff;}
+  .msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:18px;line-height:1.5;}
+  .msg-sys{align-self:center;background:#FFF8E1;color:#E65100;font-size:14px;font-weight:bold;border-radius:20px;padding:6px 12px;}
+  .msg-user{align-self:flex-end;background:var(--g);color:#fff;border-bottom-right-radius:2px;}
+  .msg-ia{align-self:flex-start;background:#F5F5F5;border:1px solid #E0E0E0;color:#333;border-bottom-left-radius:2px;}
+  .sim-input-row{display:flex;padding:10px;background:#F0F4F8;border-top:1px solid var(--bd);gap:8px;}
+  .sim-input-row input{flex:1;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:17px;outline:none;}
+  .btn-enviar{background:var(--g);color:#fff;border:none;padding:0 16px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:17px;}
+  .btn-enviar:disabled{background:#ccc;cursor:not-allowed;}
+
+  /* Evaluación */
+  .escala{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0;}
+  .escala-btn{padding:10px;border-radius:8px;border:2px solid var(--bd);background:var(--gris);cursor:pointer;font-size:17px;font-weight:bold;text-align:center;transition:.15s;}
+  .escala-btn:hover{border-color:var(--amb);background:var(--abg);}
+  .escala-btn.sel{border-color:var(--amb);background:var(--amb);color:#fff;}
+  .eval-preg{margin-bottom:18px;}
+  .eval-preg label{display:block;font-weight:bold;color:var(--nav);font-size:19px;margin-bottom:8px;}
+  .eval-preg textarea{width:100%;border:none;border-bottom:2px solid var(--bd);padding:8px 0;font-size:18px;font-family:inherit;resize:none;outline:none;min-height:60px;background:transparent;}
+  .eval-preg textarea:focus{border-bottom-color:var(--amb);}
+
+  @media(max-width:700px){.clientes{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>CLASE 16 — EL ASISTENTE A PRUEBA</h1>
+  <p>Taller de IA Aplicada · Abril Oreste · CTP Antonio Martín Marte</p>
+</header>
+<div class="container">
+<a href="index.html" class="back-btn">⬅ Volver</a>
+
+<!-- INTRO -->
+<div class="card c-intro">
+  <h2>¿QUÉ HACEMOS HOY?</h2>
+  <p>En la clase pasada aprendiste a reconocer cómo habla la IA. Hoy lo usás al revés: <strong>vos diseñás la situación</strong> y evaluás si tu asistente está a la altura.</p>
+  <div class="caja caja-teal" style="margin-top:14px;">
+    <strong>En tres pasos:</strong>
+    <ol style="margin-left:20px;line-height:2.4;margin-top:6px;">
+      <li>Elegís un "cliente" con una necesidad específica de cocina</li>
+      <li>Corrés el asistente con 5-6 intercambios para ese cliente</li>
+      <li>Evaluás si el asistente estuvo a la altura</li>
+    </ol>
+  </div>
+</div>
+
+<!-- PASO 1: DISEÑAR EL CLIENTE -->
+<div class="card c-diseno">
+  <h2><span class="num-badge" style="background:var(--amb);">1</span> ELEGÍ UN CLIENTE</h2>
+  <p>Antes de arrancar el chat, decidís quién le va a hablar a tu asistente hoy. Elegí uno de estos tres o inventá el tuyo.</p>
+
+  <div class="clientes">
+    <div class="cliente-card" onclick="elegirCliente('a', this)">
+      <div class="cc-header">👦 El estudiante</div>
+      <div class="cc-body">Vive solo por primera vez. Solo sabe calentar agua. Tiene harina, huevos, aceite y sal.</div>
+    </div>
+    <div class="cliente-card" onclick="elegirCliente('b', this)">
+      <div class="cc-header">👵 La abuela</div>
+      <div class="cc-body">Quiere cocinar algo especial para su nieta que viene de visita pero tiene alergia al gluten.</div>
+    </div>
+    <div class="cliente-card" onclick="elegirCliente('c', this)">
+      <div class="cc-header">⏰ La persona apurada</div>
+      <div class="cc-body">Tiene 15 minutos, una lata de atún, arroz y algunas verduras. Necesita algo rápido y que quede rico.</div>
+    </div>
+  </div>
+
+  <div class="cliente-detalle" id="det-a">
+    <div class="caja caja-amb">
+      <strong>Antes de arrancar — escribí lo que esperás</strong>
+      ¿Qué debería poder darle el asistente al estudiante? ¿Una receta simple? ¿Los pasos muy detallados? ¿Alternativas si algo falla?
+    </div>
+    <div class="eval-preg" style="margin-top:0;">
+      <label>Yo espero que el asistente...</label>
+      <textarea placeholder="Escribí acá antes de empezar el chat..."></textarea>
+    </div>
+  </div>
+
+  <div class="cliente-detalle" id="det-b">
+    <div class="caja caja-amb">
+      <strong>Antes de arrancar — escribí lo que esperás</strong>
+      ¿El asistente debería conocer qué contiene gluten? ¿Debería proponer alternativas concretas? ¿Cómo esperás que maneje una restricción dietaria?
+    </div>
+    <div class="eval-preg" style="margin-top:0;">
+      <label>Yo espero que el asistente...</label>
+      <textarea placeholder="Escribí acá antes de empezar el chat..."></textarea>
+    </div>
+  </div>
+
+  <div class="cliente-detalle" id="det-c">
+    <div class="caja caja-amb">
+      <strong>Antes de arrancar — escribí lo que esperás</strong>
+      ¿El asistente debería respetar el tiempo de 15 minutos? ¿Debería preguntar qué verduras tiene o asumir? ¿Cómo debería organizar los pasos?
+    </div>
+    <div class="eval-preg" style="margin-top:0;">
+      <label>Yo espero que el asistente...</label>
+      <textarea placeholder="Escribí acá antes de empezar el chat..."></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 2: SIMULADOR -->
+<div class="card c-sim">
+  <h2><span class="num-badge" style="background:var(--g);">2</span> CHATEÁ CON TU ASISTENTE</h2>
+  <p>Usá el system prompt de tu asistente de cocina. Escribí <strong>como si fueras el cliente</strong> que elegiste — con su situación, su nivel, sus limitaciones.</p>
+
+  <div class="sim-panel">
+    <div class="sim-header-bar">🍽 Tu asistente de cocina</div>
+    <div class="sim-config">
+      <input type="password" id="sim-key" placeholder="API Key de Groq">
+      <textarea id="sim-prompt" placeholder="Pegá acá el system prompt de tu asistente..."></textarea>
+      <button class="btn-activar" onclick="activar()">✅ ACTIVAR</button>
+    </div>
+    <div class="chat-box" id="chat-box">
+      <div class="msg msg-sys">Activá el asistente y empezá el chat como si fueras el cliente elegido.</div>
+    </div>
+    <div class="sim-input-row">
+      <input type="text" id="sim-input" placeholder="Escribí como el cliente..." disabled onkeypress="if(event.key==='Enter')enviar()">
+      <button class="btn-enviar" id="btn-enviar" onclick="enviar()" disabled>Enviar</button>
+    </div>
+  </div>
+
+  <div class="caja caja-g" style="margin-top:14px;">
+    <strong>💡 Hacé al menos 5 intercambios</strong>
+    Empezá con la situación del cliente. Después preguntá algo más específico. Intentá una situación inesperada (¿y si no tengo ese ingrediente?). Veamos cómo responde el asistente.
+  </div>
+</div>
+
+<!-- PASO 3: EVALUAR -->
+<div class="card c-eval">
+  <h2><span class="num-badge" style="background:var(--vio);">3</span> ¿CÓMO LE FUE?</h2>
+  <p>Ahora comparás lo que esperabas con lo que pasó.</p>
+
+  <div class="eval-preg">
+    <label>¿El asistente ayudó al cliente? ¿Por qué sí o por qué no?</label>
+    <textarea placeholder="Escribí acá..."></textarea>
+  </div>
+
+  <div class="eval-preg">
+    <label>¿Hubo algo que el asistente no supo manejar? ¿Qué fue?</label>
+    <textarea placeholder="Escribí acá..."></textarea>
+  </div>
+
+  <div class="eval-preg">
+    <label>Si pudieras cambiar UNA regla del system prompt para que funcione mejor con este cliente, ¿cuál sería?</label>
+    <textarea placeholder="Escribí acá..."></textarea>
+  </div>
+</div>
+
+<!-- ENTREGA -->
+<div class="card c-entr">
+  <h2>ENTREGÁ EN CLASSROOM</h2>
+  <div style="background:#E6F4EA;border-left:5px solid var(--classroom);padding:18px;border-radius:8px;">
+    <strong style="color:var(--classroom);display:block;margin-bottom:10px;font-size:19px;">📤 Antes de terminar:</strong>
+    <ol style="margin-left:20px;line-height:2.4;">
+      <li>Qué cliente elegiste y qué esperabas del asistente.</li>
+      <li>Las tres respuestas de evaluación.</li>
+      <li>Captura de pantalla del chat (al menos 5 turnos).</li>
+    </ol>
+  </div>
+</div>
+
+</div>
+<script>
+var KEY='', HIST=[];
+
+function elegirCliente(id, card){
+  document.querySelectorAll('.cliente-card').forEach(function(c){c.classList.remove('elegido');});
+  document.querySelectorAll('.cliente-detalle').forEach(function(d){d.classList.remove('visible');});
+  card.classList.add('elegido');
+  document.getElementById('det-'+id).classList.add('visible');
+}
+
+function activar(){
+  var k=document.getElementById('sim-key').value.trim();
+  var p=document.getElementById('sim-prompt').value.trim();
+  if(!k){alert('Falta la API Key.');return;}
+  if(!p){alert('Pegá el system prompt primero.');return;}
+  KEY=k; HIST=[{role:'system',content:p}];
+  document.getElementById('chat-box').innerHTML='';
+  addMsg('Asistente listo. Empezá el chat como el cliente elegido.','sys');
+  document.getElementById('sim-input').disabled=false;
+  document.getElementById('btn-enviar').disabled=false;
+  document.getElementById('sim-input').focus();
+}
+
+async function enviar(){
+  var inp=document.getElementById('sim-input');
+  var txt=inp.value.trim();
+  if(!txt||!KEY) return;
+  inp.value='';
+  document.getElementById('btn-enviar').disabled=true;
+  addMsg(txt,'user');
+  HIST.push({role:'user',content:txt});
+  var p=addMsg('...','sys');
+  try{
+    var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',temperature:0.7,messages:HIST})
+    });
+    var d=await r.json();
+    if(d.error) throw new Error(d.error.message);
+    var resp=d.choices[0].message.content;
+    p.remove();
+    HIST.push({role:'assistant',content:resp});
+    addMsg(resp,'ia');
+  }catch(e){
+    p.remove();
+    addMsg('Error. Revisá la API Key.','sys');
+    HIST.pop();
+  }
+  document.getElementById('btn-enviar').disabled=false;
+}
+
+function addMsg(txt,tipo){
+  var box=document.getElementById('chat-box');
+  var d=document.createElement('div');
+  d.className='msg msg-'+tipo;
+  d.textContent=txt;
+  box.appendChild(d);
+  box.scrollTop=box.scrollHeight;
+  return d;
+}
+</script>
+</body>
+</html>
