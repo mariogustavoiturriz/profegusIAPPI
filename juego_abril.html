@@ -387,7 +387,7 @@ Entendido, el camión está en camino al hospital. Sin embargo, el viento tiró 
             const datos = await respuesta.json();
             
             if (datos.error) {
-                mostrarMensaje("Error de transmisión: " + datos.error.message, "ai");
+                mostrarMensaje("Error de transmisión : " + datos.error.message, "ai");
             } else {
                 const respuestaCruda = datos.choices[0].message.content;
                 historial.push({ role: "assistant", content: respuestaCruda });
