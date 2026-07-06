@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio de Emergencia - Base Ushuaia</title>
+    <style>
+        body { 
+            background: #121212; 
+            color: #E0E0E0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #app { 
+            width: 100%; 
+            max-width: 750px; 
+            height: 90vh; 
+            display: flex; 
+            flex-direction: column; 
+            background: #1E1E1E; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8); 
+            overflow: hidden; 
+            border: 1px solid #333;
+        }
+        .header { 
+            background: #B71C1C; 
+            color: white; 
+            padding: 18px; 
+            text-align: center; 
+            font-size: 22px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+        }
+        
+        /* Pantalla de Inicio */
+        #setup { 
+            display: flex; 
+            flex-direction: column; 
+            padding: 30px 40px; 
+            gap: 20px; 
+            overflow-y: auto;
+            height: 100%;
+            justify-content: center;
+        }
+        #setup h2 { color: #FF5252; margin-top: 0; margin-bottom: 5px; font-size: 26px; text-align: center; }
+        .intro-text { font-size: 17px; line-height: 1.6; color: #CCC; margin-bottom: 20px; text-align: center; }
+        
+        .api-section {
+            background: #1A1A1A;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .api-input { 
+            padding: 15px; 
+            font-size: 16px; 
+            border-radius: 6px; 
+            border: 1px solid #555; 
+            background: #121212; 
+            color: white; 
+            text-align: center;
+        }
+        .btn-start { 
+            background: #B71C1C; 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            font-size: 18px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .btn-start:hover { background: #D32F2F; }
+
+        /* Pantalla de Chat */
+        #chat-interface {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+        .chat-container { 
+            flex: 1; 
+            padding: 20px; 
+            overflow-y: auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+        }
+        .msg { 
+            padding: 15px 20px; 
+            border-radius: 8px; 
+            font-size: 18px; 
+            line-height: 1.5; 
+            max-width: 85%; 
+        }
+        .msg.ai { 
+            background: #2C2C2C; 
+            align-self: flex-start; 
+            border-left: 5px solid #FF5252; 
+        }
+        .msg.user { 
+            background: #0D47A1; 
+            align-self: flex-end; 
+            color: white; 
+        }
+        .ai-label { font-size: 12px; color: #FF5252; text-transform: uppercase; font-weight: bold; margin-bottom: 5px; display: block; }
+        .user-label { font-size: 12px; color: #64B5F6; text-transform: uppercase; font-weight: bold; margin-bottom: 5px; display: block; }
+        
+        /* Controles / Inputs */
+        .controls { 
+            padding: 20px; 
+            background: #252525; 
+            border-top: 1px solid #444; 
+        }
+        .quick-actions { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+            margin-bottom: 15px; 
+        }
+        .quick-btn { 
+            background: #333; 
+            color: #E0E0E0; 
+            border: 1px solid #555; 
+            padding: 12px 15px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            flex: 1; 
+            transition: 0.2s; 
+        }
+        .quick-btn:hover { background: #444; border-color: #888; }
+        .input-area { 
+            display: flex; 
+            gap: 10px; 
+        }
+        .chat-input { 
+            flex: 1; 
+            padding: 15px; 
+            font-size: 18px; 
+            border-radius: 6px; 
+            border: 1px solid #555; 
+            background: #121212; 
+            color: white; 
+        }
+        .send-btn { 
+            background: #B71C1C; 
+            color: white; 
+            border: none; 
+            padding: 0 25px; 
+            font-size: 18px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: bold; 
+        }
+        .send-btn:hover { background: #D32F2F; }
+        .btn-finish {
+            background: #0D47A1; 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            font-size: 18px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            width: 100%;
+            margin-top: 15px;
+            transition: 0.2s;
+        }
+        .btn-finish:hover { background: #1565C0; }
+        .loader { display: none; font-style: italic; color: #888; font-size: 16px; align-self: flex-start; margin-left: 20px; }
+
+        /* Pantalla Final / Consignas */
+        #post-game {
+            display: none;
+            flex-direction: column;
+            padding: 30px 40px;
+            gap: 20px;
+            overflow-y: auto;
+            height: 100%;
+        }
+        #post-game h2 { color: #FF5252; margin-top: 0; margin-bottom: 5px; font-size: 26px; }
+        .consigna-box {
+            background: #252525;
+            border-left: 4px solid #FF5252;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .consigna-box h3 { margin-top: 0; color: #E0E0E0; font-size: 19px; }
+        .regla { font-family: monospace; background: #121212; padding: 5px 10px; border-radius: 4px; color: #64B5F6; display: block; margin: 8px 0; }
+        
+        .pregunta { margin-bottom: 20px; }
+        .pregunta label { display: block; font-size: 17px; font-weight: bold; margin-bottom: 10px; color: #FFF; }
+        .pregunta textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #555;
+            background: #121212;
+            color: white;
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="header">Central de Emergencias - Ushuaia</div>
+    
+    <!-- Configuración inicial -->
+    <div id="setup">
+        <h2>Misión del Día</h2>
+        <p class="intro-text">
+            ¡Hola Abril! Hoy vas a ser la Coordinadora Civil durante un apagón total por tormenta de nieve. Vas a conectarte por radio con el Jefe de Rescate (controlado por IA). Tu objetivo es gestionar los recursos limitados para evitar que la ciudad colapse.
+        </p>
+        
+        <div class="api-section">
+            <input type="password" id="apiKey" class="api-input" placeholder="🔑 Ingresá tu API Key de Groq para comenzar">
+            <button class="btn-start" onclick="iniciarConexion()">Conectar Radio y Jugar</button>
+        </div>
+    </div>
+
+    <!-- Interfaz de Chat (IA) -->
+    <div id="chat-interface">
+        <div class="chat-container" id="chat">
+            <!-- Los mensajes aparecen acá -->
+        </div>
+        <div id="loader" class="loader">El Jefe de Rescate está transmitiendo...</div>
+        
+        <div class="controls">
+            <!-- Botones dinámicos -->
+            <div class="quick-actions" id="dynamic-buttons"></div>
+            
+            <div class="input-area">
+                <input type="text" id="userInput" class="chat-input" placeholder="Escribí tu orden acá..." onkeydown="if(event.key==='Enter')enviarInput()">
+                <button class="send-btn" onclick="enviarInput()">ENVIAR</button>
+            </div>
+            
+            <button id="btn-terminar" class="btn-finish" style="display: none;" onclick="terminarJuego()">FINALIZAR SIMULACIÓN Y EVALUAR</button>
+        </div>
+    </div>
+
+    <!-- Pantalla Final / Consignas -->
+    <div id="post-game">
+        <h2>Misión Completada</h2>
+        <div class="consigna-box">
+            <h3>🔍 Análisis de la Simulación</h3>
+            <p style="margin-top: 0; color: #CCC; font-size: 15px;">Para que el simulador funcionara, le programamos dos reglas estrictas a la IA por detrás:</p>
+            <span class="regla">Regla 1: Debe responder siempre en MÁXIMO 3 oraciones.</span>
+            <span class="regla">Regla 2: Al final, debe darte 3 opciones separadas por el símbolo "|||".</span>
+            
+            <div style="margin-top: 20px;">
+                <div class="pregunta">
+                    <label>1. Teniendo en cuenta que fue un escenario de emergencia realista, ¿por qué creés que fue importante la Regla 1?</label>
+                    <textarea placeholder="Escribí tu respuesta acá..."></textarea>
+                </div>
+                <div class="pregunta">
+                    <label>2. Si la IA se olvidaba de cumplir la Regla 2 y no escribía los símbolos "|||", ¿qué creés que hubiera pasado con los botones de acción del juego?</label>
+                    <textarea placeholder="Escribí tu respuesta acá..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let apiKey = "";
+    let historial = [];
+    let turno = 1;
+
+    const systemPrompt = `Sos el Jefe de Rescate en Ushuaia durante un apagón total por tormenta de nieve. Estás en la calle, con frío y bajo presión. 
+Hablas en español argentino, de forma muy seria, profesional y al grano. Abril es la coordinadora civil y vos le reportás a ella.
+
+REGLAS INQUEBRANTABLES:
+1. El juego debe durar al menos 20 turnos. NUNCA resuelvas la crisis general de inmediato. Cada vez que ella te dé una orden para solucionar algo, reportale que surgió un nuevo problema en otra parte de Ushuaia (ej. un refugio sin estufas, calles congeladas, un árbol caído).
+2. NUNCA escribas más de 3 oraciones de reporte. Sé directo.
+3. FORMATO DE RESPUESTA ESTRUCTURADO OBLIGATORIO:
+Para que el sistema de la base funcione, tu respuesta DEBE tener siempre tu reporte de la situación seguido del separador "|||" y luego 3 opciones de acción para que Abril elija, separadas también por "|||".
+EJEMPLO ESTRICTO QUE DEBES IMITAR:
+Entendido, el camión está en camino al hospital. Sin embargo, el viento tiró un poste en el barrio San Vicente y hay riesgo de incendio. ¿Qué hacemos con los bomberos? ||| Mandarlos al incendio ||| Que se queden en la base ||| Pedir ayuda a la policía`;
+
+    function iniciarConexion() {
+        const keyInput = document.getElementById("apiKey").value.trim();
+        if (!keyInput) {
+            alert("¡No te olvides de poner tu API Key para que el juego funcione!");
+            return;
+        }
+        apiKey = keyInput;
+        
+        document.getElementById("setup").style.display = "none";
+        document.getElementById("chat-interface").style.display = "flex";
+
+        historial.push({ role: "system", content: systemPrompt });
+
+        const mensajeTexto = "Base, acá equipo de rescate. Tenemos un problema grave: el Hospital Regional se queda sin generadores, y al mismo tiempo hay 5 autos atrapados en la nieve en la Ruta 3. Solo tenemos un camión. ¿A dónde vamos primero?";
+        const opcionesIniciales = ["Mandar al Hospital", "Mandar a la Ruta 3", "Pedir ayuda a la Marina"];
+        
+        historial.push({ role: "assistant", content: mensajeTexto + " ||| " + opcionesIniciales.join(" ||| ") });
+        
+        mostrarMensaje(mensajeTexto, "ai");
+        actualizarBotones(opcionesIniciales);
+    }
+
+    function actualizarBotones(opciones) {
+        const contenedor = document.getElementById("dynamic-buttons");
+        contenedor.innerHTML = "";
+        
+        opciones.forEach(opt => {
+            if(opt.trim()) {
+                const btn = document.createElement("button");
+                btn.className = "quick-btn";
+                btn.innerText = opt.trim();
+                btn.onclick = () => enviarMensaje(opt.trim());
+                contenedor.appendChild(btn);
+            }
+        });
+
+        if(contenedor.innerHTML === "") {
+            const btn = document.createElement("button");
+            btn.className = "quick-btn";
+            btn.innerText = "Solicitar informe claro de situación";
+            btn.onclick = () => enviarMensaje("Solicitar informe claro de situación");
+            contenedor.appendChild(btn);
+        }
+    }
+
+    function enviarInput() {
+        const inputEl = document.getElementById("userInput");
+        const texto = inputEl.value.trim();
+        if (texto) {
+            enviarMensaje(texto);
+            inputEl.value = "";
+        }
+    }
+
+    async function enviarMensaje(texto) {
+        mostrarMensaje(texto, "user"); 
+        
+        turno++;
+        
+        if (turno >= 20) {
+            document.getElementById("btn-terminar").style.display = "block";
+        }
+        
+        const instruccionOculta = texto + ` (Instrucción interna: Turno ${turno} de 20. Generá una nueva complicación realista. Recordá devolver OBLIGATORIAMENTE tu reporte corto y luego las 3 opciones separadas por "|||").`;
+        historial.push({ role: "user", content: instruccionOculta });
+        
+        const loader = document.getElementById("loader");
+        loader.style.display = "block";
+        
+        document.getElementById("userInput").disabled = true;
+        document.querySelectorAll(".quick-btn").forEach(btn => btn.disabled = true);
+
+        try {
+            const respuesta = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + apiKey,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    model: "llama-3.3-70b-versatile",
+                    messages: historial,
+                    temperature: 0.7
+                })
+            });
+
+            const datos = await respuesta.json();
+            
+            if (datos.error) {
+                mostrarMensaje("Error de transmisión: " + datos.error.message, "ai");
+            } else {
+                const respuestaCruda = datos.choices[0].message.content;
+                historial.push({ role: "assistant", content: respuestaCruda });
+
+                let partes = respuestaCruda.split("|||");
+                let textoLimpio = partes[0].trim();
+                
+                let nuevasOpciones = [];
+                if (partes.length > 1) {
+                    for(let i = 1; i < partes.length; i++) {
+                        if(partes[i].trim()) nuevasOpciones.push(partes[i].trim());
+                    }
+                }
+
+                mostrarMensaje(textoLimpio, "ai");
+                actualizarBotones(nuevasOpciones);
+            }
+        } catch (error) {
+            mostrarMensaje("⚠️ Se perdió la señal. Avisale al profe que revisen la conexión o la API Key.", "ai");
+        }
+
+        loader.style.display = "none";
+        document.getElementById("userInput").disabled = false;
+        document.getElementById("userInput").focus();
+    }
+
+    function mostrarMensaje(texto, remitente) {
+        const chat = document.getElementById("chat");
+        const div = document.createElement("div");
+        div.className = "msg " + remitente;
+        
+        if(remitente === "ai") {
+            div.innerHTML = "<span class='ai-label'>Jefe de Rescate</span>" + texto;
+        } else {
+            div.innerHTML = "<span class='user-label'>Coordinadora (Abril)</span>" + texto;
+        }
+        
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight; 
+    }
+
+    function terminarJuego() {
+        document.getElementById("chat-interface").style.display = "none";
+        document.getElementById("post-game").style.display = "flex";
+    }
+</script>
+
+</body>
+</html>
