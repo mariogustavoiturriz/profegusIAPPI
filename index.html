@@ -9,6 +9,7 @@
     --nav: #1A2C3A; --teal: #00949A; --amb: #D4873A; 
     --vio: #3D5A99; --gris: #F3F6F9; --bd: #C5D2DC; --txt: #2C3E50;
     --bco: #FFFFFF; --r: 12px; --tp: #8E24AA; --rojo: #C62828;
+    --p1: #1F6E5C;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
   
@@ -25,7 +26,7 @@
     color: var(--bco); 
     padding: 40px 20px; 
     text-align: center;
-    border-bottom: 6px solid var(--amb); 
+    border-bottom: 6px solid var(--p1); 
   }
   header h1 { font-size: 34px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
   header p { font-size: 22px; opacity: 0.9; max-width: 600px; margin: 0 auto; font-weight: bold; color: #FFF8E1; }
@@ -39,6 +40,18 @@
     padding-bottom: 10px;
     border-bottom: 3px solid var(--bd);
     text-transform: uppercase;
+  }
+
+  .section-title.destacada {
+    border-bottom-color: var(--p1);
+    color: var(--p1);
+    margin-top: 0;
+  }
+  .subtitulo-seccion {
+    font-size: 20px;
+    color: #555;
+    margin: -8px 0 26px 0;
+    max-width: 900px;
   }
 
   .grid {
@@ -70,6 +83,7 @@
   .c-actual { border-top-color: var(--teal); background: #F0FAFA; }
   .c-futura { border-top-color: var(--amb); }
   .c-tp-nuevo { border-top-color: var(--rojo); background: #FFEBEE; }
+  .c-proyecto { border-top-color: var(--p1); background: #E8F4F0; }
   
   .badge-date { 
     font-size: 16px; 
@@ -84,6 +98,7 @@
   .c-actual .badge-date { color: var(--teal); }
   .c-futura .badge-date { color: var(--amb); }
   .c-tp-nuevo .badge-date { color: var(--rojo); }
+  .c-proyecto .badge-date { color: var(--p1); }
   
   .card h2 { 
     color: var(--nav); 
@@ -120,6 +135,9 @@
   
   .c-tp-nuevo .btn { background: var(--rojo); }
   .c-tp-nuevo .btn:hover { background: #B71C1C; }
+
+  .c-proyecto .btn { background: var(--p1); }
+  .c-proyecto .btn:hover { background: #145244; }
   
   /* Botón bloqueado */
   .locked { background: #E0E0E0 !important; color: #888 !important; border: 1px solid #ccc !important; cursor: not-allowed; box-shadow: none !important; }
@@ -139,26 +157,46 @@
 </header>
 
 <div class="container">
-  <h2 class="section-title">Próximas Clases y Evaluaciones</h2>
+
+  <!-- ══════════ SEGUNDO CUATRIMESTRE ══════════ -->
+  <h2 class="section-title destacada">Segundo Cuatrimestre · Mi Proyecto</h2>
+  <p class="subtitulo-seccion">
+    Vas a escribir tus propios textos, la inteligencia artificial va a sacar los datos, y con eso vas a armar tu tabla. 🚀
+  </p>
   <div class="grid">
-    <!-- CLASE 14 (Viernes) — habilita el viernes 19 a las 10:35 -->
-    <a href="clase_13_abril.html" class="card c-futura" 
-       data-unlock="2026-06-19T10:35:00-03:00" 
+
+    <!-- CLASE 0 (2C) -->
+    <a href="clase_0_2c.html" class="card c-futura"
+       data-unlock="2026-08-03T09:45:00-03:00"
+       data-tipo="proyecto"
        data-label="Abrir Clase">
-      <span class="badge-date">Viernes 29 de Mayo</span>
-      <h2>Clase 14: LA AUDITORA</h2>
-      <p>La clase pasada creaste tu asistente de cocina. Hoy lo ponés a prueba — como si fuera el asistente de otra persona..</p>
+      <span class="badge-date">Lunes 03 de Agosto</span>
+      <h2>Clase 0 (2C): ¡Volvimos!</h2>
+      <p>Repaso de todo lo que aprendiste: tu asistente de cocina, las reglas que le pusiste, y cómo darte cuenta cuando la IA se equivoca.</p>
       <div class="btn">Abrir Clase</div>
     </a>
+
   </div>
 
-   <!-- CLASE 13 (Ya pasó) -->
-    <a href="clase_13_abril.html" class="card c-pasada">
-      <span class="badge-date">Viernes 29 de Mayo</span>
-      <h2>Clase 13: Próximas Clases y Evaluaciones</h2>
-      <p>Creamos nuestra propia aventura donde la Inteligencia Artificial es la narradora de la historia.</p>
+  <!-- ══════════ PRIMER CUATRIMESTRE ══════════ -->
+  <h2 class="section-title">Primer Cuatrimestre</h2>
+  <div class="grid">
+    <!-- CLASE 14 -->
+    <a href="clase_14_abril.html" class="card c-pasada">
+      <span class="badge-date">Viernes 19 de Junio</span>
+      <h2>Clase 14: La Auditora</h2>
+      <p>Pusiste a prueba tu asistente de cocina, como si fuera el asistente de otra persona.</p>
       <div class="btn">Repasar Clase</div>
     </a>
+
+    <!-- CLASE 13 -->
+    <a href="clase_13_abril.html" class="card c-pasada">
+      <span class="badge-date">Viernes 29 de Mayo</span>
+      <h2>Clase 13: Diseñá tu asistente</h2>
+      <p>Creaste tu propio asistente de cocina: elegiste el tema, le pusiste las reglas y lo probaste.</p>
+      <div class="btn">Repasar Clase</div>
+    </a>
+  </div>
 
   <h2 class="section-title">Unidad 3: NLP y Sistemas Expertos</h2>
   <div class="grid">
@@ -292,6 +330,7 @@
         /* Volvemos a color de clase futura */
         card.classList.remove('c-actual');
         card.classList.remove('c-tp-nuevo');
+        card.classList.remove('c-proyecto');
         card.classList.add('c-futura');
       } else {
         /* Ya es la hora, desbloqueamos */
@@ -305,6 +344,8 @@
         card.classList.remove('c-futura');
         if (label === 'Abrir Evaluación') {
           card.classList.add('c-tp-nuevo');
+        } else if (card.getAttribute('data-tipo') === 'proyecto') {
+          card.classList.add('c-proyecto');
         } else {
           card.classList.add('c-actual');
         }
@@ -335,6 +376,8 @@
           card.classList.remove('c-futura');
           if (label === 'Abrir Evaluación') {
             card.classList.add('c-tp-nuevo');
+          } else if (card.getAttribute('data-tipo') === 'proyecto') {
+            card.classList.add('c-proyecto');
           } else {
             card.classList.add('c-actual');
           }
