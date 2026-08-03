@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abril &middot; Semana 0 · Repaso</title>
+<style>
+  :root{
+    --nav:#1A2C3A;--verde:#2A9D5C;--verde-bg:#E7F7EE;--lila:#7B5EA7;--lila-bg:#F3EEFB;
+    --sol:#E9A030;--sol-bg:#FEF6E7;--cielo:#2E86C1;--cielo-bg:#EAF4FB;
+    --rosa:#D65D8B;--rosa-bg:#FCEEF4;--txt:#2C3E50;--bd:#D5DDE5;--r:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;background:#F2F6FA;color:var(--txt);line-height:1.7;font-size:22px;padding:15px 0 60px;}
+  header{background:var(--lila);color:#fff;padding:28px 20px;border-bottom:6px solid var(--sol);border-radius:0 0 20px 20px;}
+  header h1{font-size:30px;margin-bottom:6px;}
+  header p{font-size:19px;opacity:.95;}
+  .container{width:94%;max-width:900px;margin:0 auto;padding:0 10px;}
+  .card{background:#fff;border-radius:var(--r);padding:28px;margin:24px 0;box-shadow:0 4px 14px rgba(0,0,0,.09);border-left:8px solid var(--bd);}
+  .c-lila{border-left-color:var(--lila);}
+  .c-verde{border-left-color:var(--verde);}
+  .c-sol{border-left-color:var(--sol);}
+  .c-cielo{border-left-color:var(--cielo);}
+  .c-rosa{border-left-color:var(--rosa);}
+  h2{color:var(--nav);font-size:25px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+  .paso{background:var(--lila);color:#fff;min-width:46px;height:46px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;}
+  p{margin-bottom:12px;}
+  .texto-lectura{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:14px;padding:20px 22px;font-size:23px;line-height:2;margin:16px 0;}
+  .btn{display:inline-block;background:var(--verde);color:#fff;border:none;padding:16px 26px;border-radius:14px;font-size:21px;font-weight:bold;cursor:pointer;margin:8px 6px 8px 0;font-family:inherit;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn-lila{background:var(--lila);}
+  .btn-sol{background:var(--sol);}
+  .btn-chico{padding:10px 18px;font-size:19px;}
+  .feedback{font-size:22px;font-weight:bold;min-height:36px;margin-top:10px;}
+  .bien{color:var(--verde);}
+  .casi{color:var(--sol);}
+  input[type=text], textarea{width:100%;padding:14px;border:3px solid var(--bd);border-radius:12px;font-size:21px;font-family:inherit;margin:6px 0 12px;}
+  input[type=text]:focus, textarea:focus{border-color:var(--lila);outline:none;}
+  label{font-weight:bold;font-size:20px;color:var(--nav);}
+  .dai{background:var(--rosa-bg);border:3px dashed var(--rosa);border-radius:var(--r);padding:20px 24px;margin:26px 0;font-size:21px;}
+  .dai strong{color:var(--rosa);font-size:22px;display:block;margin-bottom:6px;}
+  .estrellas{font-size:34px;letter-spacing:6px;min-height:44px;}
+  .opciones{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  .opcion{background:#fff;border:4px solid var(--bd);border-radius:16px;padding:22px;text-align:center;font-size:22px;cursor:pointer;transition:all .15s;}
+  .opcion:hover{border-color:var(--lila);transform:translateY(-2px);}
+  .opcion.elegida{border-color:var(--verde);background:var(--verde-bg);}
+  .opcion .emoji{font-size:52px;display:block;margin-bottom:8px;}
+  .palabra{cursor:pointer;padding:3px 6px;border-radius:8px;transition:background .15s;}
+  .palabra:hover{background:#FFE9A8;}
+  .palabra.ok{background:var(--verde);color:#fff;}
+  .palabra.no{background:#F5B7B1;}
+  table{width:100%;border-collapse:collapse;font-size:20px;margin:14px 0;}
+  th,td{border:2px solid var(--bd);padding:12px;text-align:left;}
+  th{background:var(--lila);color:#fff;font-size:19px;}
+  td input[type=text]{margin:0;padding:10px;font-size:20px;border-width:2px;}
+  .chk{display:flex;align-items:center;gap:14px;background:#fff;border:3px solid var(--bd);border-radius:14px;padding:16px 20px;margin:10px 0;font-size:21px;cursor:pointer;}
+  .chk.hecho{border-color:var(--verde);background:var(--verde-bg);}
+  .chk .caja{font-size:30px;}
+  ul{margin-left:24px;} li{margin-bottom:10px;}
+  @media(max-width:700px){.opciones{grid-template-columns:1fr;} body{font-size:21px;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>👋 ¡Volvimos! — Repaso de todo lo que aprendiste</h1>
+  <p>Taller de IA Aplicada &middot; Mi Proyecto &middot; Semana del 3 al 7 de agosto</p>
+</header>
+<div class="container">
+
+<div class="card c-lila">
+  <h2><span class="paso">1</span> ¿Te acordás lo que hiciste?</h2>
+  <p>En la primera parte del año hiciste cosas geniales:</p>
+  <ul>
+    <li>🍳 Creaste tu propio <strong>asistente de cocina</strong> con inteligencia artificial.</li>
+    <li>📏 Le pusiste <strong>reglas</strong> para que hablara como vos querías.</li>
+    <li>🔍 Aprendiste a <strong>darte cuenta</strong> cuándo un texto lo escribió una IA.</li>
+  </ul>
+  <p>Hoy repasamos eso, porque pronto empezás <strong>un proyecto nuevo</strong>. 🚀</p>
+  <div class="estrellas" id="estrellas"></div>
+  <p style="font-size:20px;color:#666;">Vas a ganar una estrella por cada actividad que completes. ¡Son 5!</p>
+</div>
+
+<div class="card c-cielo">
+  <h2><span class="paso">2</span> ¿Dónde vive la inteligencia artificial?</h2>
+  <p>Cuando le escribías a tu asistente de cocina, ¿dónde estaba la IA? Tocá lo que te parece:</p>
+  <div class="opciones">
+    <div class="opcion" onclick="resp2(this,false)"><span class="emoji">💻</span>Adentro de la computadora de la escuela</div>
+    <div class="opcion" onclick="resp2(this,true)"><span class="emoji">🌍</span>Lejos, en computadoras muy grandes. Le llega tu mensaje por internet</div>
+    <div class="opcion" onclick="resp2(this,false)"><span class="emoji">📱</span>Adentro del teclado</div>
+  </div>
+  <div class="feedback" id="fb-2"></div>
+</div>
+
+<div class="card c-verde">
+  <h2><span class="paso">3</span> Tu mensaje hace un viaje</h2>
+  <p>Cada vez que escribías algo, pasaba esto:</p>
+  <div style="background:#fff;border:3px solid var(--verde);border-radius:14px;padding:20px;margin:14px 0;">
+    <p style="font-size:23px;line-height:2.2;">
+      1️⃣ Vos escribís: <em>"¿cómo hago un budín?"</em><br>
+      ⬇️<br>
+      2️⃣ Tu mensaje <strong>viaja por internet</strong> 🌍<br>
+      ⬇️<br>
+      3️⃣ La IA lo lee y <strong>prepara la respuesta</strong> 🤖<br>
+      ⬇️<br>
+      4️⃣ La respuesta <strong>vuelve</strong> a tu pantalla 💬
+    </p>
+  </div>
+  <p><strong>Por eso, si no hay internet, tu asistente no puede responder.</strong> 📶</p>
+
+  <p style="margin-top:18px;font-size:23px;font-weight:bold;">👉 Ahora ordenalo vos. Tocá los pasos en el orden correcto:</p>
+  <div class="opciones" id="orden-ops">
+    <div class="opcion" onclick="respOrden(this,3)"><span class="emoji">🤖</span>La IA prepara la respuesta</div>
+    <div class="opcion" onclick="respOrden(this,1)"><span class="emoji">⌨️</span>Yo escribo mi pregunta</div>
+    <div class="opcion" onclick="respOrden(this,4)"><span class="emoji">💬</span>La respuesta llega a mi pantalla</div>
+    <div class="opcion" onclick="respOrden(this,2)"><span class="emoji">🌍</span>Mi mensaje viaja por internet</div>
+  </div>
+  <div class="feedback" id="fb-orden"></div>
+</div>
+
+<div class="card c-sol">
+  <h2><span class="paso">4</span> Las reglas que vos le pusiste</h2>
+  <p>Tu asistente hablaba de una forma especial porque <strong>vos le diste reglas</strong>. Por ejemplo: "hablá con palabras fáciles" o "explicá paso a paso".</p>
+  <p>Mirá estas dos respuestas. ¿Cuál sigue la regla <em>"hablá con palabras fáciles"</em>?</p>
+
+  <div class="opciones">
+    <div class="opcion" onclick="resp4(this,false)">
+      <span class="emoji">🅰️</span>"La cocción requiere una temperatura constante de 180 grados centígrados durante 45 minutos"
+    </div>
+    <div class="opcion" onclick="resp4(this,true)">
+      <span class="emoji">🅱️</span>"Poné el horno en 180 grados y dejá el budín 45 minutos. ¡Listo!"
+    </div>
+  </div>
+  <div class="feedback" id="fb-4"></div>
+</div>
+
+<div class="card c-sol">
+  <h2><span class="paso">5</span> Probá vos: cambiá las reglas</h2>
+  <p>Tocá las reglas que querés ponerle a un asistente. Abajo vas a ver <strong>cómo cambia su respuesta</strong> a la pregunta <em>"¿cómo hago un budín?"</em></p>
+
+  <div class="chk" onclick="toggleRegla(this,'facil')"><span class="caja">⬜</span> Hablá con palabras fáciles</div>
+  <div class="chk" onclick="toggleRegla(this,'corto')"><span class="caja">⬜</span> Respuestas cortas</div>
+  <div class="chk" onclick="toggleRegla(this,'pasos')"><span class="caja">⬜</span> Explicá paso a paso, con números</div>
+  <div class="chk" onclick="toggleRegla(this,'amable')"><span class="caja">⬜</span> Sé amable y dale ánimo</div>
+
+  <p style="margin-top:18px;font-weight:bold;font-size:22px;">🤖 Así respondería tu asistente:</p>
+  <div class="texto-lectura" id="preview-reglas" style="min-height:120px;">
+    Tocá alguna regla para ver cómo cambia la respuesta.
+  </div>
+  <div class="dai" style="margin-top:14px;">
+    <strong>🤝 Charlá con tu DAI</strong>
+    ¿Cuál de todas te gusta más para tu asistente? ¿Por qué? Las reglas que elegís cambian <strong>completamente</strong> cómo te habla la IA.
+  </div>
+</div>
+
+<div class="card c-rosa">
+  <h2><span class="paso">6</span> La IA a veces se equivoca</h2>
+  <p>Esto es <strong>lo más importante</strong> que aprendiste: la inteligencia artificial <strong>no siempre dice la verdad</strong>. A veces inventa cosas que suenan bien pero no son ciertas.</p>
+  <p>Sos la <strong>detective</strong>. 🕵️‍♀️ En cada caso, leé lo que dice el texto y decidí si la IA respondió bien o inventó.</p>
+
+  <div id="caso-1">
+    <div class="texto-lectura">
+      <strong>📄 La receta dice:</strong> "Mezclar la harina con el azúcar y la manteca."
+    </div>
+    <p style="font-size:22px;">🤖 <strong>La IA responde:</strong> <em>"Lleva 3 huevos."</em></p>
+    <div class="opciones">
+      <div class="opcion" onclick="respCaso(this,1,false)"><span class="emoji">✅</span>Está bien</div>
+      <div class="opcion" onclick="respCaso(this,1,true)"><span class="emoji">❌</span>Inventó: la receta no habla de huevos</div>
+    </div>
+    <div class="feedback" id="fb-c1"></div>
+  </div>
+
+  <div id="caso-2" style="display:none;margin-top:24px;">
+    <div class="texto-lectura">
+      <strong>📄 El texto dice:</strong> "El zorro colorado vive en el bosque y come pájaros."
+    </div>
+    <p style="font-size:22px;">🤖 <strong>La IA responde:</strong> <em>"El zorro colorado vive en el bosque."</em></p>
+    <div class="opciones">
+      <div class="opcion" onclick="respCaso(this,2,true)"><span class="emoji">✅</span>Está bien: eso sí lo dice el texto</div>
+      <div class="opcion" onclick="respCaso(this,2,false)"><span class="emoji">❌</span>Inventó</div>
+    </div>
+    <div class="feedback" id="fb-c2"></div>
+  </div>
+
+  <div id="caso-3" style="display:none;margin-top:24px;">
+    <div class="texto-lectura">
+      <strong>📄 El pedido dice:</strong> "Hola, quiero dos empanadas para Milena."
+    </div>
+    <p style="font-size:22px;">🤖 <strong>La IA responde:</strong> <em>"Milena las retira a las 8 de la noche."</em></p>
+    <div class="opciones">
+      <div class="opcion" onclick="respCaso(this,3,false)"><span class="emoji">✅</span>Está bien</div>
+      <div class="opcion" onclick="respCaso(this,3,true)"><span class="emoji">❌</span>Inventó: el pedido no dice ninguna hora</div>
+    </div>
+    <div class="feedback" id="fb-c3"></div>
+  </div>
+
+  <div id="caso-4" style="display:none;margin-top:24px;">
+    <div class="texto-lectura">
+      <strong>📄 El texto dice:</strong> "La torta se hornea 40 minutos."
+    </div>
+    <p style="font-size:22px;">🤖 <strong>La IA responde:</strong> <em>"Se hornea 40 minutos a 200 grados."</em></p>
+    <div class="opciones">
+      <div class="opcion" onclick="respCaso(this,4,false)"><span class="emoji">✅</span>Está bien</div>
+      <div class="opcion" onclick="respCaso(this,4,true)"><span class="emoji">❌</span>Los 40 minutos están bien, pero los grados los inventó</div>
+    </div>
+    <div class="feedback" id="fb-c4"></div>
+  </div>
+</div>
+
+<div class="card c-cielo">
+  <h2><span class="paso">7</span> ¿Quién lo escribió: una persona o una IA?</h2>
+  <p>Como en el <strong>Tribunal de Textos</strong> que hiciste. Leé cada texto y decidí quién lo escribió. 👀</p>
+
+  <div id="texto-a">
+    <div class="texto-lectura">"Che, ayer hice unos ñoquis que quedaron un desastre. Me olvidé la sal. Igual mi hermano se comió tres platos 😂"</div>
+    <div class="opciones">
+      <div class="opcion" onclick="respQuien(this,'a',true)"><span class="emoji">🧑</span>Una persona</div>
+      <div class="opcion" onclick="respQuien(this,'a',false)"><span class="emoji">🤖</span>Una IA</div>
+    </div>
+    <div class="feedback" id="fb-qa"></div>
+  </div>
+
+  <div id="texto-b" style="display:none;margin-top:24px;">
+    <div class="texto-lectura">"Es fundamental destacar que la correcta cocción de los ñoquis constituye un elemento esencial. Resulta importante considerar diversos factores que requieren atención."</div>
+    <div class="opciones">
+      <div class="opcion" onclick="respQuien(this,'b',false)"><span class="emoji">🧑</span>Una persona</div>
+      <div class="opcion" onclick="respQuien(this,'b',true)"><span class="emoji">🤖</span>Una IA</div>
+    </div>
+    <div class="feedback" id="fb-qb"></div>
+  </div>
+
+  <div id="texto-c" style="display:none;margin-top:24px;">
+    <div class="texto-lectura">"En primer lugar, es importante mencionar que existen múltiples opciones. En segundo lugar, cabe destacar que cada alternativa presenta ventajas significativas. En conclusión, resulta esencial evaluar cuidadosamente."</div>
+    <div class="opciones">
+      <div class="opcion" onclick="respQuien(this,'c',false)"><span class="emoji">🧑</span>Una persona</div>
+      <div class="opcion" onclick="respQuien(this,'c',true)"><span class="emoji">🤖</span>Una IA</div>
+    </div>
+    <div class="feedback" id="fb-qc"></div>
+  </div>
+
+  <div class="feedback" id="fb-quien-final"></div>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">8</span> ¿Qué viene ahora?</h2>
+  <p>Pronto empezás <strong>tu proyecto nuevo</strong>. Vas a usar todo lo que ya sabés:</p>
+  <table>
+    <tr><th>Lo que ya aprendiste</th><th>Cómo lo vas a usar</th></tr>
+    <tr><td>🤖 Pedirle cosas a la IA</td><td>Le vas a pedir que saque datos de tus textos</td></tr>
+    <tr><td>📏 Ponerle reglas</td><td>Le vas a decir exactamente qué datos querés</td></tr>
+    <tr><td>🔍 Darte cuenta si se equivoca</td><td>Vas a revisar si la IA sacó bien los datos</td></tr>
+  </table>
+  <p style="margin-top:14px;">¡Ya sabés todo lo que hace falta para empezar! 💪</p>
+</div>
+
+<div class="dai">
+  <strong>🤝 Con tu DAI</strong>
+  Esta semana, con Edith: abrí tu asistente de cocina una última vez y hacele una pregunta. Charlen sobre qué respondió bien y qué no. Cuando empiece el proyecto nuevo, lo primero que vas a hacer es elegir tu tema. 🌟
+</div>
+
+</div>
+<script>
+var puntos=0, hechas={};
+function sumar(id){
+  if(hechas[id])return;
+  hechas[id]=true; puntos++;
+  document.getElementById('estrellas').textContent='⭐'.repeat(puntos);
+}
+function limpiar(el){
+  var h=el.parentNode.querySelectorAll('.opcion');
+  for(var i=0;i<h.length;i++){h[i].classList.remove('elegida');}
+}
+
+/* ---- 2. Dónde vive ---- */
+function resp2(el,ok){
+  limpiar(el); el.classList.add('elegida');
+  var fb=document.getElementById('fb-2');
+  if(ok){
+    fb.innerHTML='<span class="bien">¡Muy bien! 🎉 La IA está lejos, en computadoras enormes. Tu mensaje viaja por internet y la respuesta vuelve.</span>';
+    sumar('p2');
+  }else{
+    fb.innerHTML='<span class="casi">Casi... La IA es tan grande que no entra en una computadora común. Probá otra opción 💪</span>';
+  }
+}
+
+/* ---- 3. Ordenar el viaje ---- */
+var ordenEsperado=1;
+function respOrden(el,num){
+  var fb=document.getElementById('fb-orden');
+  if(el.classList.contains('elegida'))return;
+  if(num===ordenEsperado){
+    el.classList.add('elegida');
+    el.innerHTML='<span class="emoji">'+ordenEsperado+'️⃣</span>'+el.textContent.trim();
+    ordenEsperado++;
+    if(ordenEsperado>4){
+      fb.innerHTML='<span class="bien">¡Perfecto! 🏆 Ese es el viaje completo de tu mensaje.</span>';
+      sumar('p3');
+    }else{
+      fb.innerHTML='<span class="bien">¡Bien! Ahora tocá el paso '+ordenEsperado+' 👇</span>';
+    }
+  }else{
+    fb.innerHTML='<span class="casi">Ese no va todavía. Pensá qué pasa primero 🤔</span>';
+  }
+}
+
+/* ---- 4. Las reglas ---- */
+function resp4(el,ok){
+  limpiar(el); el.classList.add('elegida');
+  var fb=document.getElementById('fb-4');
+  if(ok){
+    fb.innerHTML='<span class="bien">¡Exacto! 🎉 La B usa palabras fáciles y va al grano. Así hablaba tu asistente porque vos le pusiste esa regla.</span>';
+    sumar('p4');
+  }else{
+    fb.innerHTML='<span class="casi">Mirá de nuevo: ¿cuál usa palabras más difíciles? Esa NO sigue la regla 💪</span>';
+  }
+}
+
+/* ---- 5. Cambiá las reglas ---- */
+var reglas={facil:false,corto:false,pasos:false,amable:false};
+function toggleRegla(el,cual){
+  reglas[cual]=!reglas[cual];
+  el.classList.toggle('hecho');
+  el.querySelector('.caja').textContent=reglas[cual]?'✅':'⬜';
+  mostrarPreview();
+}
+function mostrarPreview(){
+  var box=document.getElementById('preview-reglas');
+  var activas=0;
+  for(var k in reglas){ if(reglas[k])activas++; }
+  if(activas===0){
+    box.innerHTML='Tocá alguna regla para ver cómo cambia la respuesta.';
+    return;
+  }
+  var txt='';
+  if(reglas.amable) txt+='¡Qué bueno que quieras cocinar! 😊<br><br>';
+  if(reglas.pasos){
+    txt+='1. Poné el horno en 180 grados.<br>2. Mezclá la harina, el azúcar y la manteca.<br>3. Agregá los huevos.<br>4. Llevá al horno 45 minutos.';
+  }else if(reglas.corto){
+    txt+='Mezclás todo, al horno 180 grados, 45 minutos. Listo.';
+  }else if(reglas.facil){
+    txt+='Mezclá la harina con el azúcar y la manteca. Agregá los huevos. Poné el horno en 180 grados y dejalo 45 minutos.';
+  }else{
+    txt+='La elaboración del budín requiere la incorporación gradual de los ingredientes secos, seguida de una cocción a temperatura constante durante un período aproximado de 45 minutos.';
+  }
+  if(reglas.corto && reglas.pasos) txt+='<br><br><em>(cortito y por pasos)</em>';
+  if(reglas.amable) txt+='<br><br>¡Te va a salir riquísimo! 💪';
+  box.innerHTML=txt;
+}
+
+/* ---- 6. Detective ---- */
+var casosOk=0;
+function respCaso(el,n,ok){
+  limpiar(el); el.classList.add('elegida');
+  var fb=document.getElementById('fb-c'+n);
+  var msj={
+    1:'¡Perfecto! 🎉 La receta no dice nada de huevos: la IA los inventó.',
+    2:'¡Muy bien! 🎉 Acá la IA respondió bien: eso sí está escrito en el texto. ¡No siempre se equivoca!',
+    3:'¡Exacto! 🎉 El pedido no dice ninguna hora. La IA se la inventó.',
+    4:'¡Buenísimo! 🏆 Muy fina esa: los 40 minutos están bien, pero los 200 grados no aparecen en ningún lado.'
+  };
+  if(ok){
+    fb.innerHTML='<span class="bien">'+msj[n]+'</span>';
+    casosOk++;
+    if(n<4){
+      var sig=document.getElementById('caso-'+(n+1));
+      if(sig)sig.style.display='block';
+    }
+    if(casosOk===4){
+      fb.innerHTML+='<br><span class="bien">🕵️‍♀️ ¡Resolviste los 4 casos! Sos muy buena detectando cuando la IA inventa.</span>';
+      sumar('p6');
+    }
+  }else{
+    fb.innerHTML='<span class="casi">Mirá de nuevo el texto: ¿eso que dice la IA está escrito ahí? 🤔</span>';
+  }
+}
+
+/* ---- 7. Persona o IA ---- */
+var quienOk=0;
+function respQuien(el,letra,ok){
+  limpiar(el); el.classList.add('elegida');
+  var fb=document.getElementById('fb-q'+letra);
+  var msj={
+    a:'¡Sí! 🎉 Se nota que es una persona: cuenta algo que le pasó, usa "che", tiene emoji y hasta se ríe de su error.',
+    b:'¡Exacto! 🤖 Fijate las pistas: "es fundamental", "constituye", "resulta importante". La IA usa mucho esas palabras.',
+    c:'¡Perfecto! 🤖 "En primer lugar", "cabe destacar", "en conclusión"... habla mucho pero no dice nada concreto. Marca registrada de la IA.'
+  };
+  if(ok){
+    fb.innerHTML='<span class="bien">'+msj[letra]+'</span>';
+    quienOk++;
+    if(letra==='a')document.getElementById('texto-b').style.display='block';
+    if(letra==='b')document.getElementById('texto-c').style.display='block';
+    if(quienOk===3){
+      document.getElementById('fb-quien-final').innerHTML='<span class="bien">🏆 ¡Los tres! Tenés muy buen ojo para reconocer a la IA.</span>';
+      sumar('p7');
+    }
+  }else{
+    fb.innerHTML='<span class="casi">Mirá cómo está escrito: ¿suena a alguien contando algo suyo, o a un texto muy formal y repetido? 🤔</span>';
+  }
+}
+</script>
+</body>
+</html>
