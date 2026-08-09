@@ -58,12 +58,36 @@
   .chk .caja{font-size:30px;}
   ul{margin-left:24px;} li{margin-bottom:10px;}
   @media(max-width:700px){.opciones{grid-template-columns:1fr;} body{font-size:21px;}}
+
+  .campo{display:inline-block;background:#fff;border:3px solid var(--bd);border-radius:26px;
+         padding:14px 24px;margin:8px 8px 8px 0;cursor:pointer;font-size:23px;transition:all .15s;}
+  .campo:hover{border-color:var(--verde);}
+  .campo.si{background:var(--verde);color:#fff;border-color:var(--verde);}
+  .campo.no{background:#FFE5E5;border-color:#C62828;color:#8B1A1A;}
+
+  .pieza{display:inline-block;background:#fff;border:3px solid var(--bd);border-radius:12px;
+         padding:12px 20px;margin:7px;cursor:pointer;font-size:22px;transition:all .15s;}
+  .pieza:hover{border-color:var(--lila);}
+  .pieza.puesta{background:var(--lila);color:#fff;border-color:var(--lila);}
+  .hueco{display:inline-block;min-width:150px;border-bottom:4px dotted var(--lila);
+         padding:6px 12px;margin:0 6px;font-size:22px;color:var(--lila);font-weight:bold;}
+
+  .qz-op{display:block;width:100%;text-align:left;background:#fff;border:3px solid var(--bd);
+         border-radius:14px;padding:16px 22px;margin-bottom:12px;font-size:23px;cursor:pointer;
+         font-family:inherit;color:var(--txt);}
+  .qz-op:hover:enabled{border-color:var(--verde);}
+  .qz-op:disabled{cursor:default;}
+  .qz-vf{display:inline-block;width:47%;text-align:center;font-size:24px;font-weight:bold;
+         padding:20px;margin:0 1% 12px;border:3px solid var(--bd);border-radius:14px;
+         background:#fff;cursor:pointer;font-family:inherit;color:var(--txt);}
+  .qz-vf:hover:enabled{border-color:var(--verde);}
+  .qz-vf:disabled{cursor:default;}
 </style>
 </head>
 <body>
 <header>
   <h1>👋 ¡Volvimos! — Repaso de todo lo que aprendiste</h1>
-  <p>Taller de IA Aplicada &middot; Mi Proyecto &middot; Viernes 7 de agosto</p>
+  <p>Taller de IA Aplicada &middot; Mi Proyecto &middot; Lunes 10 de agosto</p>
 </header>
 <div class="container">
 
@@ -77,7 +101,7 @@
   </ul>
   <p>Hoy repasamos eso, porque pronto empezás <strong>un proyecto nuevo</strong>. 🚀</p>
   <div class="estrellas" id="estrellas"></div>
-  <p style="font-size:20px;color:#666;">Vas a ganar una estrella por cada actividad que completes. ¡Son 5!</p>
+  <p style="font-size:20px;color:#666;">Vas a ganar una estrella por cada actividad que completes. ¡Son 6!</p>
 </div>
 
 <div class="card c-cielo">
@@ -93,21 +117,7 @@
 
 <div class="card c-verde">
   <h2><span class="paso">3</span> Tu mensaje hace un viaje</h2>
-  <p>Cada vez que escribías algo, pasaba esto:</p>
-  <div style="background:#fff;border:3px solid var(--verde);border-radius:14px;padding:20px;margin:14px 0;">
-    <p style="font-size:23px;line-height:2.2;">
-      1️⃣ Vos escribís: <em>"¿cómo hago un budín?"</em><br>
-      ⬇️<br>
-      2️⃣ Tu mensaje <strong>viaja por internet</strong> 🌍<br>
-      ⬇️<br>
-      3️⃣ La IA lo lee y <strong>prepara la respuesta</strong> 🤖<br>
-      ⬇️<br>
-      4️⃣ La respuesta <strong>vuelve</strong> a tu pantalla 💬
-    </p>
-  </div>
-  <p><strong>Por eso, si no hay internet, tu asistente no puede responder.</strong> 📶</p>
-
-  <p style="margin-top:18px;font-size:23px;font-weight:bold;">👉 Ahora ordenalo vos. Tocá los pasos en el orden correcto:</p>
+  <p style="font-size:23px;font-weight:bold;">👉 Armá el viaje de tu mensaje. Tocá los pasos en orden:</p>
   <div class="opciones" id="orden-ops">
     <div class="opcion" onclick="respOrden(this,3)"><span class="emoji">🤖</span>La IA prepara la respuesta</div>
     <div class="opcion" onclick="respOrden(this,1)"><span class="emoji">⌨️</span>Yo escribo mi pregunta</div>
@@ -204,6 +214,20 @@
     </div>
     <div class="feedback" id="fb-c4"></div>
   </div>
+
+  <div id="caso-5" style="display:none;margin-top:24px;">
+    <div class="texto-lectura">
+      <strong>📄 El texto dice:</strong> "La ballena jorobada vive en el mar. Come krill y pescados chicos."
+    </div>
+    <p style="font-size:22px;">🤖 <strong>La IA responde:</strong> <em>"Vive en el mar y come krill."</em></p>
+    <div class="opciones">
+      <div class="opcion" onclick="respCaso(this,5,true)"><span class="emoji">⚠️</span>Está incompleto: se olvidó los pescados chicos</div>
+      <div class="opcion" onclick="respCaso(this,5,false)"><span class="emoji">✅</span>Está perfecto</div>
+      <div class="opcion" onclick="respCaso(this,5,false)"><span class="emoji">❌</span>Inventó todo</div>
+    </div>
+    <div class="feedback" id="fb-c5"></div>
+  </div>
+
 </div>
 
 <div class="card c-cielo">
@@ -240,8 +264,81 @@
   <div class="feedback" id="fb-quien-final"></div>
 </div>
 
+
+<div class="card c-verde">
+  <h2><span class="paso">8</span> ¿Qué datos puedo sacar?</h2>
+  <p>En tu proyecto nuevo vas a elegir <strong>qué datos</strong> le pedís a la computadora. Practiquemos.</p>
+  <p><strong>La regla es fácil:</strong> el dato tiene que estar <strong>escrito en el texto</strong>. Si no está escrito, la IA se lo inventa. 🤖</p>
+
+  <div id="datos-1">
+    <div class="texto-lectura">
+      🦊 "El zorro colorado vive en el bosque. Come pájaros y frutos."
+    </div>
+    <p style="font-size:23px;font-weight:bold;">👉 Tocá los datos que <strong>SÍ</strong> están en el texto:</p>
+    <div>
+      <span class="campo" data-ok="1">📛 el nombre</span>
+      <span class="campo" data-ok="1">🏠 dónde vive</span>
+      <span class="campo" data-ok="1">🍽️ qué come</span>
+      <span class="campo" data-ok="0">🎨 de qué color es</span>
+      <span class="campo" data-ok="0">📏 cuánto mide</span>
+    </div>
+    <div class="feedback" id="fb-d1"></div>
+  </div>
+
+  <div id="datos-2" style="display:none;margin-top:26px;">
+    <div class="texto-lectura">
+      🦅 "El cóndor vive en las montañas. Come carne."
+    </div>
+    <p style="font-size:23px;font-weight:bold;">👉 Otra vez: tocá los datos que <strong>SÍ</strong> están:</p>
+    <div>
+      <span class="campo" data-ok="1">📛 el nombre</span>
+      <span class="campo" data-ok="1">🏠 dónde vive</span>
+      <span class="campo" data-ok="1">🍽️ qué come</span>
+      <span class="campo" data-ok="0">🥚 cuántos huevos pone</span>
+      <span class="campo" data-ok="0">🕐 a qué hora caza</span>
+    </div>
+    <div class="feedback" id="fb-d2"></div>
+  </div>
+
+  <div id="datos-3" style="display:none;margin-top:26px;">
+    <div class="texto-lectura">
+      🐧 "El pingüino de Magallanes hace su nido en la costa. Se alimenta de peces. Llega a Tierra del Fuego en septiembre."
+    </div>
+    <p style="font-size:23px;font-weight:bold;">👉 Esta es más difícil. Tocá los datos que <strong>SÍ</strong> están:</p>
+    <div>
+      <span class="campo" data-ok="1">📛 el nombre</span>
+      <span class="campo" data-ok="1">🏠 dónde vive</span>
+      <span class="campo" data-ok="1">🍽️ qué come</span>
+      <span class="campo" data-ok="1">📅 cuándo llega</span>
+      <span class="campo" data-ok="0">🐣 cuántos pichones tiene</span>
+      <span class="campo" data-ok="0">🌡️ si tiene frío</span>
+    </div>
+    <div class="feedback" id="fb-d3"></div>
+  </div>
+
+  <div id="datos-fin" style="display:none;margin-top:20px;">
+    <div style="background:var(--verde-bg);border-left:8px solid var(--verde);border-radius:14px;padding:20px;">
+      <p style="font-size:24px;font-weight:bold;color:var(--verde);margin-bottom:8px;">🎯 ¡Ese es el truco!</p>
+      <p>Los datos que <strong>no</strong> servían (el color, cuánto mide, los huevos) no están escritos en el texto. Si se los pedís igual a la IA, <strong>te los va a inventar</strong>.</p>
+      <p style="margin-top:10px;">Por eso, cuando elijas tu tema, los <strong>3 datos</strong> tienen que aparecer en TODOS tus textos. 💪</p>
+    </div>
+  </div>
+
+  <div class="dai" style="margin-top:16px;">
+    <strong>🤝 Con tu DAI</strong>
+    Pensá tu tema (animales, pelis, recetas… lo que elijas) y escriban juntas los <strong>3 datos</strong> que va a tener cada texto tuyo. Probá la regla con cada uno: ¿ese dato lo voy a escribir siempre? Si la respuesta es sí, sirve. 🌟
+  </div>
+</div>
+
+
+<div class="card c-cielo">
+  <h2><span class="paso">9</span> ¿Cuánto te acordás?</h2>
+  <p>Diez preguntas para cerrar. Algunas son para <strong>elegir</strong> y otras son de <strong>Verdadero o Falso</strong>. ¡Tomate tu tiempo! 🌟</p>
+  <div id="qz-box" style="margin-top:16px;"></div>
+</div>
+
 <div class="card c-lila">
-  <h2><span class="paso">8</span> ¿Qué viene ahora?</h2>
+  <h2><span class="paso">10</span> ¿Qué viene ahora?</h2>
   <p>Pronto empezás <strong>tu proyecto nuevo</strong>. Vas a usar todo lo que ya sabés:</p>
   <table>
     <tr><th>Lo que ya aprendiste</th><th>Cómo lo vas a usar</th></tr>
@@ -355,17 +452,18 @@ function respCaso(el,n,ok){
     1:'¡Perfecto! 🎉 La receta no dice nada de huevos: la IA los inventó.',
     2:'¡Muy bien! 🎉 Acá la IA respondió bien: eso sí está escrito en el texto. ¡No siempre se equivoca!',
     3:'¡Exacto! 🎉 El pedido no dice ninguna hora. La IA se la inventó.',
-    4:'¡Buenísimo! 🏆 Muy fina esa: los 40 minutos están bien, pero los 200 grados no aparecen en ningún lado.'
+    4:'¡Buenísimo! 🏆 Muy fina esa: los 40 minutos están bien, pero los 200 grados no aparecen en ningún lado.',
+    5:'¡Excelente! 🏆 Esta era la más difícil: la IA no inventó nada, pero se OLVIDÓ un dato. Eso también es un error.'
   };
   if(ok){
     fb.innerHTML='<span class="bien">'+msj[n]+'</span>';
     casosOk++;
-    if(n<4){
+    if(n<5){
       var sig=document.getElementById('caso-'+(n+1));
       if(sig)sig.style.display='block';
     }
-    if(casosOk===4){
-      fb.innerHTML+='<br><span class="bien">🕵️‍♀️ ¡Resolviste los 4 casos! Sos muy buena detectando cuando la IA inventa.</span>';
+    if(casosOk===5){
+      fb.innerHTML+='<br><span class="bien">🕵️‍♀️ ¡Resolviste los 5 casos! Sos muy buena detectando cuando la IA inventa.</span>';
       sumar('p6');
     }
   }else{
@@ -396,6 +494,146 @@ function respQuien(el,letra,ok){
     fb.innerHTML='<span class="casi">Mirá cómo está escrito: ¿suena a alguien contando algo suyo, o a un texto muy formal y repetido? 🤔</span>';
   }
 }
+
+/* ---- 8. Qué datos puedo sacar ---- */
+function chequearDatos(cont, fbId, siguiente){
+  var faltan = cont.querySelectorAll('.campo[data-ok="1"]:not(.si)').length;
+  var fb = document.getElementById(fbId);
+  if(faltan === 0){
+    var cuantos = cont.querySelectorAll('.campo[data-ok="1"]').length;
+    fb.innerHTML = '<span class="bien">¡Encontraste los ' + cuantos + '! 🎉 Todos esos están escritos en el texto.</span>';
+    if(siguiente){
+      document.getElementById(siguiente).style.display = 'block';
+    } else {
+      document.getElementById('datos-fin').style.display = 'block';
+      sumar('p8');
+    }
+  }
+}
+document.addEventListener('click', function(ev){
+  var c = ev.target.closest('.campo');
+  if(!c) return;
+  if(c.classList.contains('si') || c.classList.contains('no')) return;
+  var cont = c.closest('div[id^="datos-"]');
+  if(!cont) return;
+  var fbId = 'fb-d' + cont.id.split('-')[1];
+  if(c.getAttribute('data-ok') === '1'){
+    c.classList.add('si');
+    var sig = cont.id === 'datos-1' ? 'datos-2' : (cont.id === 'datos-2' ? 'datos-3' : null);
+    chequearDatos(cont, fbId, sig);
+  } else {
+    c.classList.add('no');
+    document.getElementById(fbId).innerHTML = '<span class="casi">Ese no está escrito en el texto. Leelo de nuevo 🔍</span>';
+  }
+});
+
+/* ---- 9. Cuestionario de cierre ---- */
+var QZ = [
+ {t:"mc", p:"&iquest;D&oacute;nde vive la inteligencia artificial?",
+  o:["Adentro de la computadora de la escuela","Lejos, y le llega tu mensaje por internet","Adentro del teclado"], ok:1},
+ {t:"vf", p:"Sin internet, tu asistente igual te puede responder.", ok:1,
+  exp:"Falso. La IA est&aacute; lejos: sin internet, tu mensaje no llega."},
+ {t:"mc", p:"Vos le pusiste <strong>reglas</strong> a tu asistente. &iquest;Para qu&eacute; sirven?",
+  o:["Para que hable como vos quer&eacute;s","Para que vaya m&aacute;s r&aacute;pido","Para nada"], ok:0},
+ {t:"vf", p:"La IA siempre dice la verdad y nunca inventa nada.", ok:1,
+  exp:"Falso. A veces inventa cosas que suenan bien pero no son ciertas. Por eso hay que revisar."},
+ {t:"mc", p:"Si un texto dice «el gato come pescado», &iquest;qu&eacute; dato PUEDO sacar?",
+  o:["De qu&eacute; color es el gato","Qu&eacute; come el gato","Cu&aacute;ntos a&ntilde;os tiene"], ok:1},
+ {t:"vf", p:"Puedo sacar un dato que NO est&aacute; escrito en el texto.", ok:1,
+  exp:"Falso. Si no est&aacute; escrito, la IA lo inventa. Solo sirven los datos que est&aacute;n en el texto."},
+ {t:"mc", p:"Cuando un texto usa mucho «es fundamental» y «cabe destacar», seguramente lo escribi&oacute;&hellip;",
+  o:["Una persona","Una IA","Un ni&ntilde;o"], ok:1},
+ {t:"vf", p:"Tu mensaje hace un viaje: sale de tu compu, va por internet y vuelve con la respuesta.", ok:0,
+  exp:"&iexcl;Verdadero! Ese es el viaje del mensaje."},
+ {t:"mc", p:"En tu proyecto nuevo vas a&hellip;",
+  o:["Dibujar","Sacar datos de tus textos","Jugar al f&uacute;tbol"], ok:1},
+ {t:"vf", p:"Para tu proyecto, tus 3 datos tienen que estar en TODOS tus textos.", ok:0,
+  exp:"&iexcl;Verdadero! Si un dato no est&aacute; en alg&uacute;n texto, la IA lo va a inventar ah&iacute;."}
+];
+var qi=0, qok=0, qresp=[];
+function qzRender(){
+  var box=document.getElementById('qz-box');
+  if(qi>=QZ.length){ qzFin(); return; }
+  var q=QZ[qi];
+  var h='<p style="font-size:20px;color:#666;margin-bottom:8px;">Pregunta '+(qi+1)+' de '+QZ.length+'</p>';
+  h+='<p style="font-size:26px;font-weight:bold;margin-bottom:16px;">'+q.p+'</p>';
+  if(q.t==="vf"){
+    h+='<button class="qz-vf" onclick="qzVF(0)">👍 VERDADERO</button>';
+    h+='<button class="qz-vf" onclick="qzVF(1)">👎 FALSO</button>';
+  } else {
+    for(var i=0;i<q.o.length;i++){ h+='<button class="qz-op" onclick="qzMC('+i+')">'+q.o[i]+'</button>'; }
+  }
+  h+='<div id="qz-fb"></div>';
+  box.innerHTML=h;
+}
+function qzLock(){ var b=document.querySelectorAll(".qz-op,.qz-vf"); for(var i=0;i<b.length;i++)b[i].disabled=true; return b; }
+function qzSig(bien, txt){
+  document.getElementById("qz-fb").innerHTML =
+    '<div class="feedback"><span class="'+(bien?"bien":"casi")+'">'+txt+'</span></div>'
+    +'<button class="btn-next" onclick="qzAvanzar()" style="font-size:22px;">Siguiente ➡</button>';
+}
+window.qzVF=function(e){
+  var q=QZ[qi]; var b=qzLock();
+  qresp.push({n:qi+1, ok:(e===q.ok)});
+  b[q.ok].style.borderColor="#2E7D32"; b[q.ok].style.background="#E7F7EE";
+  var bien=(e===q.ok); if(bien)qok++; else { b[e].style.borderColor="#C62828"; b[e].style.background="#FFE5E5"; }
+  qzSig(bien, (bien?"¡Muy bien! 🎉 ":"")+q.exp);
+};
+window.qzMC=function(e){
+  var q=QZ[qi]; var b=qzLock();
+  qresp.push({n:qi+1, ok:(e===q.ok)});
+  b[q.ok].style.borderColor="#2E7D32"; b[q.ok].style.background="#E7F7EE";
+  var bien=(e===q.ok); if(bien)qok++; else { b[e].style.borderColor="#C62828"; b[e].style.background="#FFE5E5"; }
+  qzSig(bien, bien?"¡Correcto! 🎉":"La respuesta correcta es la verde 💪");
+};
+window.qzAvanzar=function(){ qi++; qzRender(); };
+function qzFin(){
+  var box=document.getElementById("qz-box");
+  var msj = qok>=8?"¡Sos una genia! Te acord&aacute;s de todo. 🌟"
+          : qok>=5?"¡Muy bien! Te acord&aacute;s de un mont&oacute;n. 💪"
+          : "¡Bien! Pod&eacute;s repasar la p&aacute;gina y volver a intentar. 😊";
+  box.innerHTML='<div style="text-align:center;">'
+    +'<p style="font-size:28px;font-weight:bold;color:var(--verde);">¡Terminaste! 🎉</p>'
+    +'<p style="font-size:40px;font-weight:bold;margin:10px 0;">'+qok+' / '+QZ.length+'</p>'
+    +'<p style="font-size:24px;">'+msj+'</p></div>'
+    +'<div class="dai" style="margin-top:16px;">'
+    +'<strong>📩 Para el profe</strong>'
+    +'Escrib&iacute; tu nombre y descarg&aacute; tu resultado. Despu&eacute;s se lo pas&aacute;s al profe. 🌟'
+    +'<div style="margin-top:12px;text-align:center;">'
+    +'<input id="qz-nombre" type="text" placeholder="Tu nombre" '
+    +'style="width:90%;max-width:380px;padding:14px 18px;font-size:22px;border:3px solid var(--bd);border-radius:14px;font-family:inherit;">'
+    +'</div>'
+    +'<div id="qz-nombre-err" style="font-size:19px;margin-top:8px;text-align:center;"></div>'
+    +'<div style="text-align:center;"><button class="btn-next" onclick="qzDescargar()" style="font-size:22px;margin-top:10px;">⬇ Descargar mi resultado</button></div>'
+    +'</div>'
+    +'<div style="text-align:center;"><button class="btn-next" onclick="qzReset()" style="font-size:20px;background:#999;margin-top:8px;">🔄 Volver a intentar</button></div>';
+}
+window.qzDescargar=function(){
+  var nom=(document.getElementById("qz-nombre").value||"").trim();
+  var err=document.getElementById("qz-nombre-err");
+  if(nom.length<2){ err.style.color="#C62828"; err.innerHTML="Escrib&iacute; tu nombre antes de descargar."; return; }
+  var ahora=new Date();
+  var fecha=ahora.toLocaleDateString("es-AR")+" "+ahora.toLocaleTimeString("es-AR");
+  var lin=[];
+  lin.push("MI RESULTADO - CLASE 0 (2C)");
+  lin.push("=============================");
+  lin.push("Nombre: "+nom);
+  lin.push("Fecha: "+fecha);
+  lin.push("Puntaje: "+qok+" de "+QZ.length);
+  lin.push("");
+  var ord=qresp.slice().sort(function(a,b){return a.n-b.n;});
+  for(var i=0;i<ord.length;i++){ lin.push("Pregunta "+ord[i].n+": "+(ord[i].ok?"bien":"para repasar")); }
+  var blob=new Blob([lin.join("\n")], {type:"text/plain;charset=utf-8"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a");
+  var limpio=nom.toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"");
+  a.href=url; a.download="mi_resultado_"+limpio+".txt";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  err.style.color="#2E7D32"; err.innerHTML="✅ &iexcl;Listo! Est&aacute; en tus descargas.";
+};
+window.qzReset=function(){ qi=0; qok=0; qresp=[]; qzRender(); };
+qzRender();
 </script>
 </body>
 </html>
