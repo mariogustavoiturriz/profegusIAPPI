@@ -39,7 +39,7 @@
   label{font-weight:bold;font-size:20px;color:var(--nav);}
   .dai{background:var(--rosa-bg);border:3px dashed var(--rosa);border-radius:var(--r);padding:20px 24px;margin:26px 0;font-size:21px;}
   .dai strong{color:var(--rosa);font-size:22px;display:block;margin-bottom:6px;}
-  .estrellas{font-size:34px;letter-spacing:6px;min-height:44px;}
+  .estrellas{font-size:19px;font-weight:bold;color:var(--verde);min-height:28px;margin-top:4px;}
   .opciones{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
   .opcion{background:#fff;border:4px solid var(--bd);border-radius:16px;padding:22px;text-align:center;font-size:22px;cursor:pointer;transition:all .15s;}
   .opcion:hover{border-color:var(--lila);transform:translateY(-2px);}
@@ -101,7 +101,7 @@
   </ul>
   <p>Hoy repasamos eso, porque pronto empezás <strong>un proyecto nuevo</strong>. 🚀</p>
   <div class="estrellas" id="estrellas"></div>
-  <p style="font-size:20px;color:#666;">Vas a ganar una estrella por cada actividad que completes. ¡Son 6!</p>
+  <p style="font-size:20px;color:#666;">Son 6 actividades en total. Abajo vas viendo cuántas completaste.</p>
 </div>
 
 <div class="card c-cielo">
@@ -318,22 +318,22 @@
 
   <div id="datos-fin" style="display:none;margin-top:20px;">
     <div style="background:var(--verde-bg);border-left:8px solid var(--verde);border-radius:14px;padding:20px;">
-      <p style="font-size:24px;font-weight:bold;color:var(--verde);margin-bottom:8px;">🎯 ¡Ese es el truco!</p>
+      <p style="font-size:24px;font-weight:bold;color:var(--verde);margin-bottom:8px;">🎯 Ese es el criterio</p>
       <p>Los datos que <strong>no</strong> servían (el color, cuánto mide, los huevos) no están escritos en el texto. Si se los pedís igual a la IA, <strong>te los va a inventar</strong>.</p>
-      <p style="margin-top:10px;">Por eso, cuando elijas tu tema, los <strong>3 datos</strong> tienen que aparecer en TODOS tus textos. 💪</p>
+      <p style="margin-top:10px;">Por eso, cuando elijas tu tema, los <strong>3 datos</strong> tienen que aparecer en TODOS tus textos.</p>
     </div>
   </div>
 
   <div class="dai" style="margin-top:16px;">
     <strong>🤝 Con tu DAI</strong>
-    Pensá tu tema (animales, pelis, recetas… lo que elijas) y escriban juntas los <strong>3 datos</strong> que va a tener cada texto tuyo. Probá la regla con cada uno: ¿ese dato lo voy a escribir siempre? Si la respuesta es sí, sirve. 🌟
+    Pensá tu tema (animales, pelis, recetas… lo que elijas) y escriban juntas los <strong>3 datos</strong> que va a tener cada texto tuyo. Probá la regla con cada uno: ¿ese dato lo voy a escribir siempre? Si la respuesta es sí, sirve.
   </div>
 </div>
 
 
 <div class="card c-cielo">
   <h2><span class="paso">9</span> ¿Cuánto te acordás?</h2>
-  <p>Diez preguntas para cerrar. Algunas son para <strong>elegir</strong> y otras son de <strong>Verdadero o Falso</strong>. ¡Tomate tu tiempo! 🌟</p>
+  <p>Diez preguntas para cerrar. Algunas son para <strong>elegir</strong> y otras son de <strong>Verdadero o Falso</strong>. Tomate el tiempo que necesites.</p>
   <div id="qz-box" style="margin-top:16px;"></div>
 </div>
 
@@ -346,18 +346,18 @@
     <tr><td>📏 Ponerle reglas</td><td>Le vas a decir exactamente qué datos querés</td></tr>
     <tr><td>🔍 Darte cuenta si se equivoca</td><td>Vas a revisar si la IA sacó bien los datos</td></tr>
   </table>
-  <p style="margin-top:14px;">¡Ya sabés todo lo que hace falta para empezar! 💪</p>
+  <p style="margin-top:14px;">¡Ya sabés todo lo que hace falta para empezar.</p>
 
   <div style="background:var(--verde-bg);border-left:8px solid var(--verde);border-radius:14px;padding:20px;margin-top:16px;">
     <p style="font-size:24px;font-weight:bold;color:var(--verde);margin-bottom:8px;">🤖 ¿Sabías esto?</p>
     <p>Cuando una computadora <strong>decide sola</strong> qué hacer, se llama un <strong>agente</strong>. Y para decidir bien, un agente necesita <strong>datos ordenados y verdaderos</strong>.</p>
-    <p style="margin-top:10px;">¡Eso es justo lo que vos vas a preparar! La tabla de datos que armes es la clase de información con la que trabajan los agentes. Sos la que arma la base. 🌟</p>
+    <p style="margin-top:10px;">¡Eso es justo lo que vos vas a preparar! La tabla de datos que armes es la clase de información con la que trabajan los agentes. Sos la que arma la base.</p>
   </div>
 </div>
 
 <div class="dai">
   <strong>🤝 Con tu DAI</strong>
-  Esta semana, con tu DAI: abrí tu asistente de cocina una última vez y hacele una pregunta. Charlen sobre qué respondió bien y qué no. Cuando empiece el proyecto nuevo, lo primero que vas a hacer es elegir tu tema. 🌟
+  Esta semana, con tu DAI: abrí tu asistente de cocina una última vez y hacele una pregunta. Charlen sobre qué respondió bien y qué no. Cuando empiece el proyecto nuevo, lo primero que vas a hacer es elegir tu tema.
 </div>
 
 </div>
@@ -366,7 +366,7 @@ var puntos=0, hechas={};
 function sumar(id){
   if(hechas[id])return;
   hechas[id]=true; puntos++;
-  document.getElementById('estrellas').textContent='⭐'.repeat(puntos);
+  document.getElementById('estrellas').textContent='Actividades completadas: ' + puntos + ' de 6';
 }
 function limpiar(el){
   var h=el.parentNode.querySelectorAll('.opcion');
@@ -378,10 +378,10 @@ function resp2(el,ok){
   limpiar(el); el.classList.add('elegida');
   var fb=document.getElementById('fb-2');
   if(ok){
-    fb.innerHTML='<span class="bien">¡Muy bien! 🎉 La IA está lejos, en computadoras enormes. Tu mensaje viaja por internet y la respuesta vuelve.</span>';
+    fb.innerHTML='<span class="bien">Correcto. La IA está lejos, en computadoras muy grandes. Tu mensaje viaja por internet y la respuesta vuelve.</span>';
     sumar('p2');
   }else{
-    fb.innerHTML='<span class="casi">Casi... La IA es tan grande que no entra en una computadora común. Probá otra opción 💪</span>';
+    fb.innerHTML='<span class="casi">Casi... La IA es tan grande que no entra en una computadora común. Probá otra opción.</span>';
   }
 }
 
@@ -395,10 +395,10 @@ function respOrden(el,num){
     el.innerHTML='<span class="emoji">'+ordenEsperado+'️⃣</span>'+el.textContent.trim();
     ordenEsperado++;
     if(ordenEsperado>4){
-      fb.innerHTML='<span class="bien">¡Perfecto! 🏆 Ese es el viaje completo de tu mensaje.</span>';
+      fb.innerHTML='<span class="bien">Correcto. Ese es el viaje completo de tu mensaje.</span>';
       sumar('p3');
     }else{
-      fb.innerHTML='<span class="bien">¡Bien! Ahora tocá el paso '+ordenEsperado+' 👇</span>';
+      fb.innerHTML='<span class="bien">Bien. Ahora seleccioná el paso '+ordenEsperado+'.</span>';
     }
   }else{
     fb.innerHTML='<span class="casi">Ese no va todavía. Pensá qué pasa primero 🤔</span>';
@@ -410,10 +410,10 @@ function resp4(el,ok){
   limpiar(el); el.classList.add('elegida');
   var fb=document.getElementById('fb-4');
   if(ok){
-    fb.innerHTML='<span class="bien">¡Exacto! 🎉 La B usa palabras fáciles y va al grano. Así hablaba tu asistente porque vos le pusiste esa regla.</span>';
+    fb.innerHTML='<span class="bien">Correcto. La opción B usa palabras fáciles y va al grano. Así respondía tu asistente porque vos le pusiste esa regla.</span>';
     sumar('p4');
   }else{
-    fb.innerHTML='<span class="casi">Mirá de nuevo: ¿cuál usa palabras más difíciles? Esa NO sigue la regla 💪</span>';
+    fb.innerHTML='<span class="casi">Mirá de nuevo: ¿cuál usa palabras más difíciles? Esa no sigue la regla.</span>';
   }
 }
 
@@ -455,11 +455,11 @@ function respCaso(el,n,ok){
   limpiar(el); el.classList.add('elegida');
   var fb=document.getElementById('fb-c'+n);
   var msj={
-    1:'¡Perfecto! 🎉 La receta no dice nada de huevos: la IA los inventó.',
-    2:'¡Muy bien! 🎉 Acá la IA respondió bien: eso sí está escrito en el texto. ¡No siempre se equivoca!',
-    3:'¡Exacto! 🎉 El pedido no dice ninguna hora. La IA se la inventó.',
-    4:'¡Buenísimo! 🏆 Muy fina esa: los 40 minutos están bien, pero los 200 grados no aparecen en ningún lado.',
-    5:'¡Excelente! 🏆 Esta era la más difícil: la IA no inventó nada, pero se OLVIDÓ un dato. Eso también es un error.'
+    1:'Correcto. La receta no menciona huevos: la IA los inventó.',
+    2:'Correcto. Acá la IA respondió bien: eso sí está escrito en el texto. No siempre se equivoca.',
+    3:'Correcto. El pedido no menciona ninguna hora. La IA la inventó.',
+    4:'Correcto. Esta era difícil: los 40 minutos están bien, pero los 200 grados no aparecen en ningún lado.',
+    5:'Correcto. Esta era la más difícil: la IA no inventó nada, pero se OLVIDÓ un dato. Eso también es un error.'
   };
   if(ok){
     fb.innerHTML='<span class="bien">'+msj[n]+'</span>';
@@ -469,7 +469,7 @@ function respCaso(el,n,ok){
       if(sig)sig.style.display='block';
     }
     if(casosOk===5){
-      fb.innerHTML+='<br><span class="bien">🕵️‍♀️ ¡Resolviste los 5 casos! Sos muy buena detectando cuando la IA inventa.</span>';
+      fb.innerHTML+='<br><span class="bien">🔍 Resolviste los 5 casos. Ya distinguís bien cuándo la IA inventa un dato y cuándo no.</span>';
       sumar('p6');
     }
   }else{
@@ -483,7 +483,7 @@ function respQuien(el,letra,ok){
   limpiar(el); el.classList.add('elegida');
   var fb=document.getElementById('fb-q'+letra);
   var msj={
-    a:'¡Sí! 🎉 Se nota que es una persona: cuenta algo que le pasó, usa "che", tiene emoji y hasta se ríe de su error.',
+    a:'Correcto. Se nota que es una persona: cuenta algo que le pasó, usa "che", tiene emoji y hasta se ríe de su error.',
     b:'¡Exacto! 🤖 Fijate las pistas: "es fundamental", "constituye", "resulta importante". La IA usa mucho esas palabras.',
     c:'¡Perfecto! 🤖 "En primer lugar", "cabe destacar", "en conclusión"... habla mucho pero no dice nada concreto. Marca registrada de la IA.'
   };
@@ -493,7 +493,7 @@ function respQuien(el,letra,ok){
     if(letra==='a')document.getElementById('texto-b').style.display='block';
     if(letra==='b')document.getElementById('texto-c').style.display='block';
     if(quienOk===3){
-      document.getElementById('fb-quien-final').innerHTML='<span class="bien">🏆 ¡Los tres! Tenés muy buen ojo para reconocer a la IA.</span>';
+      document.getElementById('fb-quien-final').innerHTML='<span class="bien">Resolviste los tres. Reconocés bien cuándo un texto lo escribió una IA.</span>';
       sumar('p7');
     }
   }else{
@@ -507,7 +507,7 @@ function chequearDatos(cont, fbId, siguiente){
   var fb = document.getElementById(fbId);
   if(faltan === 0){
     var cuantos = cont.querySelectorAll('.campo[data-ok="1"]').length;
-    fb.innerHTML = '<span class="bien">¡Encontraste los ' + cuantos + '! 🎉 Todos esos están escritos en el texto.</span>';
+    fb.innerHTML = '<span class="bien">Correcto: los ' + cuantos + ' están escritos en el texto.</span>';
     if(siguiente){
       document.getElementById(siguiente).style.display = 'block';
     } else {
@@ -583,23 +583,23 @@ window.qzVF=function(e){
   qresp.push({n:qi+1, ok:(e===q.ok)});
   b[q.ok].style.borderColor="#2E7D32"; b[q.ok].style.background="#E7F7EE";
   var bien=(e===q.ok); if(bien)qok++; else { b[e].style.borderColor="#C62828"; b[e].style.background="#FFE5E5"; }
-  qzSig(bien, (bien?"¡Muy bien! 🎉 ":"")+q.exp);
+  qzSig(bien, (bien?"Correcto. ":"")+q.exp);
 };
 window.qzMC=function(e){
   var q=QZ[qi]; var b=qzLock();
   qresp.push({n:qi+1, ok:(e===q.ok)});
   b[q.ok].style.borderColor="#2E7D32"; b[q.ok].style.background="#E7F7EE";
   var bien=(e===q.ok); if(bien)qok++; else { b[e].style.borderColor="#C62828"; b[e].style.background="#FFE5E5"; }
-  qzSig(bien, bien?"¡Correcto! 🎉":"La respuesta correcta es la verde 💪");
+  qzSig(bien, bien?"Correcto.":"La La respuesta correcta es la que está en verde.");
 };
 window.qzAvanzar=function(){ qi++; qzRender(); };
 function qzFin(){
   var box=document.getElementById("qz-box");
-  var msj = qok>=8?"¡Sos una genia! Te acord&aacute;s de todo. 🌟"
-          : qok>=5?"¡Muy bien! Te acord&aacute;s de un mont&oacute;n. 💪"
-          : "¡Bien! Pod&eacute;s repasar la p&aacute;gina y volver a intentar. 😊";
+  var msj = qok>=8?"Muy bien. Repasaste todos los temas."
+          : qok>=5?"Bien. Repasaste la mayoría de los temas."
+          : "Te conviene repasar la página y volver a intentar.";
   box.innerHTML='<div style="text-align:center;">'
-    +'<p style="font-size:28px;font-weight:bold;color:var(--verde);">¡Terminaste! 🎉</p>'
+    +'<p style="font-size:28px;font-weight:bold;color:var(--verde);">Cuestionario completo</p>'
     +'<p style="font-size:40px;font-weight:bold;margin:10px 0;">'+qok+' / '+QZ.length+'</p>'
     +'<p style="font-size:24px;">'+msj+'</p></div>'
     +'<div class="dai" style="margin-top:16px;">'
