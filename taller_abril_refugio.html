@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de IA · Mi Proyecto · Los animales del refugio</title>
+<style>
+  :root{
+    --nav:#1A2C3A;--verde:#2A9D5C;--verde-bg:#E7F7EE;--lila:#7B5EA7;--lila-bg:#F3EEFB;
+    --sol:#E9A030;--sol-bg:#FEF6E7;--cielo:#2E86C1;--cielo-bg:#EAF4FB;
+    --rosa:#D65D8B;--rosa-bg:#FCEEF4;--txt:#2C3E50;--bd:#D5DDE5;--r:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;background:#F2F6FA;color:var(--txt);line-height:1.7;font-size:22px;padding:15px 0 60px;}
+  header{background:var(--lila);color:#fff;padding:28px 20px;border-bottom:6px solid var(--sol);border-radius:0 0 20px 20px;}
+  header h1{font-size:30px;margin-bottom:6px;}
+  header p{font-size:19px;opacity:.95;}
+  .container{width:94%;max-width:900px;margin:0 auto;padding:0 10px;}
+  .card{background:#fff;border-radius:var(--r);padding:28px;margin:24px 0;box-shadow:0 4px 14px rgba(0,0,0,.09);border-left:8px solid var(--bd);}
+  .c-lila{border-left-color:var(--lila);}
+  .c-verde{border-left-color:var(--verde);}
+  .c-sol{border-left-color:var(--sol);}
+  .c-cielo{border-left-color:var(--cielo);}
+  .c-rosa{border-left-color:var(--rosa);}
+  h2{color:var(--nav);font-size:25px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+  .paso{background:var(--lila);color:#fff;min-width:46px;height:46px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;}
+  p{margin-bottom:12px;}
+  .texto-lectura{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:14px;padding:20px 22px;font-size:23px;line-height:2;margin:16px 0;}
+  .btn{display:inline-block;background:var(--verde);color:#fff;border:none;padding:16px 26px;border-radius:14px;font-size:21px;font-weight:bold;cursor:pointer;margin:8px 6px 8px 0;font-family:inherit;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn-lila{background:var(--lila);}
+  .btn-sol{background:var(--sol);}
+  .btn-chico{padding:10px 18px;font-size:19px;}
+  .feedback{font-size:22px;font-weight:bold;min-height:36px;margin-top:10px;}
+  .bien{color:var(--verde);}
+  .casi{color:var(--sol);}
+  input[type=text], textarea{width:100%;padding:14px;border:3px solid var(--bd);border-radius:12px;font-size:21px;font-family:inherit;margin:6px 0 12px;}
+  input[type=text]:focus, textarea:focus{border-color:var(--lila);outline:none;}
+  label{font-weight:bold;font-size:20px;color:var(--nav);}
+  .dai{background:var(--rosa-bg);border:3px dashed var(--rosa);border-radius:var(--r);padding:20px 24px;margin:26px 0;font-size:21px;}
+  .dai strong{color:var(--rosa);font-size:22px;display:block;margin-bottom:6px;}
+  .estrellas{font-size:19px;font-weight:bold;color:var(--verde);min-height:28px;margin-top:4px;}
+  .opciones{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  .opcion{background:#fff;border:4px solid var(--bd);border-radius:16px;padding:22px;text-align:center;font-size:22px;cursor:pointer;transition:all .15s;}
+  .opcion:hover{border-color:var(--lila);transform:translateY(-2px);}
+  .opcion.elegida{border-color:var(--verde);background:var(--verde-bg);}
+  .opcion .emoji{font-size:52px;display:block;margin-bottom:8px;}
+  .palabra{cursor:pointer;padding:3px 6px;border-radius:8px;transition:background .15s;}
+  .palabra:hover{background:#FFE9A8;}
+  .palabra.ok{background:var(--verde);color:#fff;}
+  .palabra.no{background:#F5B7B1;}
+  table{width:100%;border-collapse:collapse;font-size:20px;margin:14px 0;}
+  th,td{border:2px solid var(--bd);padding:12px;text-align:left;}
+  th{background:var(--lila);color:#fff;font-size:19px;}
+  td input[type=text]{margin:0;padding:10px;font-size:20px;border-width:2px;}
+  .chk{display:flex;align-items:center;gap:14px;background:#fff;border:3px solid var(--bd);border-radius:14px;padding:16px 20px;margin:10px 0;font-size:21px;cursor:pointer;}
+  .chk.hecho{border-color:var(--verde);background:var(--verde-bg);}
+  .chk .caja{font-size:30px;}
+  ul{margin-left:24px;} li{margin-bottom:10px;}
+  @media(max-width:700px){.opciones{grid-template-columns:1fr;} body{font-size:21px;}}
+
+  .campo{display:inline-block;background:#fff;border:3px solid var(--bd);border-radius:26px;
+         padding:14px 24px;margin:8px 8px 8px 0;cursor:pointer;font-size:23px;transition:all .15s;}
+  .campo:hover{border-color:var(--verde);}
+  .campo.si{background:var(--verde);color:#fff;border-color:var(--verde);}
+  .campo.no{background:#FFE5E5;border-color:#C62828;color:#8B1A1A;}
+
+  .pieza{display:inline-block;background:#fff;border:3px solid var(--bd);border-radius:12px;
+         padding:12px 20px;margin:7px;cursor:pointer;font-size:22px;transition:all .15s;}
+  .pieza:hover{border-color:var(--lila);}
+  .pieza.puesta{background:var(--lila);color:#fff;border-color:var(--lila);}
+  .hueco{display:inline-block;min-width:150px;border-bottom:4px dotted var(--lila);
+         padding:6px 12px;margin:0 6px;font-size:22px;color:var(--lila);font-weight:bold;}
+
+  .qz-op{display:block;width:100%;text-align:left;background:#fff;border:3px solid var(--bd);
+         border-radius:14px;padding:16px 22px;margin-bottom:12px;font-size:23px;cursor:pointer;
+         font-family:inherit;color:var(--txt);}
+  .qz-op:hover:enabled{border-color:var(--verde);}
+  .qz-op:disabled{cursor:default;}
+  .qz-vf{display:inline-block;width:47%;text-align:center;font-size:24px;font-weight:bold;
+         padding:20px;margin:0 1% 12px;border:3px solid var(--bd);border-radius:14px;
+         background:#fff;cursor:pointer;font-family:inherit;color:var(--txt);}
+  .qz-vf:hover:enabled{border-color:var(--verde);}
+  .qz-vf:disabled{cursor:default;}
+</style>
+</head>
+<body>
+<header>
+  <h1>🐾 Tu proyecto: los animales del refugio</h1>
+  <p>Taller de IA &middot; Mi Proyecto &middot; Viernes · 80 minutos</p>
+</header>
+<div class="container">
+
+<style>
+  .bit-campo{width:100%;box-sizing:border-box;border:3px solid var(--bd);border-radius:12px;
+             padding:14px 16px;font-size:19px;font-family:inherit;color:var(--txt);
+             line-height:1.6;resize:vertical;margin-top:8px;}
+  .bit-campo:focus{outline:none;border-color:var(--verde);}
+  .bit-lbl{font-weight:bold;font-size:20px;margin-top:18px;display:block;}
+  .ficha-animal{background:#FFFDF6;border:3px solid var(--sol);border-radius:14px;
+                padding:18px 22px;font-size:21px;font-style:italic;line-height:1.7;margin:14px 0;}
+  .btn-desc{background:var(--verde);color:#fff;border:none;border-radius:12px;padding:16px 28px;
+            font-size:20px;font-weight:bold;cursor:pointer;font-family:inherit;margin-top:16px;}
+  .modelo{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:12px;
+          padding:16px 20px;font-family:Consolas,monospace;font-size:18px;line-height:1.8;margin:12px 0;}
+  .cuenta{font-size:20px;font-weight:bold;color:var(--verde);margin-top:8px;}
+</style>
+
+<div class="card c-verde">
+  <h2><span class="paso">1</span> Una novedad para tu proyecto</h2>
+  <p>Hasta ahora practicaste con recetas y con textos de prueba. Pero tu proyecto de verdad va a ser sobre algo que te interesa: <strong>los animales de un refugio</strong>.</p>
+
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);">
+    <p style="font-size:22px;font-weight:bold;color:var(--verde);">🐾 ¿Qué vas a hacer?</p>
+    <p>Cuando llega un animal a un refugio, alguien escribe una descripción en un mensaje o un cuaderno. Están todos los datos, pero <strong>mezclados en el texto</strong>: no sirven para buscar ni para ordenar.</p>
+    <p style="margin-top:10px;">Tu proyecto es convertir esas descripciones en una <strong>tabla ordenada</strong>. Una tabla donde se pueda buscar "todos los perros vacunados" y aparezcan enseguida.</p>
+  </div>
+
+  <p>Así se ve una descripción como las que vas a trabajar:</p>
+  <div class="ficha-animal">
+    "Lleg&oacute; una perra mestiza de unos 3 a&ntilde;os, marr&oacute;n. La encontraron en el barrio Kuanip. Est&aacute; vacunada. Le pusimos Nube."
+  </div>
+
+  <p>Y estos son los datos que se pueden sacar de ahí:</p>
+  <div class="modelo">
+    nombre: Nube<br>
+    especie: perro<br>
+    edad_aprox: 3 a&ntilde;os<br>
+    color: marr&oacute;n<br>
+    zona: Kuanip<br>
+    vacunado: s&iacute;
+  </div>
+
+  <div class="caja" style="background:var(--sol-bg);border-left:8px solid var(--sol);">
+    <p><strong>Fijate que es la misma regla que ya practicaste:</strong> el dato tiene que <strong>estar escrito</strong> en el texto. "Nube" está escrito. "Si es cariñosa" no está: eso no se puede sacar.</p>
+  </div>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">2</span> Cómo es la clase de hoy</h2>
+  <p>Hoy vas a hacer <strong>tres intentos</strong> de pedirle los datos a la IA. En cada intento vas a pedírselo de una forma distinta, y vas a ver cómo cambia la respuesta.</p>
+  <p style="margin-top:10px;">No hay que hacerlo bien la primera vez. La idea es justamente <strong>ir mejorando</strong> y darte cuenta de qué funciona.</p>
+  <div class="caja" style="background:var(--lila-bg);border-left:8px solid var(--lila);">
+    <p>📄 Vas a escribir lo que probás en los recuadros de esta página. Al final descargás todo junto y se lo pasás al profe.</p>
+  </div>
+</div>
+
+<div class="card c-cielo">
+  <h2><span class="paso">3</span> Intento 1 — Pedíselo como se te ocurra</h2>
+
+  <p>Este es el texto con el que vas a trabajar los tres intentos:</p>
+  <div class="ficha-animal">
+    "Ingres&oacute; un gato negro, macho, joven, de m&aacute;s o menos 1 a&ntilde;o. Apareci&oacute; cerca del hospital. Todav&iacute;a no est&aacute; castrado. Lo llamamos Tiz&oacute;n."
+  </div>
+
+  <p><strong>Andá a tu Colab y pedile a la IA que te saque los datos de ese texto.</strong> Escribilo como se te ocurra, con tus palabras.</p>
+
+  <label class="bit-lbl">✍️ ¿Qué le escribiste?</label>
+  <textarea class="bit-campo" id="a1" rows="3" placeholder="Escribí acá lo que le pediste..."></textarea>
+
+  <label class="bit-lbl">📋 ¿Qué te contestó?</label>
+  <textarea class="bit-campo" id="a2" rows="4" placeholder="Copiá acá la respuesta..."></textarea>
+
+  <div class="caja" style="background:var(--cielo-bg);border-left:8px solid var(--cielo);">
+    <p><strong>Mirá bien la respuesta y pensá:</strong></p>
+    <p>¿Están todos los datos? ¿Está escrito de forma ordenada? ¿Se parece a la tabla que querés armar, o es un texto largo?</p>
+  </div>
+
+  <label class="bit-lbl">💭 ¿Qué te pareció la respuesta?</label>
+  <textarea class="bit-campo" id="a3" rows="3" placeholder="..."></textarea>
+</div>
+
+<div class="card c-cielo">
+  <h2><span class="paso">4</span> Intento 2 — Decile exactamente qué querés</h2>
+
+  <p>Ahora probá de nuevo, pero esta vez <strong>nombrale los datos que querés</strong>. En lugar de decirle "sacame los datos", pedile los campos uno por uno.</p>
+
+  <div class="caja" style="background:var(--sol-bg);border-left:8px solid var(--sol);">
+    <p><strong>Los campos de tu proyecto son:</strong></p>
+    <p style="font-size:20px;margin-top:8px;">nombre &middot; especie &middot; edad_aprox &middot; color &middot; zona &middot; castrado</p>
+  </div>
+
+  <label class="bit-lbl">✍️ ¿Cómo se lo pediste esta vez?</label>
+  <textarea class="bit-campo" id="a4" rows="4" placeholder="..."></textarea>
+
+  <label class="bit-lbl">📋 ¿Qué te contestó ahora?</label>
+  <textarea class="bit-campo" id="a5" rows="4" placeholder="..."></textarea>
+
+  <label class="bit-lbl">💭 ¿Salió mejor que la primera vez? ¿En qué?</label>
+  <textarea class="bit-campo" id="a6" rows="3" placeholder="..."></textarea>
+</div>
+
+<div class="card c-rosa">
+  <h2><span class="paso">5</span> Intento 3 — El desafío</h2>
+
+  <p>Este es el más difícil. Querés que la IA te conteste <strong>siempre con esta forma exacta</strong>, sin cambiar nada:</p>
+
+  <div class="modelo">
+    nombre: ___<br>
+    especie: ___<br>
+    edad_aprox: ___<br>
+    color: ___<br>
+    zona: ___<br>
+    castrado: ___
+  </div>
+
+  <p><strong>El desafío:</strong> lográ que la respuesta de la IA salga con esa forma. Ni más ni menos. Sin frases de más, sin explicaciones, sin saludos.</p>
+
+  <div class="caja" style="background:var(--rosa-bg);border-left:8px solid var(--rosa);">
+    <p><strong>Probá, mirá qué sale, y volvé a probar.</strong> Casi nunca sale a la primera. Si después de varios intentos no sale, pedile ayuda a tu acompañante para pensarlo juntas.</p>
+  </div>
+
+  <label class="bit-lbl">✍️ ¿Qué le escribiste para lograrlo?</label>
+  <textarea class="bit-campo" id="a7" rows="5" placeholder="..."></textarea>
+
+  <label class="bit-lbl">📋 ¿Cómo quedó la respuesta?</label>
+  <textarea class="bit-campo" id="a8" rows="4" placeholder="..."></textarea>
+</div>
+
+<div class="card c-verde">
+  <h2><span class="paso">6</span> Lo que descubriste</h2>
+
+  <p>Mirá tus tres intentos, uno al lado del otro.</p>
+
+  <label class="bit-lbl">🔍 ¿Cuál funcionó mejor y por qué te parece que fue?</label>
+  <textarea class="bit-campo" id="a9" rows="4" placeholder="..."></textarea>
+
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);">
+    <p><strong>Esto es lo importante de hoy:</strong></p>
+    <p style="margin-top:8px;">La IA hace lo que vos le pedís. Si le pedís algo suelto, te contesta cualquier cosa. Si le pedís <strong>exactamente</strong> lo que querés y <strong>cómo</strong> lo querés, te contesta así.</p>
+    <p style="margin-top:10px;">Eso que descubriste hoy es lo que vas a usar para armar la tabla de los animales.</p>
+  </div>
+</div>
+
+<div class="card c-sol">
+  <h2><span class="paso">7</span> Guardá tu trabajo</h2>
+  <p>Escribí tu nombre y descargá todo lo que hiciste hoy.</p>
+
+  <label class="bit-lbl">Tu nombre</label>
+  <input class="bit-campo" id="nombre" placeholder="Escribí tu nombre">
+
+  <button class="btn-desc" onclick="descargarAbril()">⬇ Descargar mi trabajo</button>
+  <p id="okdesc" class="cuenta"></p>
+</div>
+
+</div>
+<script>
+function descargarAbril(){
+  var n = document.getElementById('nombre').value.trim();
+  if(!n){ alert('Escribí tu nombre antes de descargar.'); return; }
+  function v(id){ var e=document.getElementById(id); return e && e.value.trim() ? e.value.trim() : '(sin completar)'; }
+  var f = new Date();
+  var fecha = f.getDate()+'/'+(f.getMonth()+1)+'/'+f.getFullYear();
+  var t = [];
+  t.push('MI TRABAJO - Los animales del refugio');
+  t.push('Taller de IA');
+  t.push('Nombre: ' + n);
+  t.push('Fecha: ' + fecha);
+  t.push('');
+  t.push('--- INTENTO 1 ---');
+  t.push('Le escribi: ' + v('a1'));
+  t.push('Me contesto: ' + v('a2'));
+  t.push('Me parecio: ' + v('a3'));
+  t.push('');
+  t.push('--- INTENTO 2 (nombrando los campos) ---');
+  t.push('Le escribi: ' + v('a4'));
+  t.push('Me contesto: ' + v('a5'));
+  t.push('Salio mejor porque: ' + v('a6'));
+  t.push('');
+  t.push('--- INTENTO 3 (el desafio del formato) ---');
+  t.push('Le escribi: ' + v('a7'));
+  t.push('Me contesto: ' + v('a8'));
+  t.push('');
+  t.push('--- LO QUE DESCUBRI ---');
+  t.push(v('a9'));
+  t.push('');
+  var texto = t.join('\n');
+  var limpio = n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'_');
+  var blob = new Blob([texto], {type:'text/plain;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'mi_trabajo_' + limpio + '.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  document.getElementById('okdesc').textContent = 'Listo. Tu archivo se descargo.';
+}
+</script>
+</body>
+</html>
