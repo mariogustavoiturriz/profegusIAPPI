@@ -104,6 +104,19 @@
   .modelo{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:12px;
           padding:16px 20px;font-family:Consolas,monospace;font-size:18px;line-height:1.8;margin:12px 0;}
   .cuenta{font-size:20px;font-weight:bold;color:var(--verde);margin-top:8px;}
+  .keybox{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:14px;
+          padding:20px 24px;margin:16px 0;}
+  .keybox input{width:100%;box-sizing:border-box;font-size:18px;padding:13px 15px;
+                border:3px solid var(--bd);border-radius:12px;font-family:inherit;margin-top:8px;}
+  .btn-ia{background:var(--cielo);color:#fff;border:none;border-radius:12px;padding:15px 26px;
+          font-size:19px;font-weight:bold;cursor:pointer;font-family:inherit;margin-top:10px;}
+  .btn-ia:hover:enabled{filter:brightness(1.08);}
+  .btn-ia:disabled{opacity:.5;cursor:default;}
+  .rta{background:#F4F8FB;border:3px solid var(--bd);border-radius:12px;padding:16px 18px;
+       font-size:18px;line-height:1.7;margin-top:10px;white-space:pre-wrap;min-height:60px;}
+  .rta.esperando{color:#888;font-style:italic;}
+  .rta.error{background:#FDECEA;border-color:#C0392B;color:#8B1A1A;}
+  .aviso-key{font-size:18px;font-weight:bold;color:var(--rosa);margin-top:10px;}
 </style>
 
 <div class="card c-verde">
@@ -145,21 +158,38 @@
   </div>
 </div>
 
+<div class="card c-sol">
+  <h2><span class="paso">3</span> Poné tu clave</h2>
+  <p>Para que la inteligencia artificial te conteste, primero pegá tu clave. <strong>Es una sola vez</strong>: después la usás en los tres intentos sin volver a escribirla.</p>
+
+  <div class="keybox">
+    <label class="bit-lbl" style="margin-top:0;">🔑 Tu clave de Groq</label>
+    <input id="lakey" type="password" placeholder="Pegá acá tu clave">
+    <br><button class="btn-ia" onclick="activarIA()">Activar</button>
+    <p id="okkey" class="cuenta"></p>
+  </div>
+
+  <div class="caja" style="background:var(--sol-bg);border-left:8px solid var(--sol);">
+    <p>Si no te acordás dónde está tu clave, pedísela al profe. <strong>No la compartas con nadie</strong>: es como la contraseña de tu cuenta.</p>
+  </div>
+</div>
+
 <div class="card c-cielo">
-  <h2><span class="paso">3</span> Intento 1 — Pedíselo como se te ocurra</h2>
+  <h2><span class="paso">4</span> Intento 1 — Pedíselo como se te ocurra</h2>
 
   <p>Este es el texto con el que vas a trabajar los tres intentos:</p>
   <div class="ficha-animal">
     "Ingres&oacute; un gato negro, macho, joven, de m&aacute;s o menos 1 a&ntilde;o. Apareci&oacute; cerca del hospital. Todav&iacute;a no est&aacute; castrado. Lo llamamos Tiz&oacute;n."
   </div>
 
-  <p><strong>Andá a tu Colab y pedile a la IA que te saque los datos de ese texto.</strong> Escribilo como se te ocurra, con tus palabras.</p>
+  <p><strong>Pedile a la IA que te saque los datos de ese texto.</strong> Escribilo como se te ocurra, con tus palabras.</p>
 
-  <label class="bit-lbl">✍️ ¿Qué le escribiste?</label>
-  <textarea class="bit-campo" id="a1" rows="3" placeholder="Escribí acá lo que le pediste..."></textarea>
+  <label class="bit-lbl">✍️ Escribí acá lo que le pedís a la IA</label>
+  <textarea class="bit-campo" id="a1" rows="3" placeholder="Por ejemplo: sacame los datos de este texto"></textarea>
+  <button class="btn-ia" id="btn1" onclick="probar(1,'a1','r1')">▶ Probar con la IA</button>
 
-  <label class="bit-lbl">📋 ¿Qué te contestó?</label>
-  <textarea class="bit-campo" id="a2" rows="4" placeholder="Copiá acá la respuesta..."></textarea>
+  <label class="bit-lbl">📋 Lo que te contestó</label>
+  <div class="rta esperando" id="r1">Todavía no probaste. Escribí tu pedido y tocá el botón.</div>
 
   <div class="caja" style="background:var(--cielo-bg);border-left:8px solid var(--cielo);">
     <p><strong>Mirá bien la respuesta y pensá:</strong></p>
@@ -171,7 +201,7 @@
 </div>
 
 <div class="card c-cielo">
-  <h2><span class="paso">4</span> Intento 2 — Decile exactamente qué querés</h2>
+  <h2><span class="paso">5</span> Intento 2 — Decile exactamente qué querés</h2>
 
   <p>Ahora probá de nuevo, pero esta vez <strong>nombrale los datos que querés</strong>. En lugar de decirle "sacame los datos", pedile los campos uno por uno.</p>
 
@@ -180,18 +210,19 @@
     <p style="font-size:20px;margin-top:8px;">nombre &middot; especie &middot; edad_aprox &middot; color &middot; zona &middot; castrado</p>
   </div>
 
-  <label class="bit-lbl">✍️ ¿Cómo se lo pediste esta vez?</label>
-  <textarea class="bit-campo" id="a4" rows="4" placeholder="..."></textarea>
+  <label class="bit-lbl">✍️ Escribí acá lo que le pedís a la IA</label>
+  <textarea class="bit-campo" id="a4" rows="3" placeholder="Nombrale los campos uno por uno..."></textarea>
+  <button class="btn-ia" id="btn2" onclick="probar(2,'a4','r2')">▶ Probar con la IA</button>
 
-  <label class="bit-lbl">📋 ¿Qué te contestó ahora?</label>
-  <textarea class="bit-campo" id="a5" rows="4" placeholder="..."></textarea>
+  <label class="bit-lbl">📋 Lo que te contestó</label>
+  <div class="rta esperando" id="r2">Todavía no probaste. Escribí tu pedido y tocá el botón.</div>
 
   <label class="bit-lbl">💭 ¿Salió mejor que la primera vez? ¿En qué?</label>
   <textarea class="bit-campo" id="a6" rows="3" placeholder="..."></textarea>
 </div>
 
 <div class="card c-rosa">
-  <h2><span class="paso">5</span> Intento 3 — El desafío</h2>
+  <h2><span class="paso">6</span> Intento 3 — El desafío</h2>
 
   <p>Este es el más difícil. Querés que la IA te conteste <strong>siempre con esta forma exacta</strong>, sin cambiar nada:</p>
 
@@ -210,15 +241,16 @@
     <p><strong>Probá, mirá qué sale, y volvé a probar.</strong> Casi nunca sale a la primera. Si después de varios intentos no sale, pedile ayuda a tu acompañante para pensarlo juntas.</p>
   </div>
 
-  <label class="bit-lbl">✍️ ¿Qué le escribiste para lograrlo?</label>
-  <textarea class="bit-campo" id="a7" rows="5" placeholder="..."></textarea>
+  <label class="bit-lbl">✍️ Escribí acá lo que le pedís a la IA</label>
+  <textarea class="bit-campo" id="a7" rows="3" placeholder="Mostrale exactamente la forma que querés..."></textarea>
+  <button class="btn-ia" id="btn3" onclick="probar(3,'a7','r3')">▶ Probar con la IA</button>
 
-  <label class="bit-lbl">📋 ¿Cómo quedó la respuesta?</label>
-  <textarea class="bit-campo" id="a8" rows="4" placeholder="..."></textarea>
+  <label class="bit-lbl">📋 Lo que te contestó</label>
+  <div class="rta esperando" id="r3">Todavía no probaste. Escribí tu pedido y tocá el botón.</div>
 </div>
 
 <div class="card c-verde">
-  <h2><span class="paso">6</span> Lo que descubriste</h2>
+  <h2><span class="paso">7</span> Lo que descubriste</h2>
 
   <p>Mirá tus tres intentos, uno al lado del otro.</p>
 
@@ -233,7 +265,7 @@
 </div>
 
 <div class="card c-sol">
-  <h2><span class="paso">7</span> Guardá tu trabajo</h2>
+  <h2><span class="paso">8</span> Guardá tu trabajo</h2>
   <p>Escribí tu nombre y descargá todo lo que hiciste hoy.</p>
 
   <label class="bit-lbl">Tu nombre</label>
@@ -245,10 +277,75 @@
 
 </div>
 <script>
+var LA_KEY = "";
+var TEXTO_ANIMAL = "Ingresó un gato negro, macho, joven, de más o menos 1 año. Apareció cerca del hospital. Todavía no está castrado. Lo llamamos Tizón.";
+
+function activarIA(){
+  var k = document.getElementById('lakey').value.trim();
+  if(k.length < 20){
+    document.getElementById('okkey').textContent = 'Esa clave parece incompleta. Fijate de pegarla entera.';
+    return;
+  }
+  LA_KEY = k;
+  document.getElementById('okkey').textContent = 'Listo. Ya podés probar en los tres intentos.';
+}
+
+async function probar(n, idPedido, idRta){
+  var caja = document.getElementById(idRta);
+  var pedido = document.getElementById(idPedido).value.trim();
+
+  if(!LA_KEY){
+    caja.className = 'rta error';
+    caja.textContent = 'Primero poné tu clave en el paso 3 y tocá Activar.';
+    return;
+  }
+  if(!pedido){
+    caja.className = 'rta error';
+    caja.textContent = 'Escribí primero qué le querés pedir a la IA.';
+    return;
+  }
+
+  var btn = document.getElementById('btn' + n);
+  btn.disabled = true;
+  caja.className = 'rta esperando';
+  caja.textContent = 'Pensando...';
+
+  try {
+    var r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {'Authorization': 'Bearer ' + LA_KEY, 'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'openai/gpt-oss-120b',
+        temperature: 0.2,
+        messages: [{role: 'system', content: pedido},
+                   {role: 'user', content: TEXTO_ANIMAL}]
+      })
+    });
+    var d = await r.json();
+    if(d.error){
+      caja.className = 'rta error';
+      caja.textContent = 'La IA no pudo responder. Revisá que la clave esté bien.';
+    } else {
+      caja.className = 'rta';
+      caja.textContent = d.choices[0].message.content;
+    }
+  } catch(e){
+    caja.className = 'rta error';
+    caja.textContent = 'No se pudo conectar. Fijate que haya internet y probá de nuevo.';
+  }
+  btn.disabled = false;
+}
+
 function descargarAbril(){
   var n = document.getElementById('nombre').value.trim();
   if(!n){ alert('Escribí tu nombre antes de descargar.'); return; }
-  function v(id){ var e=document.getElementById(id); return e && e.value.trim() ? e.value.trim() : '(sin completar)'; }
+  function v(id){
+    var e=document.getElementById(id);
+    if(!e) return '(sin completar)';
+    if(e.value !== undefined) return e.value.trim() ? e.value.trim() : '(sin completar)';
+    var t=(e.textContent||'').trim();
+    return (t && t.indexOf('Todavía no probaste')<0) ? t : '(sin completar)';
+  }
   var f = new Date();
   var fecha = f.getDate()+'/'+(f.getMonth()+1)+'/'+f.getFullYear();
   var t = [];
@@ -259,17 +356,17 @@ function descargarAbril(){
   t.push('');
   t.push('--- INTENTO 1 ---');
   t.push('Le escribi: ' + v('a1'));
-  t.push('Me contesto: ' + v('a2'));
+  t.push('Me contesto: ' + v('r1'));
   t.push('Me parecio: ' + v('a3'));
   t.push('');
   t.push('--- INTENTO 2 (nombrando los campos) ---');
   t.push('Le escribi: ' + v('a4'));
-  t.push('Me contesto: ' + v('a5'));
+  t.push('Me contesto: ' + v('r2'));
   t.push('Salio mejor porque: ' + v('a6'));
   t.push('');
   t.push('--- INTENTO 3 (el desafio del formato) ---');
   t.push('Le escribi: ' + v('a7'));
-  t.push('Me contesto: ' + v('a8'));
+  t.push('Me contesto: ' + v('r3'));
   t.push('');
   t.push('--- LO QUE DESCUBRI ---');
   t.push(v('a9'));
