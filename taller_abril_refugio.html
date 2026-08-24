@@ -117,6 +117,21 @@
   .rta.esperando{color:#888;font-style:italic;}
   .rta.error{background:#FDECEA;border-color:#C0392B;color:#8B1A1A;}
   .aviso-key{font-size:18px;font-weight:bold;color:var(--rosa);margin-top:10px;}
+  details.tip{background:var(--lila-bg);border-left:8px solid var(--lila);border-radius:12px;
+              padding:14px 18px;margin-top:10px;}
+  details.tip summary{cursor:pointer;font-weight:bold;color:var(--lila);font-size:19px;}
+  details.tip p{margin:12px 0 0 0;font-size:18px;line-height:1.6;}
+  .banco{background:var(--verde-bg);border:3px solid var(--verde);border-radius:14px;
+         padding:18px 20px;margin-top:14px;}
+  .banco h4{margin:0 0 6px 0;font-size:20px;color:var(--verde);}
+  .banco p.expl{font-size:17px;margin:0 0 12px 0;}
+  .frase{display:block;width:100%;text-align:left;background:#fff;border:3px solid var(--bd);
+         border-radius:12px;padding:13px 16px;margin-bottom:9px;font-size:18px;cursor:pointer;
+         font-family:inherit;color:var(--txt);line-height:1.5;}
+  .frase:hover{border-color:var(--verde);background:#F4FBF7;}
+  .frase .quefaltahace{display:block;font-size:15px;color:#667;margin-top:4px;font-style:italic;}
+  .borrar{background:#fff;border:3px solid var(--rosa);color:var(--rosa);border-radius:12px;
+          padding:10px 18px;font-size:16px;font-weight:bold;cursor:pointer;font-family:inherit;margin-top:4px;}
 </style>
 
 <div class="card c-verde">
@@ -210,6 +225,24 @@
     <p style="font-size:20px;margin-top:8px;">nombre &middot; especie &middot; edad_aprox &middot; color &middot; zona &middot; castrado</p>
   </div>
 
+  <details class="tip">
+    <summary>💡 Pista 1 — no sé por dónde empezar</summary>
+    <p>Pensá que la IA no sabe qué querés. Si le decís "sacame los datos", ella elige cuáles. <strong>Decile los nombres exactos de los datos que querés</strong>, uno por uno.</p>
+  </details>
+  <details class="tip">
+    <summary>💡 Pista 2 — ya le nombré los campos y sigue raro</summary>
+    <p>Fijate si te contesta con una frase larga o con una lista. Si viene todo junto en un párrafo, pedile que te lo escriba <strong>de a un dato por línea</strong>.</p>
+  </details>
+
+  <div class="banco">
+    <h4>🧱 Banco de frases</h4>
+    <p class="expl">Tocá las frases que quieras usar y se van agregando a tu pedido. Podés cambiarlas después.</p>
+    <button class="frase" onclick="agregarFrase('a4','Sos un asistente que saca datos de textos sobre animales.')">Sos un asistente que saca datos de textos sobre animales.<span class="quefaltahace">le dice qué tarea tiene</span></button>
+    <button class="frase" onclick="agregarFrase('a4','Sacá estos datos: nombre, especie, edad_aprox, color, zona, castrado.')">Sacá estos datos: nombre, especie, edad_aprox, color, zona, castrado.<span class="quefaltahace">le dice qué datos querés</span></button>
+    <button class="frase" onclick="agregarFrase('a4','Escribí un dato por línea.')">Escribí un dato por línea.<span class="quefaltahace">le pide una lista y no un párrafo</span></button>
+    <button class="borrar" onclick="limpiarPedido('a4')">Borrar y empezar de nuevo</button>
+  </div>
+
   <label class="bit-lbl">✍️ Escribí acá lo que le pedís a la IA</label>
   <textarea class="bit-campo" id="a4" rows="3" placeholder="Nombrale los campos uno por uno..."></textarea>
   <button class="btn-ia" id="btn2" onclick="probar(2,'a4','r2')">▶ Probar con la IA</button>
@@ -239,6 +272,30 @@
 
   <div class="caja" style="background:var(--rosa-bg);border-left:8px solid var(--rosa);">
     <p><strong>Probá, mirá qué sale, y volvé a probar.</strong> Casi nunca sale a la primera. Si después de varios intentos no sale, pedile ayuda a tu acompañante para pensarlo juntas.</p>
+  </div>
+
+  <details class="tip">
+    <summary>💡 Pista 1 — sale bien pero con cosas de más</summary>
+    <p>Si te contesta con un saludo adelante o una explicación atrás, es porque nadie le dijo que no lo haga. <strong>Pedíselo directamente</strong>: que conteste solo los datos y nada más.</p>
+  </details>
+  <details class="tip">
+    <summary>💡 Pista 2 — cada vez sale de una forma distinta</summary>
+    <p>Si no le mostrás cómo tiene que verse, ella elige la forma cada vez. <strong>Mostrale un ejemplo</strong> del formato que querés y pedile que lo copie exactamente así.</p>
+  </details>
+  <details class="tip">
+    <summary>💡 Pista 3 — completa datos que no están en el texto</summary>
+    <p>Cuando le falta un dato, la IA lo inventa para no dejar el hueco. Decile qué hacer en ese caso: <strong>que lo deje vacío</strong> en lugar de suponerlo.</p>
+  </details>
+
+  <div class="banco">
+    <h4>🧱 Banco de frases</h4>
+    <p class="expl">Estas se suman a las que ya usaste. Probá una por vez y mirá cómo cambia la respuesta.</p>
+    <button class="frase" onclick="agregarFrase('a7','Sos un asistente que saca datos de textos sobre animales.')">Sos un asistente que saca datos de textos sobre animales.<span class="quefaltahace">le dice qué tarea tiene</span></button>
+    <button class="frase" onclick="agregarFrase('a7','Sacá estos datos: nombre, especie, edad_aprox, color, zona, castrado.')">Sacá estos datos: nombre, especie, edad_aprox, color, zona, castrado.<span class="quefaltahace">le dice qué datos querés</span></button>
+    <button class="frase" onclick="agregarFrase('a7','Escribí un dato por línea, con este formato: campo: valor')">Escribí un dato por línea, con este formato: campo: valor<span class="quefaltahace">le muestra la forma exacta</span></button>
+    <button class="frase" onclick="agregarFrase('a7','No agregues saludos, ni explicaciones, ni nada más.')">No agregues saludos, ni explicaciones, ni nada más.<span class="quefaltahace">saca lo que sobra alrededor</span></button>
+    <button class="frase" onclick="agregarFrase('a7','Si un dato no está escrito en el texto, dejalo vacío.')">Si un dato no está escrito en el texto, dejalo vacío.<span class="quefaltahace">evita que invente</span></button>
+    <button class="borrar" onclick="limpiarPedido('a7')">Borrar y empezar de nuevo</button>
   </div>
 
   <label class="bit-lbl">✍️ Escribí acá lo que le pedís a la IA</label>
@@ -277,6 +334,21 @@
 
 </div>
 <script>
+function agregarFrase(destino, frase){
+  var campo = document.getElementById(destino);
+  if(!campo) return;
+  var actual = campo.value.trim();
+  if(actual.indexOf(frase) >= 0) return;      // ya la tiene
+  campo.value = actual ? (actual + "\n" + frase) : frase;
+  campo.focus();
+  campo.scrollTop = campo.scrollHeight;
+}
+
+function limpiarPedido(destino){
+  var campo = document.getElementById(destino);
+  if(campo){ campo.value = ""; campo.focus(); }
+}
+
 var LA_KEY = "";
 var TEXTO_ANIMAL = "Ingresó un gato negro, macho, joven, de más o menos 1 año. Apareció cerca del hospital. Todavía no está castrado. Lo llamamos Tizón.";
 
