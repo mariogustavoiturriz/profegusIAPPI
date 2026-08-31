@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de IA · Mi colección de animales del refugio</title>
+<style>
+  :root{
+    --nav:#1A2C3A;--verde:#2A9D5C;--verde-bg:#E7F7EE;--lila:#7B5EA7;--lila-bg:#F3EEFB;
+    --sol:#E9A030;--sol-bg:#FEF6E7;--cielo:#2E86C1;--cielo-bg:#EAF4FB;
+    --rosa:#D65D8B;--rosa-bg:#FCEEF4;--txt:#2C3E50;--bd:#D5DDE5;--r:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;background:#F2F6FA;color:var(--txt);line-height:1.7;font-size:22px;padding:15px 0 60px;}
+  header{background:var(--lila);color:#fff;padding:28px 20px;border-bottom:6px solid var(--sol);border-radius:0 0 20px 20px;}
+  header h1{font-size:30px;margin-bottom:6px;}
+  header p{font-size:19px;opacity:.95;}
+  .container{width:94%;max-width:900px;margin:0 auto;padding:0 10px;}
+  .card{background:#fff;border-radius:var(--r);padding:28px;margin:24px 0;box-shadow:0 4px 14px rgba(0,0,0,.09);border-left:8px solid var(--bd);}
+  .c-lila{border-left-color:var(--lila);}
+  .c-verde{border-left-color:var(--verde);}
+  .c-sol{border-left-color:var(--sol);}
+  .c-cielo{border-left-color:var(--cielo);}
+  .c-rosa{border-left-color:var(--rosa);}
+  h2{color:var(--nav);font-size:25px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+  .paso{background:var(--lila);color:#fff;min-width:46px;height:46px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;}
+  p{margin-bottom:12px;}
+  .texto-lectura{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:14px;padding:20px 22px;font-size:23px;line-height:2;margin:16px 0;}
+  .btn{display:inline-block;background:var(--verde);color:#fff;border:none;padding:16px 26px;border-radius:14px;font-size:21px;font-weight:bold;cursor:pointer;margin:8px 6px 8px 0;font-family:inherit;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn-lila{background:var(--lila);}
+  .btn-sol{background:var(--sol);}
+  .btn-chico{padding:10px 18px;font-size:19px;}
+  .feedback{font-size:22px;font-weight:bold;min-height:36px;margin-top:10px;}
+  .bien{color:var(--verde);}
+  .casi{color:var(--sol);}
+  input[type=text], textarea{width:100%;padding:14px;border:3px solid var(--bd);border-radius:12px;font-size:21px;font-family:inherit;margin:6px 0 12px;}
+  input[type=text]:focus, textarea:focus{border-color:var(--lila);outline:none;}
+  label{font-weight:bold;font-size:20px;color:var(--nav);}
+  .dai{background:var(--rosa-bg);border:3px dashed var(--rosa);border-radius:var(--r);padding:20px 24px;margin:26px 0;font-size:21px;}
+  .dai strong{color:var(--rosa);font-size:22px;display:block;margin-bottom:6px;}
+  .estrellas{font-size:19px;font-weight:bold;color:var(--verde);min-height:28px;margin-top:4px;}
+  .opciones{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  .opcion{background:#fff;border:4px solid var(--bd);border-radius:16px;padding:22px;text-align:center;font-size:22px;cursor:pointer;transition:all .15s;}
+  .opcion:hover{border-color:var(--lila);transform:translateY(-2px);}
+  .opcion.elegida{border-color:var(--verde);background:var(--verde-bg);}
+  .opcion .emoji{font-size:52px;display:block;margin-bottom:8px;}
+  .palabra{cursor:pointer;padding:3px 6px;border-radius:8px;transition:background .15s;}
+  .palabra:hover{background:#FFE9A8;}
+  .palabra.ok{background:var(--verde);color:#fff;}
+  .palabra.no{background:#F5B7B1;}
+  table{width:100%;border-collapse:collapse;font-size:20px;margin:14px 0;}
+  th,td{border:2px solid var(--bd);padding:12px;text-align:left;}
+  th{background:var(--lila);color:#fff;font-size:19px;}
+  td input[type=text]{margin:0;padding:10px;font-size:20px;border-width:2px;}
+  .chk{display:flex;align-items:center;gap:14px;background:#fff;border:3px solid var(--bd);border-radius:14px;padding:16px 20px;margin:10px 0;font-size:21px;cursor:pointer;}
+  .chk.hecho{border-color:var(--verde);background:var(--verde-bg);}
+  .chk .caja{font-size:30px;}
+  ul{margin-left:24px;} li{margin-bottom:10px;}
+  @media(max-width:700px){.opciones{grid-template-columns:1fr;} body{font-size:21px;}}
+
+  .campo{display:inline-block;background:#fff;border:3px solid var(--bd);border-radius:26px;
+         padding:14px 24px;margin:8px 8px 8px 0;cursor:pointer;font-size:23px;transition:all .15s;}
+  .campo:hover{border-color:var(--verde);}
+  .campo.si{background:var(--verde);color:#fff;border-color:var(--verde);}
+  .campo.no{background:#FFE5E5;border-color:#C62828;color:#8B1A1A;}
+
+  .pieza{display:inline-block;background:#fff;border:3px solid var(--bd);border-radius:12px;
+         padding:12px 20px;margin:7px;cursor:pointer;font-size:22px;transition:all .15s;}
+  .pieza:hover{border-color:var(--lila);}
+  .pieza.puesta{background:var(--lila);color:#fff;border-color:var(--lila);}
+  .hueco{display:inline-block;min-width:150px;border-bottom:4px dotted var(--lila);
+         padding:6px 12px;margin:0 6px;font-size:22px;color:var(--lila);font-weight:bold;}
+
+  .qz-op{display:block;width:100%;text-align:left;background:#fff;border:3px solid var(--bd);
+         border-radius:14px;padding:16px 22px;margin-bottom:12px;font-size:23px;cursor:pointer;
+         font-family:inherit;color:var(--txt);}
+  .qz-op:hover:enabled{border-color:var(--verde);}
+  .qz-op:disabled{cursor:default;}
+  .qz-vf{display:inline-block;width:47%;text-align:center;font-size:24px;font-weight:bold;
+         padding:20px;margin:0 1% 12px;border:3px solid var(--bd);border-radius:14px;
+         background:#fff;cursor:pointer;font-family:inherit;color:var(--txt);}
+  .qz-vf:hover:enabled{border-color:var(--verde);}
+  .qz-vf:disabled{cursor:default;}
+</style>
+</head>
+<body>
+<header>
+  <h1>🐾 Tu colección de animales del refugio</h1>
+  <p>Taller de IA &middot; Lunes 31 de agosto &middot; 120 minutos</p>
+</header>
+<div class="container">
+
+<style>
+  .campo-a{width:100%;box-sizing:border-box;border:3px solid var(--bd);border-radius:12px;
+           padding:14px 16px;font-size:19px;font-family:inherit;color:var(--txt);
+           line-height:1.6;resize:vertical;margin-top:8px;}
+  .campo-a:focus{outline:none;border-color:var(--verde);}
+  .lbl-a{font-weight:bold;font-size:20px;margin-top:18px;display:block;}
+  .ficha{background:#FFFDF6;border:3px solid var(--sol);border-radius:14px;
+         padding:18px 22px;font-size:20px;font-style:italic;line-height:1.7;margin:14px 0;}
+  .modelo{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:12px;
+          padding:16px 20px;font-family:Consolas,monospace;font-size:18px;line-height:1.9;margin:12px 0;}
+  .btn-a{background:var(--verde);color:#fff;border:none;border-radius:12px;padding:16px 28px;
+         font-size:20px;font-weight:bold;cursor:pointer;font-family:inherit;margin-top:16px;}
+  .contador{font-size:20px;font-weight:bold;color:var(--verde);margin-top:10px;}
+  .num{display:inline-block;background:var(--lila);color:#fff;width:34px;height:34px;
+       border-radius:50%;text-align:center;line-height:34px;font-weight:bold;margin-right:8px;}
+</style>
+
+<div class="card c-verde">
+  <h2><span class="paso">1</span> Dónde estás</h2>
+  <p>Ya probaste tres formas distintas de pedirle datos a la IA, y encontraste una que funcionaba: cuando le decís <strong>exactamente qué campos querés y con qué forma</strong>, te contesta siempre igual.</p>
+  <p style="margin-top:10px;">Ahora falta lo otro: <strong>los textos</strong>. Sin textos no hay nada que sacar. Hoy vas a armar tu propia colección.</p>
+
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);">
+    <p style="font-size:22px;font-weight:bold;color:var(--verde);">🐾 Tu objetivo de hoy</p>
+    <p>Escribir <strong>descripciones de animales</strong> como las que haría alguien en un refugio, y sacarles los datos con la IA.</p>
+    <p style="margin-top:10px;">Si llegás a cuatro está muy bien. No hay apuro.</p>
+  </div>
+</div>
+
+<div class="card c-cielo">
+  <h2><span class="paso">2</span> Cómo es una buena descripción</h2>
+  <p>Esta es la que ya viste:</p>
+  <div class="ficha">
+    "Lleg&oacute; una perra mestiza de unos 3 a&ntilde;os, marr&oacute;n. La encontraron en el barrio Kuanip. Est&aacute; vacunada. Le pusimos Nube."
+  </div>
+  <p>Sirve porque adentro están <strong>todos los datos que necesitás</strong>:</p>
+  <div class="modelo">
+    nombre: Nube<br>
+    especie: perro<br>
+    edad_aprox: 3 a&ntilde;os<br>
+    color: marr&oacute;n<br>
+    zona: Kuanip<br>
+    vacunado: s&iacute;
+  </div>
+
+  <div class="caja" style="background:var(--sol-bg);border-left:8px solid var(--sol);">
+    <p><strong>La regla de siempre:</strong> el dato tiene que <strong>estar escrito</strong>. Si escribís "es re buena y cariñosa", eso no es un dato que se pueda sacar: es una opinión. Escribí como escribiría alguien del refugio, con la información concreta.</p>
+  </div>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">3</span> Escribí las tuyas</h2>
+  <p>Escribí seis descripciones. Pueden ser de perros, gatos u otros animales. Cambiá los nombres, las edades, los colores y los barrios para que no se parezcan entre sí.</p>
+
+  <div class="caja" style="background:var(--lila-bg);border-left:8px solid var(--lila);">
+    <p><strong>Antes de escribir cada una, pensá:</strong> ¿cómo se llama? ¿qué animal es? ¿qué edad más o menos? ¿de qué color? ¿dónde apareció? ¿está vacunado o castrado?</p>
+  </div>
+
+  <label class="lbl-a"><span class="num">1</span>Primera descripción</label>
+  <textarea class="campo-a" id="d1" rows="3" placeholder="Escribí acá..."></textarea>
+
+  <label class="lbl-a"><span class="num">2</span>Segunda descripción</label>
+  <textarea class="campo-a" id="d2" rows="3" placeholder="Escribí acá..."></textarea>
+
+  <label class="lbl-a"><span class="num">3</span>Tercera descripción</label>
+  <textarea class="campo-a" id="d3" rows="3" placeholder="Escribí acá..."></textarea>
+
+  <label class="lbl-a"><span class="num">4</span>Cuarta descripción</label>
+  <textarea class="campo-a" id="d4" rows="3" placeholder="Escribí acá..."></textarea>
+
+  <label class="lbl-a"><span class="num">5</span>Quinta descripción</label>
+  <textarea class="campo-a" id="d5" rows="3" placeholder="Escribí acá..."></textarea>
+
+  <label class="lbl-a"><span class="num">6</span>Sexta descripción</label>
+  <textarea class="campo-a" id="d6" rows="3" placeholder="Escribí acá..."></textarea>
+</div>
+
+<div class="card c-sol">
+  <h2><span class="paso">4</span> Revisá lo que escribiste</h2>
+  <p>Volvé a leer tus seis descripciones, una por una, y fijate:</p>
+  <div class="caja" style="background:var(--sol-bg);border-left:8px solid var(--sol);">
+    <p>¿Cada una dice <strong>el nombre</strong> del animal?</p>
+    <p style="margin-top:8px;">¿Se entiende <strong>qué animal es</strong> y <strong>de qué color</strong>?</p>
+    <p style="margin-top:8px;">¿Dice <strong>dónde apareció</strong>?</p>
+    <p style="margin-top:8px;">¿Dice algo sobre <strong>vacunas o castración</strong>?</p>
+  </div>
+  <p>Si a alguna le falta algo, volvé arriba y completala. No hace falta que todas tengan todo, pero cuantos más datos tengan, mejor te va a salir la tabla.</p>
+
+  <label class="lbl-a">¿Alguna te quedó incompleta? ¿Cuál y por qué?</label>
+  <textarea class="campo-a" id="rev" rows="3" placeholder="..."></textarea>
+</div>
+
+<div class="card c-rosa">
+  <h2><span class="paso">5</span> Probala con la IA</h2>
+  <p>Ahora usá <strong>la instrucción que te funcionó en el taller</strong> —la del tercer intento, la que hacía que la respuesta saliera siempre igual— y probala con dos o tres de tus descripciones nuevas.</p>
+
+  <div class="caja" style="background:var(--rosa-bg);border-left:8px solid var(--rosa);">
+    <p><strong>Lo que hay que mirar:</strong> ¿la respuesta sale con la misma forma en todas? ¿O con alguna descripción se desordena?</p>
+    <p style="margin-top:10px;">Si con alguna se desordena, fijate qué tiene de distinta esa descripción. Eso es información valiosa.</p>
+  </div>
+
+  <label class="lbl-a">¿Salió igual en todas? ¿Qué pasó?</label>
+  <textarea class="campo-a" id="prueba" rows="4" placeholder="..."></textarea>
+
+  <label class="lbl-a">¿La IA completó algún dato que vos no habías escrito?</label>
+  <textarea class="campo-a" id="invent" rows="3" placeholder="..."></textarea>
+</div>
+
+<div class="card c-cielo">
+  <h2><span class="paso">6</span> Lo que viene</h2>
+  <p>Hoy cierra la primera parte del año. <strong>El viernes 4 arranca el proyecto del equipo</strong>: vas a trabajar con Orión, Máximo, Morena y Tomás en el sistema de calidad del aire para la feria de ciencias.</p>
+
+  <div class="caja" style="background:var(--cielo-bg);border-left:8px solid var(--cielo);">
+    <p style="font-size:22px;font-weight:bold;color:var(--cielo);">🔍 Tu trabajo en el equipo</p>
+    <p>Cada integrante tiene un rol. <strong>El tuyo es sacar los datos de los textos.</strong></p>
+    <p style="margin-top:10px;">El equipo va a conseguir documentos sobre calidad del aire, donde están escritos los valores peligrosos: cuánto monóxido es mucho, a partir de qué temperatura hay problema. Esos datos están <strong>perdidos adentro de textos largos</strong>, igual que los datos de tus animales.</p>
+    <p style="margin-top:10px;">Vos vas a escribir la instrucción que hace que la IA los saque ordenados. <strong>Eso es exactamente lo que practicaste hoy y el lunes pasado.</strong></p>
+  </div>
+
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);">
+    <p style="font-size:22px;font-weight:bold;color:var(--verde);">Por qué importa tu parte</p>
+    <p>Sin esa tabla de datos, el equipo <strong>no puede seguir</strong>: el programa que van a construir después la necesita para funcionar.</p>
+    <p style="margin-top:10px;">Y vos llegás sabiendo hacerlo. Tus compañeros lo van a ver por primera vez el viernes.</p>
+  </div>
+</div>
+
+<div class="card c-verde">
+  <h2><span class="paso">7</span> Guardá tu trabajo</h2>
+  <p>Descargá tu colección y entregala. Es el registro de lo que hiciste hoy.</p>
+  <label class="lbl-a">Tu nombre</label>
+  <input class="campo-a" id="nom" placeholder="Escribí tu nombre">
+  <button class="btn-a" onclick="guardarColeccion()">⬇ Descargar mi colección</button>
+  <p id="okc" class="contador"></p>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">8</span> Para trabajar con tu acompañante</h2>
+  <p>Se trabaja a tu ritmo. No hace falta terminar todo: mejor pocas descripciones bien pensadas que muchas apuradas. Lo que quede sin hacer no es un problema.</p>
+  <div class="caja" style="background:var(--lila-bg);border-left:8px solid var(--lila);">
+    <p>Si alguna consigna no se entiende, léanla juntas y buscá decirla con tus palabras antes de resolverla. Y si una descripción no te sale, salteala y volvé después: a veces aparece sola.</p>
+  </div>
+</div>
+
+</div>
+<script>
+function guardarColeccion(){
+  var n = document.getElementById('nom').value.trim();
+  if(!n){ alert('Escribí tu nombre antes de descargar.'); return; }
+  function v(id){ var e=document.getElementById(id); return e && e.value.trim() ? e.value.trim() : '(sin completar)'; }
+  var f = new Date();
+  var fecha = f.getDate()+'/'+(f.getMonth()+1)+'/'+f.getFullYear();
+  var escritas = 0;
+  for(var i=1;i<=6;i++){
+    var e = document.getElementById('d'+i);
+    if(e && e.value.trim()) escritas++;
+  }
+  var t = [];
+  t.push('MI COLECCION - Animales del refugio');
+  t.push('Taller de IA');
+  t.push('Nombre: ' + n);
+  t.push('Fecha: ' + fecha);
+  t.push('Descripciones escritas: ' + escritas + ' de 6');
+  t.push('');
+  t.push('=== MIS DESCRIPCIONES ===');
+  for(var j=1;j<=6;j++){
+    t.push('');
+    t.push(j + ') ' + v('d'+j));
+  }
+  t.push('');
+  t.push('=== REVISION ===');
+  t.push(v('rev'));
+  t.push('');
+  t.push('=== PRUEBA CON LA IA ===');
+  t.push('Salio igual en todas?: ' + v('prueba'));
+  t.push('Completo datos que yo no escribi?: ' + v('invent'));
+  t.push('');
+  var texto = t.join('\n');
+  var limpio = n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'_');
+  var blob = new Blob([texto], {type:'text/plain;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'coleccion_' + limpio + '.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  document.getElementById('okc').textContent = 'Descargado. Tenes ' + escritas + ' de 6 descripciones.';
+}
+</script>
+</body>
+</html>
