@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi trabajo en el equipo</title>
+<style>
+  :root{
+    --nav:#1A2C3A;--verde:#2A9D5C;--verde-bg:#E7F7EE;--lila:#7B5EA7;--lila-bg:#F3EEFB;
+    --sol:#E9A030;--sol-bg:#FEF6E7;--cielo:#2E86C1;--cielo-bg:#EAF4FB;
+    --rosa:#D65D8B;--rosa-bg:#FCEEF4;--txt:#2C3E50;--bd:#D5DDE5;--r:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;background:#F2F6FA;color:var(--txt);line-height:1.7;font-size:22px;padding:15px 0 60px;}
+  header{background:var(--lila);color:#fff;padding:28px 20px;border-bottom:6px solid var(--sol);border-radius:0 0 20px 20px;}
+  header h1{font-size:30px;margin-bottom:6px;}
+  header p{font-size:19px;opacity:.95;}
+  .container{width:94%;max-width:900px;margin:0 auto;padding:0 10px;}
+  .card{background:#fff;border-radius:var(--r);padding:28px;margin:24px 0;box-shadow:0 4px 14px rgba(0,0,0,.09);border-left:8px solid var(--bd);}
+  .c-lila{border-left-color:var(--lila);}
+  .c-verde{border-left-color:var(--verde);}
+  .c-sol{border-left-color:var(--sol);}
+  .c-cielo{border-left-color:var(--cielo);}
+  .c-rosa{border-left-color:var(--rosa);}
+  h2{color:var(--nav);font-size:25px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+  .paso{background:var(--lila);color:#fff;min-width:46px;height:46px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;}
+  p{margin-bottom:12px;}
+  .texto-lectura{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:14px;padding:20px 22px;font-size:23px;line-height:2;margin:16px 0;}
+  .btn{display:inline-block;background:var(--verde);color:#fff;border:none;padding:16px 26px;border-radius:14px;font-size:21px;font-weight:bold;cursor:pointer;margin:8px 6px 8px 0;font-family:inherit;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn-lila{background:var(--lila);}
+  .btn-sol{background:var(--sol);}
+  .btn-chico{padding:10px 18px;font-size:19px;}
+  .feedback{font-size:22px;font-weight:bold;min-height:36px;margin-top:10px;}
+  .bien{color:var(--verde);}
+  .casi{color:var(--sol);}
+  input[type=text], textarea{width:100%;padding:14px;border:3px solid var(--bd);border-radius:12px;font-size:21px;font-family:inherit;margin:6px 0 12px;}
+  input[type=text]:focus, textarea:focus{border-color:var(--lila);outline:none;}
+  label{font-weight:bold;font-size:20px;color:var(--nav);}
+  .dai{background:var(--rosa-bg);border:3px dashed var(--rosa);border-radius:var(--r);padding:20px 24px;margin:26px 0;font-size:21px;}
+  .dai strong{color:var(--rosa);font-size:22px;display:block;margin-bottom:6px;}
+  .estrellas{font-size:19px;font-weight:bold;color:var(--verde);min-height:28px;margin-top:4px;}
+  .opciones{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  .opcion{background:#fff;border:4px solid var(--bd);border-radius:16px;padding:22px;text-align:center;font-size:22px;cursor:pointer;transition:all .15s;}
+  .opcion:hover{border-color:var(--lila);transform:translateY(-2px);}
+  .opcion.elegida{border-color:var(--verde);background:var(--verde-bg);}
+  .opcion .emoji{font-size:52px;display:block;margin-bottom:8px;}
+  .palabra{cursor:pointer;padding:3px 6px;border-radius:8px;transition:background .15s;}
+  .palabra:hover{background:#FFE9A8;}
+  .palabra.ok{background:var(--verde);color:#fff;}
+  .palabra.no{background:#F5B7B1;}
+  table{width:100%;border-collapse:collapse;font-size:20px;margin:14px 0;}
+  th,td{border:2px solid var(--bd);padding:12px;text-align:left;}
+  th{background:var(--lila);color:#fff;font-size:19px;}
+  td input[type=text]{margin:0;padding:10px;font-size:20px;border-width:2px;}
+  .chk{display:flex;align-items:center;gap:14px;background:#fff;border:3px solid var(--bd);border-radius:14px;padding:16px 20px;margin:10px 0;font-size:21px;cursor:pointer;}
+  .chk.hecho{border-color:var(--verde);background:var(--verde-bg);}
+  .chk .caja{font-size:30px;}
+  ul{margin-left:24px;} li{margin-bottom:10px;}
+  @media(max-width:700px){.opciones{grid-template-columns:1fr;} body{font-size:21px;}}
+
+  .campo{display:inline-block;background:#fff;border:3px solid var(--bd);border-radius:26px;
+         padding:14px 24px;margin:8px 8px 8px 0;cursor:pointer;font-size:23px;transition:all .15s;}
+  .campo:hover{border-color:var(--verde);}
+  .campo.si{background:var(--verde);color:#fff;border-color:var(--verde);}
+  .campo.no{background:#FFE5E5;border-color:#C62828;color:#8B1A1A;}
+
+  .pieza{display:inline-block;background:#fff;border:3px solid var(--bd);border-radius:12px;
+         padding:12px 20px;margin:7px;cursor:pointer;font-size:22px;transition:all .15s;}
+  .pieza:hover{border-color:var(--lila);}
+  .pieza.puesta{background:var(--lila);color:#fff;border-color:var(--lila);}
+  .hueco{display:inline-block;min-width:150px;border-bottom:4px dotted var(--lila);
+         padding:6px 12px;margin:0 6px;font-size:22px;color:var(--lila);font-weight:bold;}
+
+  .qz-op{display:block;width:100%;text-align:left;background:#fff;border:3px solid var(--bd);
+         border-radius:14px;padding:16px 22px;margin-bottom:12px;font-size:23px;cursor:pointer;
+         font-family:inherit;color:var(--txt);}
+  .qz-op:hover:enabled{border-color:var(--verde);}
+  .qz-op:disabled{cursor:default;}
+  .qz-vf{display:inline-block;width:47%;text-align:center;font-size:24px;font-weight:bold;
+         padding:20px;margin:0 1% 12px;border:3px solid var(--bd);border-radius:14px;
+         background:#fff;cursor:pointer;font-family:inherit;color:var(--txt);}
+  .qz-vf:hover:enabled{border-color:var(--verde);}
+  .qz-vf:disabled{cursor:default;}
+</style>
+</head>
+<body>
+<header>
+  <h1>🔍 Mi trabajo en el equipo</h1>
+  <p>Taller de IA &middot; Proyecto de calidad del aire &middot; Viernes 4 y lunes 7</p>
+</header>
+<div class="container">
+<style>
+  .keybox{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:14px;padding:18px 22px;margin:14px 0;}
+  .keybox input{width:100%;box-sizing:border-box;font-size:18px;padding:12px 15px;
+                border:3px solid var(--bd);border-radius:12px;font-family:inherit;margin-top:8px;}
+  .btn-ia{background:var(--cielo);color:#fff;border:none;border-radius:12px;padding:14px 24px;
+          font-size:19px;font-weight:bold;cursor:pointer;font-family:inherit;margin-top:10px;}
+  .btn-ia:disabled{opacity:.5;cursor:default;}
+  .rta{background:#F4F8FB;border:3px solid var(--bd);border-radius:12px;padding:16px 18px;
+       font-size:18px;line-height:1.7;margin-top:10px;white-space:pre-wrap;min-height:56px;}
+  .rta.esp{color:#888;font-style:italic;}
+  .rta.err{background:#FDECEA;border-color:#C0392B;color:#8B1A1A;}
+  .frag{background:#FFFDF6;border:3px solid var(--sol);border-radius:14px;padding:18px 22px;
+        font-size:19px;line-height:1.75;margin:12px 0;}
+  .campo{width:100%;box-sizing:border-box;border:3px solid var(--bd);border-radius:12px;
+         padding:13px 16px;font-size:19px;font-family:inherit;line-height:1.6;resize:vertical;margin-top:8px;}
+  .campo:focus{outline:none;border-color:var(--verde);}
+  .lbl{font-weight:bold;font-size:20px;margin-top:16px;display:block;}
+  details.tip{background:var(--lila-bg);border-left:8px solid var(--lila);border-radius:12px;
+              padding:14px 18px;margin-top:10px;}
+  details.tip summary{cursor:pointer;font-weight:bold;color:var(--lila);font-size:19px;}
+  details.tip p{margin:12px 0 0 0;font-size:18px;line-height:1.6;}
+  .frase{display:block;width:100%;text-align:left;background:#fff;border:3px solid var(--bd);
+         border-radius:12px;padding:13px 16px;margin-bottom:9px;font-size:18px;cursor:pointer;
+         font-family:inherit;color:var(--txt);line-height:1.5;}
+  .frase:hover{border-color:var(--verde);background:#F4FBF7;}
+  .frase span{display:block;font-size:15px;color:#667;margin-top:4px;font-style:italic;}
+  .borrar{background:#fff;border:3px solid var(--rosa);color:var(--rosa);border-radius:12px;
+          padding:10px 18px;font-size:16px;font-weight:bold;cursor:pointer;font-family:inherit;margin-top:4px;}
+  .cuenta{font-size:20px;font-weight:bold;color:var(--verde);margin-top:8px;}
+</style>
+
+<div class="card c-verde">
+  <h2><span class="paso">1</span> Tu rol</h2>
+  <p>En el equipo cada uno se ocupa de algo. <strong>Vos te ocupás de sacar los datos de los textos.</strong></p>
+
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);">
+    <p><strong>Cómo funciona el equipo</strong></p>
+    <p style="margin-top:8px;">Tus compañeros buscan documentos sobre calidad del aire y te pasan <strong>solo el pedacito donde está el número</strong>. No un archivo enorme: un párrafo.</p>
+    <p style="margin-top:10px;">Vos escribís la instrucción que hace que la IA saque ese número ordenado. <strong>Es lo mismo que hiciste con los animales del refugio.</strong></p>
+  </div>
+
+  <div class="caja" style="background:var(--sol-bg);border-left:8px solid var(--sol);">
+    <p><strong>Hoy podés empezar sin esperar a nadie</strong></p>
+    <p style="margin-top:8px;">Acá abajo hay un texto de práctica para que arranques ya. Cuando tus compañeros traigan los de verdad, vas a estar entrenada.</p>
+  </div>
+</div>
+
+<div class="card c-sol">
+  <h2><span class="paso">2</span> Poné tu clave</h2>
+  <p>Una sola vez, igual que la otra clase.</p>
+  <div class="keybox">
+    <label class="lbl" style="margin-top:0;">🔑 Tu clave de Groq</label>
+    <input id="lakey" type="password" placeholder="Pegá acá tu clave">
+    <br><button class="btn-ia" onclick="activar()">Activar</button>
+    <p id="okkey" class="cuenta"></p>
+  </div>
+</div>
+
+<div class="card c-cielo">
+  <h2><span class="paso">3</span> El texto de práctica</h2>
+  <p>Así se ven los documentos con los que vas a trabajar. Son más aburridos que las descripciones de animales, pero funcionan igual: <strong>adentro hay un dato escondido</strong>.</p>
+
+  <div class="frag" id="frag">
+    "La exposici&oacute;n prolongada a mon&oacute;xido de carbono representa un riesgo para la salud.
+    Para una exposici&oacute;n de <strong>8 horas</strong>, se recomienda no superar los <strong>9 ppm</strong>.
+    En exposiciones breves, de hasta <strong>1 hora</strong>, el valor de referencia asciende a <strong>35 ppm</strong>."
+  </div>
+
+  <div class="caja" style="background:var(--rosa-bg);border-left:8px solid var(--rosa);">
+    <p><strong>⚠️ Este texto es de práctica</strong></p>
+    <p style="margin-top:8px;">Lo escribimos nosotros para que entrenes. <strong>Estos números no sirven para el proyecto de verdad</strong>: los de verdad tienen que salir de un documento oficial, con el link anotado. Eso lo van a conseguir tus compañeros.</p>
+  </div>
+
+  <div class="caja" style="background:var(--cielo-bg);border-left:8px solid var(--cielo);">
+    <p><strong>Los datos que hay que sacar</strong></p>
+    <p style="font-size:20px;margin-top:8px;">contaminante &middot; limite &middot; tiempo_exposicion</p>
+    <p style="margin-top:10px;">Ojo: en este texto hay <strong>dos límites distintos</strong>, uno para 8 horas y otro para 1 hora. Fijate qué hace la IA con eso.</p>
+  </div>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">4</span> Escribí tu instrucción</h2>
+
+  <details class="tip">
+    <summary>💡 Pista 1 — no sé por dónde empezar</summary>
+    <p>Empezá como la otra vez: decile <strong>qué datos querés</strong>, nombrándolos uno por uno.</p>
+  </details>
+  <details class="tip">
+    <summary>💡 Pista 2 — sale desordenado</summary>
+    <p>Pedile un <strong>dato por línea</strong>, con el formato <code>campo: valor</code>.</p>
+  </details>
+  <details class="tip">
+    <summary>💡 Pista 3 — hay dos límites y no sé qué hacer</summary>
+    <p>Podés pedirle que devuelva <strong>los dos por separado</strong>: un bloque para el de 8 horas y otro para el de 1 hora. Probá y mirá cómo queda.</p>
+  </details>
+
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);margin-top:14px;">
+    <p style="font-size:20px;font-weight:bold;color:var(--verde);">🧱 Banco de frases</p>
+    <p style="font-size:17px;">Tocá las que quieras usar. Después podés cambiarlas.</p>
+    <button class="frase" onclick="agregar('Sos un asistente que saca datos de documentos tecnicos.')">Sos un asistente que saca datos de documentos técnicos.<span>le dice qué tarea tiene</span></button>
+    <button class="frase" onclick="agregar('Saca estos datos: contaminante, limite, tiempo_exposicion.')">Sacá estos datos: contaminante, limite, tiempo_exposicion.<span>le dice qué datos querés</span></button>
+    <button class="frase" onclick="agregar('Escribi un dato por linea, con este formato: campo: valor')">Escribí un dato por línea, con este formato: campo: valor<span>le muestra la forma exacta</span></button>
+    <button class="frase" onclick="agregar('Si el texto tiene mas de un limite, devolvelos por separado.')">Si el texto tiene más de un límite, devolvelos por separado.<span>resuelve lo de los dos valores</span></button>
+    <button class="frase" onclick="agregar('No agregues saludos ni explicaciones.')">No agregues saludos ni explicaciones.<span>saca lo que sobra</span></button>
+    <button class="frase" onclick="agregar('Si un dato no esta escrito en el texto, dejalo vacio.')">Si un dato no está escrito en el texto, dejalo vacío.<span>evita que invente</span></button>
+    <button class="borrar" onclick="limpiar()">Borrar y empezar de nuevo</button>
+  </div>
+
+  <label class="lbl">✍️ Tu instrucción</label>
+  <textarea class="campo" id="instr" rows="5" placeholder="Escribí o armá con el banco de frases..."></textarea>
+  <button class="btn-ia" id="btn" onclick="probar()">▶ Probar con la IA</button>
+
+  <label class="lbl">📋 Lo que contestó</label>
+  <div class="rta esp" id="rta">Todavía no probaste.</div>
+
+  <div class="caja" style="background:var(--sol-bg);border-left:8px solid var(--sol);">
+    <p><strong>Cuando salga bien, probala de nuevo</strong></p>
+    <p style="margin-top:8px;">Tocá <em>Probar</em> dos o tres veces seguidas <strong>sin cambiar nada</strong>. ¿Sale siempre igual? Si cambia cada vez, todavía le falta.</p>
+  </div>
+  <label class="lbl">¿Salió igual las tres veces?</label>
+  <textarea class="campo" id="estable" rows="2" placeholder="..."></textarea>
+</div>
+
+<div class="card c-verde">
+  <h2><span class="paso">5</span> Guardá tu instrucción</h2>
+  <p>Cuando funcione, descargala. <strong>Esa instrucción es tu aporte al equipo:</strong> con ella van a poder sacar los datos de todos los documentos que consigan.</p>
+  <label class="lbl">Tu nombre</label>
+  <input class="campo" id="nom" placeholder="Nombre">
+  <button class="btn-ia" style="background:var(--verde);" onclick="bajar()">⬇ Descargar</button>
+  <p id="okb" class="cuenta"></p>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">6</span> Para trabajar con tu acompañante</h2>
+  <p>Los textos de normativa son difíciles de leer: son largos y usan palabras técnicas. <strong>Eso no lo tenés que resolver sola.</strong></p>
+  <div class="caja" style="background:var(--lila-bg);border-left:8px solid var(--lila);">
+    <p>Lean el fragmento juntas y busquen <strong>dónde está el número</strong>. Esa es la parte difícil.</p>
+    <p style="margin-top:10px;">Lo de la IA —escribir la instrucción, probar, corregir— <strong>eso ya lo sabés hacer vos</strong>.</p>
+  </div>
+</div>
+</div>
+<script>
+var KEY="";
+var TEXTO="La exposicion prolongada a monoxido de carbono representa un riesgo para la salud. Para una exposicion de 8 horas, se recomienda no superar los 9 ppm. En exposiciones breves, de hasta 1 hora, el valor de referencia asciende a 35 ppm.";
+
+function activar(){
+  var k=document.getElementById('lakey').value.trim();
+  if(k.length<20){ document.getElementById('okkey').textContent='Esa clave parece incompleta.'; return; }
+  KEY=k; document.getElementById('okkey').textContent='Listo. Ya podés probar.';
+}
+function agregar(f){
+  var c=document.getElementById('instr'); var a=c.value.trim();
+  if(a.indexOf(f)>=0) return;
+  c.value = a ? (a+"\n"+f) : f; c.focus();
+}
+function limpiar(){ document.getElementById('instr').value=""; }
+
+async function probar(){
+  var caja=document.getElementById('rta');
+  var pedido=document.getElementById('instr').value.trim();
+  if(!KEY){ caja.className='rta err'; caja.textContent='Primero poné tu clave en el paso 2.'; return; }
+  if(!pedido){ caja.className='rta err'; caja.textContent='Escribí primero tu instrucción.'; return; }
+  var b=document.getElementById('btn'); b.disabled=true;
+  caja.className='rta esp'; caja.textContent='Pensando...';
+  try{
+    var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'openai/gpt-oss-120b',temperature:0.2,
+        messages:[{role:'system',content:pedido},{role:'user',content:TEXTO}]})});
+    var d=await r.json();
+    if(d.error){ caja.className='rta err'; caja.textContent='La IA no pudo responder. Revisá la clave.'; }
+    else { caja.className='rta'; caja.textContent=d.choices[0].message.content; }
+  }catch(e){ caja.className='rta err'; caja.textContent='No se pudo conectar. Fijate que haya internet.'; }
+  b.disabled=false;
+}
+
+function bajar(){
+  var n=document.getElementById('nom').value.trim();
+  if(!n){ alert('Escribi tu nombre.'); return; }
+  var f=new Date();
+  var rta=document.getElementById('rta').textContent;
+  var t=['MI INSTRUCCION PARA EL EQUIPO','Proyecto de calidad del aire - Taller de IA',
+    'Nombre: '+n, 'Fecha: '+f.getDate()+'/'+(f.getMonth()+1)+'/'+f.getFullYear(),'',
+    'MI INSTRUCCION:', document.getElementById('instr').value.trim()||'(sin completar)','',
+    'TEXTO DE PRUEBA:', TEXTO,'',
+    'LO QUE DEVOLVIO:', (rta.indexOf('Todavia')<0 && rta.indexOf('Todavía')<0) ? rta : '(sin probar)','',
+    'SALIO IGUAL LAS TRES VECES?: '+(document.getElementById('estable').value.trim()||'(sin completar)'),''];
+  var l=n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'_');
+  var bl=new Blob([t.join('\n')],{type:'text/plain;charset=utf-8'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(bl);
+  a.download='mi_instruccion_'+l+'.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  document.getElementById('okb').textContent='Descargado. Mostrasela a tu equipo.';
+}
+</script>
+</body></html>
