@@ -86,7 +86,7 @@
 </head>
 <body>
 <header>
-  <h1>🔍 Mi trabajo de hoy</h1>
+  <h1>🔧 Armo la herramienta del equipo</h1>
   <p>Taller de IA &middot; Lunes 7</p>
 </header>
 <div class="container">
@@ -103,25 +103,31 @@
   .campo{width:100%;box-sizing:border-box;border:3px solid var(--bd);border-radius:12px;
          padding:14px 16px;font-size:20px;font-family:inherit;line-height:1.6;resize:vertical;margin-top:8px;}
   .campo:focus{outline:none;border-color:var(--verde);}
-  .gr{font-size:24px;font-weight:bold;}
   .pedido{background:var(--lila-bg);border:3px solid var(--lila);border-radius:14px;
           padding:18px 22px;font-size:20px;line-height:1.7;margin:12px 0;}
   .hueco{width:100%;box-sizing:border-box;border:3px dashed var(--lila);border-radius:10px;
          padding:12px 15px;font-size:20px;font-family:inherit;background:#fff;}
   .hueco:focus{outline:none;border-style:solid;}
-  details.tip{background:#fff;border-left:8px solid var(--lila);border-radius:12px;
-              padding:12px 16px;margin-top:9px;}
+  details.tip{background:#fff;border-left:8px solid var(--lila);border-radius:12px;padding:12px 16px;margin-top:9px;}
   details.tip summary{cursor:pointer;font-weight:bold;color:var(--lila);font-size:19px;}
   details.tip p{margin:9px 0 0 0;font-size:18px;line-height:1.55;}
+  .gr{font-size:24px;font-weight:bold;}
   .ok{font-size:20px;font-weight:bold;color:var(--verde);margin-top:8px;}
+  .si{display:block;width:100%;text-align:left;background:#fff;border:3px solid var(--bd);
+      border-radius:12px;padding:14px 17px;margin-bottom:9px;font-size:19px;cursor:pointer;
+      font-family:inherit;color:var(--txt);}
+  .si:hover{border-color:var(--verde);background:#F4FBF7;}
+  .si.on{background:var(--verde-bg);border-color:var(--verde);font-weight:bold;}
+  .si.no{background:#FDECEA;border-color:#C0392B;}
 </style>
 
 <div class="card c-verde">
-  <h2><span class="paso">1</span> Qué hacés hoy</h2>
-  <p class="gr">Tus compañeros te pasan un texto.</p>
-  <p class="gr" style="margin-top:10px;">Vos le sacás los datos con la IA.</p>
-  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);margin-top:14px;">
-    <p class="gr">Eso es todo.</p>
+  <h2><span class="paso">1</span> Tu trabajo</h2>
+  <p class="gr">Armar la herramienta que va a usar todo el equipo.</p>
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);margin-top:12px;">
+    <p>Vos escribís <strong>el pedido</strong> que hace que la IA saque los datos bien.</p>
+    <p style="margin-top:10px;">Después <strong>cualquiera del equipo lo usa</strong> con los textos que consigan.</p>
+    <p style="margin-top:10px;"><strong>No tenés que sacar todos los datos vos.</strong> Tenés que dejar hecha la herramienta.</p>
   </div>
 </div>
 
@@ -135,15 +141,23 @@
 </div>
 
 <div class="card c-cielo">
-  <h2><span class="paso">3</span> Pegá el texto</h2>
-  <p>El pedacito que te pasó tu compañero.</p>
-  <textarea class="campo" id="txt" rows="4" placeholder="Pegá acá el texto"></textarea>
+  <h2><span class="paso">3</span> Mirá lo que trajo tu equipo</h2>
+  <p>Pediles un texto de los que consiguieron el viernes y pegalo acá.</p>
+  <textarea class="campo" id="txt" rows="4" placeholder="Pegá el texto"></textarea>
+
+  <div class="caja" style="background:var(--cielo-bg);border-left:8px solid var(--cielo);margin-top:14px;">
+    <p><strong>Antes de probar, decidí vos:</strong></p>
+    <p class="gr" style="margin-top:8px;">¿Este texto sirve?</p>
+    <p style="margin-top:10px;">Sirve si <strong>dice un número</strong>. No sirve si solo dice que algo es peligroso, sin decir cuánto.</p>
+  </div>
+  <button class="si" id="s1" onclick="marcar(1)">✅ Sirve — tiene un número</button>
+  <button class="si" id="s2" onclick="marcar(2)">❌ No sirve — no dice ningún número</button>
+  <p id="okd" class="ok"></p>
 </div>
 
 <div class="card c-lila">
   <h2><span class="paso">4</span> Armá el pedido</h2>
-  <p>Este es el pedido que le vas a hacer a la IA. <strong>Falta completar dos partes.</strong></p>
-
+  <p>Completá los dos huecos.</p>
   <div class="pedido">
     <p>Saca de este texto:</p>
     <p style="margin:10px 0;"><input class="hueco" id="h1" placeholder="¿qué datos?"></p>
@@ -152,18 +166,16 @@
     <p style="margin:10px 0;"><input class="hueco" id="h2" placeholder="¿qué hace?"></p>
     <p>No agregues nada mas.</p>
   </div>
-
   <details class="tip">
-    <summary>💡 Ayuda para el primer hueco</summary>
-    <p>Son los tres datos que buscás en estos textos: <strong>contaminante, limite, tiempo</strong>.</p>
+    <summary>💡 ¿Qué datos pongo?</summary>
+    <p>Los que están en la planilla de tu equipo, en la hoja <strong>Equipo</strong>. Preguntale a un compañero cuáles son.</p>
   </details>
   <details class="tip">
-    <summary>💡 Ayuda para el segundo hueco</summary>
-    <p>Acordate del refugio: cuando un dato no estaba, ¿qué hacía la IA? Lo inventaba.</p>
-    <p style="margin-top:8px;">Escribí qué querés que haga en vez de eso. Por ejemplo: <em>dejalo vacio</em>.</p>
+    <summary>💡 ¿Y en el segundo hueco?</summary>
+    <p>Acordate del refugio: cuando faltaba un dato, la IA lo inventaba. Escribí qué querés que haga en vez de eso. Por ejemplo: <em>dejalo vacio</em>.</p>
   </details>
 
-  <button class="btn" onclick="pedir()" id="b">▶ Sacar los datos</button>
+  <button class="btn" onclick="probar()" id="b">▶ Probar</button>
   <div class="rta esp" id="r">Todavía no probaste.</div>
 </div>
 
@@ -176,74 +188,91 @@
   <textarea class="campo" id="rev" rows="2" placeholder="Sí / No — y cuál"></textarea>
 </div>
 
+<div class="card c-verde">
+  <h2><span class="paso">6</span> Entregale la herramienta al equipo</h2>
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);">
+    <p class="gr">Esto es lo más importante de hoy.</p>
+    <p style="margin-top:10px;">Cuando tu pedido funcione, <strong>copialo en la planilla del equipo</strong>, en la hoja <strong>Equipo</strong>, abajo de todo.</p>
+    <p style="margin-top:10px;">Así lo pueden usar todos, aunque vos no estés.</p>
+  </div>
+  <label class="lbl" style="font-weight:bold;font-size:20px;margin-top:14px;display:block;">¿Ya lo copiaste en la planilla?</label>
+  <textarea class="campo" id="copia" rows="2" placeholder="Sí / Todavía no"></textarea>
+</div>
+
 <div class="card c-lila">
-  <h2><span class="paso">6</span> Tu bitácora</h2>
+  <h2><span class="paso">7</span> Tu bitácora</h2>
   <div class="caja" style="background:var(--lila-bg);border-left:8px solid var(--lila);">
-    <p class="gr">Abrí tu archivo y contestá:</p>
-    <p style="margin-top:10px;">¿Qué hice hoy?</p>
-    <p style="margin-top:6px;">¿Qué me costó?</p>
-    <p style="margin-top:6px;">¿Necesito ayuda?</p>
-    <p style="margin-top:12px;"><strong>Con una frase en cada una alcanza.</strong></p>
+    <p>Abrí tu archivo y contestá las tres preguntas de hoy.</p>
+    <p style="margin-top:8px;"><strong>Ojo:</strong> completá también la del viernes 4/9, copiando lo que escribiste ese día.</p>
   </div>
 </div>
 
-<div class="card c-verde">
-  <h2><span class="paso">7</span> Guardá</h2>
+<div class="card c-sol">
+  <h2><span class="paso">8</span> Guardá</h2>
   <input class="campo" id="n" placeholder="Tu nombre">
   <button class="btn" onclick="baj()">⬇ Descargar</button>
   <p id="okb" class="ok"></p>
 </div>
 </div>
 <script>
-var K="";
-function armarPedido(){
-  var a=document.getElementById('h1').value.trim();
-  var b=document.getElementById('h2').value.trim();
-  if(!a || !b) return null;
-  return "Saca de este texto: "+a+"\nEscribi un dato por linea, asi: campo: valor"+
-         "\nSi un dato no esta en el texto, "+b+"\nNo agregues nada mas.";
-}
-
+var K="", SIRVE="";
 function act(){
   var v=document.getElementById('k').value.trim();
   if(v.length<20){ document.getElementById('okk').textContent='La clave parece incompleta.'; return; }
   K=v; document.getElementById('okk').textContent='Listo.';
 }
-async function pedir(){
+function marcar(n){
+  document.getElementById('s1').className='si';
+  document.getElementById('s2').className='si';
+  if(n===1){ document.getElementById('s1').className='si on'; SIRVE='sirve';
+    document.getElementById('okd').textContent='Bien. Segui al paso 4.'; }
+  else { document.getElementById('s2').className='si no'; SIRVE='no sirve';
+    document.getElementById('okd').textContent='Decile a tu equipo que ese no va, y pedile otro.'; }
+}
+function armar(){
+  var a=document.getElementById('h1').value.trim();
+  var b=document.getElementById('h2').value.trim();
+  if(!a||!b) return null;
+  return "Saca de este texto: "+a+"\nEscribi un dato por linea, asi: campo: valor"+
+         "\nSi un dato no esta en el texto, "+b+"\nNo agregues nada mas.";
+}
+async function probar(){
   var c=document.getElementById('r'), t=document.getElementById('txt').value.trim();
   if(!K){ c.className='rta err'; c.textContent='Primero poné tu clave, en el paso 2.'; return; }
-  if(!t){ c.className='rta err'; c.textContent='Primero pegá el texto, en el paso 3.'; return; }
-  var PEDIDO = armarPedido();
-  if(!PEDIDO){ c.className='rta err'; c.textContent='Faltan completar los dos huecos del paso 4.'; return; }
-  var PEDIDO = armarPedido();
-  if(!PEDIDO){ c.className='rta err'; c.textContent='Faltan completar los dos huecos del paso 4.'; return; }
-  var b=document.getElementById('b'); b.disabled=true;
+  if(!t){ c.className='rta err'; c.textContent='Falta pegar el texto, en el paso 3.'; return; }
+  var P=armar();
+  if(!P){ c.className='rta err'; c.textContent='Faltan los dos huecos de acá arriba.'; return; }
+  var bt=document.getElementById('b'); bt.disabled=true;
   c.className='rta esp'; c.textContent='Pensando...';
   try{
     var res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST', headers:{'Authorization':'Bearer '+K,'Content-Type':'application/json'},
       body:JSON.stringify({model:'openai/gpt-oss-120b',temperature:0.2,
-        messages:[{role:'system',content:PEDIDO},{role:'user',content:t}]})});
+        messages:[{role:'system',content:P},{role:'user',content:t}]})});
     var d=await res.json();
     if(d.error){ c.className='rta err'; c.textContent='No pudo responder. Revisá la clave.'; }
     else { c.className='rta'; c.textContent=d.choices[0].message.content; }
   }catch(e){ c.className='rta err'; c.textContent='No hay conexión.'; }
-  b.disabled=false;
+  bt.disabled=false;
 }
 function baj(){
   var n=document.getElementById('n').value.trim();
   if(!n){ alert('Escribi tu nombre.'); return; }
-  var f=new Date(), r=document.getElementById('r').textContent;
-  var L=['MI TRABAJO - lunes 7','Nombre: '+n,
+  var f=new Date();
+  function t(i){ var e=document.getElementById(i); return e&&e.value.trim()?e.value.trim():'(vacio)'; }
+  var r=document.getElementById('r').textContent;
+  var L=['ARMO LA HERRAMIENTA DEL EQUIPO - lunes 7','Nombre: '+n,
     'Fecha: '+f.getDate()+'/'+(f.getMonth()+1)+'/'+f.getFullYear(),'',
-    'TEXTO QUE ME PASARON:', (document.getElementById('txt').value.trim()||'(vacio)'),'',
-    'MI PEDIDO:', (armarPedido()||'(sin completar)'),'',
-    'DATOS QUE SACO LA IA:', (r.indexOf('Todav')<0 ? r : '(no probe)'),'',
-    'INVENTO ALGO?: '+(document.getElementById('rev').value.trim()||'(sin completar)'),''];
+    'TEXTO DEL EQUIPO:', t('txt'),'',
+    'DECIDI QUE: '+(SIRVE||'(no marque)'),'',
+    'EL PEDIDO QUE ARME:', (armar()||'(sin completar)'),'',
+    'LO QUE CONTESTO:', (r.indexOf('Todav')<0?r:'(no probe)'),'',
+    'INVENTO ALGO?: '+t('rev'),'',
+    'LO COPIE EN LA PLANILLA?: '+t('copia'),''];
   var l=n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'_');
-  var bl=new Blob([L.join('\n')],{type:'text/plain;charset=utf-8'});
-  var a=document.createElement('a'); a.href=URL.createObjectURL(bl);
-  a.download='mi_trabajo_lunes_'+l+'.txt';
+  var b=new Blob([L.join('\n')],{type:'text/plain;charset=utf-8'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(b);
+  a.download='herramienta_'+l+'.txt';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   document.getElementById('okb').textContent='Listo.';
 }
