@@ -184,8 +184,21 @@
   </div>
 </div>
 
+<div class="card c-sol">
+  <h2><span class="paso">8</span> Pasale el pedido a tu equipo</h2>
+  <div class="caja" style="background:var(--sol-bg);border-left:8px solid var(--sol);">
+    <p class="gr">Tu pedido lo van a usar todos.</p>
+    <p style="margin-top:10px;">Tocá el botón, abrí <strong>la planilla del equipo</strong> y pegalo en la hoja <strong>Equipo</strong>, donde dice «Nuestro system prompt».</p>
+  </div>
+  <button class="btn" style="background:var(--sol);color:#333;" onclick="copiar()">📋 Copiar mi pedido</button>
+  <p id="okc" class="ok2"></p>
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);margin-top:12px;">
+    <p>Así lo pueden usar aunque vos no estés.</p>
+  </div>
+</div>
+
 <div class="card c-verde">
-  <h2><span class="paso">8</span> Guardá</h2>
+  <h2><span class="paso">9</span> Guardá</h2>
   <input class="campo" id="n" placeholder="Tu nombre">
   <button class="btn" onclick="baj()">⬇ Descargar</button>
   <p id="okb" class="ok"></p>
@@ -240,6 +253,25 @@ function baj(){
   a.download='mi_trabajo_14_09_'+l+'.txt';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   document.getElementById('okb').textContent='Listo.';
+}
+
+function copiar(){
+  var p=armar();
+  var o=document.getElementById('okc');
+  if(!p){ o.textContent='Primero completá los dos huecos del paso 3.'; return; }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(p).then(function(){
+      o.textContent='Copiado. Ahora pegalo en la planilla.';
+    }).catch(function(){ manual(p,o); });
+  } else { manual(p,o); }
+}
+function manual(p,o){
+  var t=document.createElement('textarea');
+  t.value=p; t.style.position='fixed'; t.style.left='-9999px';
+  document.body.appendChild(t); t.select();
+  try{ document.execCommand('copy'); o.textContent='Copiado. Ahora pegalo en la planilla.'; }
+  catch(e){ o.textContent='No se pudo copiar. Seleccionalo del paso 3 a mano.'; }
+  document.body.removeChild(t);
 }
 </script>
 </body></html>
