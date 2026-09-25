@@ -107,10 +107,15 @@
   .lbl{font-weight:bold;font-size:19px;margin-top:14px;display:block;}
   details.tip{background:#fff;border-left:8px solid var(--lila);border-radius:12px;padding:12px 16px;margin-top:9px;}
   details.tip summary{cursor:pointer;font-weight:bold;color:var(--lila);font-size:19px;}
-  details.tip p{margin:9px 0 0 0;font-size:18px;}</style>
+  details.tip p{margin:9px 0 0 0;font-size:18px;}
+  .caja{padding:16px 20px;border-radius:12px;}</style>
 
 <div class="card c-verde">
   <h2><span class="paso">1</span> Qué hacés hoy</h2>
+  <div class="caja" style="background:var(--sol-bg);border-left:8px solid var(--sol);margin-bottom:16px;">
+    <p><strong>Volvemos.</strong> La última clase fue el lunes 14.</p>
+    <p style="margin-top:8px;">Ese día probaste tu pedido con dos textos y lo pegaste en la planilla del equipo.</p>
+  </div>
   <p class="gr">Hoy le pedís los datos <strong>de otra forma</strong>.</p>
   <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);margin-top:12px;">
     <p>Hasta ahora te los daba en renglones.</p>
@@ -130,6 +135,7 @@
 
 <div class="card c-cielo">
   <h2><span class="paso">3</span> Tu texto</h2>
+  <p>Está en la planilla del equipo, hoja <strong>Textos fuente</strong>. Si no lo encontrás, pedíselo a tu equipo.</p>
   <textarea class="campo" id="txt" rows="3" placeholder="Pegá un texto de tu equipo"></textarea>
 </div>
 
@@ -144,7 +150,7 @@
   <h2><span class="paso">5</span> Ahora entre llaves</h2>
   <div class="caja" style="background:var(--rosa-bg);border-left:8px solid var(--rosa);">
     <p>Le pedimos que lo devuelva así:</p>
-    <p class="gr" style="margin-top:8px;font-family:Consolas,monospace;">{"contaminante": "...", "limite": 0}</p>
+    <p class="gr" style="margin-top:8px;font-family:Consolas,monospace;">{"contaminante": "...", "limite": 0, "tiempo": "..."}</p>
   </div>
   <button class="btn" style="background:var(--rosa);" onclick="probarJson()">▶ Probar así</button>
   <div class="rta esp" id="r2">Todavía no probaste.</div>
@@ -162,12 +168,24 @@
 <div class="card c-lila">
   <h2><span class="paso">7</span> Tu bitácora</h2>
   <div class="caja" style="background:var(--lila-bg);border-left:8px solid var(--lila);">
-    <p>Contestá las tres preguntas de hoy.</p>
+    <p>Abrí tu archivo, buscá <strong>Viernes 25/9</strong> y contestá las tres preguntas. Con una frase en cada una alcanza.</p>
+    <p style="margin-top:8px;">Si no llegás en la clase, la completás después, <strong>antes del lunes 28</strong>.</p>
+    <p style="margin-top:8px;">¿Te quedó vacía la del lunes 14? Completala también.</p>
   </div>
 </div>
 
+<div class="card c-sol">
+  <h2><span class="paso">8</span> Tus fechas</h2>
+  <table>
+    <tr><th>Cuándo</th><th>Qué</th></tr>
+    <tr><td>Antes del lunes 28</td><td>Tu bitácora de hoy.</td></tr>
+    <tr><td>Lunes 28</td><td>Le mostrás a la IA un ejemplo, para que conteste siempre igual.</td></tr>
+    <tr><td>Viernes 9 de octubre</td><td>Tu pedido terminado y guardado en la planilla, y alguien del equipo que lo sepa usar.</td></tr>
+  </table>
+</div>
+
 <div class="card c-verde">
-  <h2><span class="paso">8</span> Guardá</h2>
+  <h2><span class="paso">9</span> Guardá</h2>
   <input class="campo" id="n" placeholder="Tu nombre">
   <button class="btn" onclick="guardar()">⬇ Descargar</button>
   <p id="okb" class="ok2"></p>
@@ -206,13 +224,13 @@ function bajarA(titulo, campos){
   });
   var b=new Blob([L.join('\n')],{type:'text/plain;charset=utf-8'});
   var a=document.createElement('a'); a.href=URL.createObjectURL(b);
-  a.download='abril_'+n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'_')+'.txt';
+  a.download='abril_25_09_'+n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'_')+'.txt';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   document.getElementById('okb').textContent='Listo.';
 }
 
-var VIEJO="Saca de este texto: contaminante, limite, tiempo.\nEscribi un dato por linea, asi: campo: valor\nNo agregues nada mas.";
-var NUEVO="Saca de este texto: contaminante, limite, tiempo.\nDevolvelo en JSON, con esta forma exacta:\n{\"contaminante\": \"...\", \"limite\": 0, \"tiempo\": \"...\"}\nNo agregues nada antes ni despues.";
+var VIEJO="Saca de este texto: contaminante, limite, tiempo.\nEscribi un dato por linea, asi: campo: valor\nSi un dato no esta en el texto, dejalo vacio.\nNo agregues nada mas.";
+var NUEVO="Saca de este texto: contaminante, limite, tiempo.\nDevolvelo en JSON, con esta forma exacta:\n{\"contaminante\": \"...\", \"limite\": 0, \"tiempo\": \"...\"}\nSi un dato no esta en el texto, dejalo vacio.\nNo agregues nada antes ni despues.";
 function probarViejo(){ llamar(VIEJO, document.getElementById('txt').value.trim(), document.getElementById('r1')); }
 function probarJson(){ llamar(NUEVO, document.getElementById('txt').value.trim(), document.getElementById('r2')); }
 function guardar(){ bajarA('MI TRABAJO - viernes 25',[['TEXTO','txt'],['COMO ANTES','r1'],['EN JSON','r2'],['EN QUE SE DIFERENCIAN','comp']]); }
