@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi trabajo del 28</title>
+<style>
+  :root{
+    --nav:#1A2C3A;--verde:#2A9D5C;--verde-bg:#E7F7EE;--lila:#7B5EA7;--lila-bg:#F3EEFB;
+    --sol:#E9A030;--sol-bg:#FEF6E7;--cielo:#2E86C1;--cielo-bg:#EAF4FB;
+    --rosa:#D65D8B;--rosa-bg:#FCEEF4;--txt:#2C3E50;--bd:#D5DDE5;--r:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;background:#F2F6FA;color:var(--txt);line-height:1.7;font-size:22px;padding:15px 0 60px;}
+  header{background:var(--lila);color:#fff;padding:28px 20px;border-bottom:6px solid var(--sol);border-radius:0 0 20px 20px;}
+  header h1{font-size:30px;margin-bottom:6px;}
+  header p{font-size:19px;opacity:.95;}
+  .container{width:94%;max-width:900px;margin:0 auto;padding:0 10px;}
+  .card{background:#fff;border-radius:var(--r);padding:28px;margin:24px 0;box-shadow:0 4px 14px rgba(0,0,0,.09);border-left:8px solid var(--bd);}
+  .c-lila{border-left-color:var(--lila);}
+  .c-verde{border-left-color:var(--verde);}
+  .c-sol{border-left-color:var(--sol);}
+  .c-cielo{border-left-color:var(--cielo);}
+  .c-rosa{border-left-color:var(--rosa);}
+  h2{color:var(--nav);font-size:25px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+  .paso{background:var(--lila);color:#fff;min-width:46px;height:46px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;}
+  p{margin-bottom:12px;}
+  .btn{display:inline-block;background:var(--verde);color:#fff;border:none;border-radius:12px;padding:16px 30px;
+       font-size:21px;font-weight:bold;cursor:pointer;font-family:inherit;margin-top:12px;}
+  .btn:hover{filter:brightness(1.08);}
+  input[type=text], textarea{width:100%;padding:14px;border:3px solid var(--bd);border-radius:12px;font-size:20px;font-family:inherit;margin:6px 0 12px;}
+  input[type=text]:focus, textarea:focus{border-color:var(--lila);outline:none;}
+  .caja{padding:16px 20px;border-radius:12px;}
+  .caja p{margin-bottom:6px;}
+  .gr{font-size:23px;font-weight:bold;}
+  .ok2{font-size:19px;font-weight:bold;color:var(--verde);margin-top:8px;}
+  .lbl{font-weight:bold;font-size:20px;margin-top:14px;display:block;}
+  .keybox{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:14px;padding:16px 20px;}
+  .keybox input{width:100%;font-size:19px;padding:13px 16px;border:3px solid var(--bd);border-radius:12px;font-family:inherit;margin-top:8px;}
+  .rta{background:#F4F8FB;border:3px solid var(--bd);border-radius:12px;padding:12px 16px;
+       font-size:17px;line-height:1.6;margin:0 0 16px;white-space:pre-wrap;min-height:44px;font-family:Consolas,monospace;}
+  .rta.esp{color:#888;font-style:italic;font-family:inherit;}
+  .rta.err{background:#FDECEA;border-color:#C0392B;color:#8B1A1A;font-family:inherit;}
+  .ped{font-family:Consolas,monospace;font-size:17px;line-height:1.6;background:var(--lila-bg);border-color:var(--lila);}
+  .dai{background:var(--rosa-bg);border:3px dashed var(--rosa);border-radius:14px;padding:14px 20px;margin:14px 0;font-size:20px;}
+  .dai strong{color:var(--rosa);}
+  .tabla-wrap{overflow-x:auto;margin:10px 0 14px;}
+  table.tab{border-collapse:collapse;font-size:16px;min-width:100%;}
+  table.tab th{background:var(--lila);color:#fff;padding:9px 10px;text-align:left;font-size:15px;white-space:nowrap;}
+  table.tab td{border:2px solid var(--bd);padding:9px 10px;vertical-align:top;}
+  td.nulo{color:#999;text-align:center;}
+  td.dudoso{background:#FFF3B0;}
+  td.estado{white-space:nowrap;font-weight:bold;}
+  .ley{font-size:18px;margin-top:4px;}
+  .marca{display:inline-block;width:22px;height:16px;background:#FFF3B0;border:2px solid #E2C44A;border-radius:4px;vertical-align:middle;margin-right:6px;}
+  @media(max-width:700px){body{font-size:21px;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🔍 Mi trabajo de hoy</h1>
+  <p>Taller de IA &middot; Lunes 28</p>
+</header>
+<div class="container">
+
+<div class="card c-verde">
+  <h2><span class="paso">1</span> Hoy cerrás tu parte</h2>
+  <p class="gr">Es tu última clase antes de irte. Hoy tu parte queda terminada y en manos de tu equipo.</p>
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);">
+    <p><strong>1.</strong> Probás tu pedido final con tres textos.</p>
+    <p><strong>2.</strong> Tus datos pasan a la tabla del equipo.</p>
+    <p><strong>3.</strong> Le enseñás tu pedido a un compañero.</p>
+  </div>
+</div>
+
+<div class="card c-sol">
+  <h2><span class="paso">2</span> Tu clave</h2>
+  <div class="keybox">
+    <input id="k" type="password" placeholder="Pegá tu clave">
+    <button class="btn" style="background:var(--cielo);" onclick="act()">Activar</button>
+    <p id="okk" class="ok2"></p>
+  </div>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">3</span> Tu pedido final</h2>
+  <p>Es el del viernes, con dos cosas nuevas:</p>
+  <div class="caja" style="background:var(--lila-bg);border-left:8px solid var(--lila);">
+    <p>✔ Usa <strong>los nombres de la tabla del equipo</strong>.</p>
+    <p>✔ Le muestra a la IA <strong>un ejemplo</strong> de cómo tiene que contestar.</p>
+  </div>
+  <textarea class="ped" id="ped" rows="8" spellcheck="false">Saca de este texto los datos del contaminante.
+Devolvelos en JSON, exactamente con esta forma:
+{"contaminante": "...", "limite": 0, "unidad": "...", "tiempo_exposicion": "...", "tipo_de_riesgo": "...", "fuente": "..."}
+El limite va como numero, sin la unidad. La unidad va aparte.
+Si un dato no esta en el texto, pone null. No lo inventes.
+No agregues nada antes ni despues.</textarea>
+  <p style="font-size:18px;color:#667;">Si tu equipo le cambió el nombre a alguna columna de la tabla, corregilo acá.</p>
+</div>
+
+<div class="card c-cielo">
+  <h2><span class="paso">4</span> Tres textos</h2>
+  <p>Elegí tres de la planilla, hoja <strong>Textos fuente</strong>, que tengan un número. Si no los encontrás, pedíselos a tu equipo.</p>
+  <label class="lbl" for="t1">Texto 1</label>
+  <textarea id="t1" rows="3" placeholder="Pegá el primer texto"></textarea>
+  <div class="rta esp" id="r1">Todavía no probaste.</div>
+  <label class="lbl" for="t2">Texto 2</label>
+  <textarea id="t2" rows="3" placeholder="Pegá el segundo texto"></textarea>
+  <div class="rta esp" id="r2">Todavía no probaste.</div>
+  <label class="lbl" for="t3">Texto 3</label>
+  <textarea id="t3" rows="3" placeholder="Pegá el tercer texto"></textarea>
+  <div class="rta esp" id="r3">Todavía no probaste.</div>
+  <button class="btn" style="background:var(--cielo);" onclick="probarTodos()">▶ Sacar los datos de los tres</button>
+  <p id="estado" class="ok2"></p>
+</div>
+
+<div class="card c-rosa">
+  <h2><span class="paso">5</span> Tu tabla</h2>
+  <p>Así quedan tus datos en la tabla del equipo:</p>
+  <div class="tabla-wrap" id="tabla"><p style="color:#888;font-style:italic;">Aparece cuando sacás los datos.</p></div>
+  <p class="ley"><span class="marca"></span>En amarillo: no aparece así en el texto. Fijate si la IA lo inventó.</p>
+  <div class="dai"><strong>Con la DAI:</strong> busquen juntas cada dato amarillo en su texto. Y contale: ¿salieron los tres con la misma forma? ¿Inventó algo?</div>
+  <button class="btn" style="background:var(--rosa);" onclick="copiarFilas()">📋 Copiar las filas para la tabla</button>
+  <p id="okf" class="ok2"></p>
+  <div class="caja" style="background:var(--rosa-bg);border-left:8px solid var(--rosa);margin-top:10px;">
+    <p>En la planilla del equipo, hoja <strong>Tabla de datos</strong>: hacé clic en la primera celda vacía de la columna <strong>contaminante</strong> y pegá.</p>
+    <p>Después tus compañeros revisan cada dato: lo verifican dos personas.</p>
+  </div>
+</div>
+
+<div class="card c-sol">
+  <h2><span class="paso">6</span> Tu traspaso</h2>
+  <p class="gr">Tu pedido lo va a usar todo el equipo.</p>
+  <button class="btn" style="background:var(--sol);color:#333;" onclick="copiarPedido()">📋 Copiar mi pedido</button>
+  <p id="okc" class="ok2"></p>
+  <div class="caja" style="background:var(--sol-bg);border-left:8px solid var(--sol);">
+    <p>Pegalo en la planilla, hoja <strong>Equipo</strong>, donde dice <strong>Nuestro system prompt</strong>.</p>
+    <p>Después elegí a alguien del equipo y pruébenlo juntos en el Colab, con un texto nuevo.</p>
+  </div>
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);margin-top:12px;">
+    <p>Contale para qué sirve y qué hay que revisar siempre.</p>
+    <p>Después anotá en la planilla, hoja <strong>Clase a clase</strong>, quién lo aprendió.</p>
+  </div>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">7</span> Las frases del agente</h2>
+  <p>El lunes 7 escribiste qué le dice el agente a la persona en cada nivel. Si las tenés en tu archivo de ese día, copialas. Revisalas y dejalas listas para el equipo.</p>
+  <label class="lbl" for="f1">Cuando el nivel es NORMAL</label>
+  <textarea id="f1" rows="2" placeholder="Tu frase"></textarea>
+  <label class="lbl" for="f2">Cuando el nivel es ATENCIÓN</label>
+  <textarea id="f2" rows="2" placeholder="Tu frase"></textarea>
+  <label class="lbl" for="f3">Cuando el nivel es ALERTA</label>
+  <textarea id="f3" rows="2" placeholder="Tu frase"></textarea>
+  <p style="font-size:18px;color:#667;">Una frase corta por nivel. Si podés, que diga contra qué límite se comparó.</p>
+  <button class="btn" style="background:var(--lila);" onclick="copiarFrases()">📋 Copiar mis frases</button>
+  <p id="okfr" class="ok2"></p>
+  <div class="caja" style="background:var(--lila-bg);border-left:8px solid var(--lila);">
+    <p>Pegalas en la planilla, hoja <strong>Contexto</strong>: clic en la primera celda vacía de la columna <strong>De qué habla</strong> y pegá.</p>
+  </div>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">8</span> Tu bitácora</h2>
+  <div class="caja" style="background:var(--lila-bg);border-left:8px solid var(--lila);">
+    <p>Abrí tu archivo, buscá <strong>Lunes 28/9</strong> y contestá las tres preguntas. Con una frase en cada una alcanza.</p>
+    <p>Si no llegás en la clase, completala en casa esta semana.</p>
+  </div>
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);margin-top:14px;">
+    <p><strong>Tu parte queda en la tabla y en la planilla del equipo.</strong></p>
+    <p>Cuando vuelvas, te sumás a probar el agente con otras personas.</p>
+  </div>
+</div>
+
+</div>
+<script>
+var K="";
+var CAMPOS_BASE=["contaminante","limite","unidad","tiempo_exposicion","tipo_de_riesgo","fuente"];
+var RESP={}, DATOS={};
+
+function act(){
+  var v=document.getElementById('k').value.trim();
+  if(v.length<20){document.getElementById('okk').textContent='Parece incompleta.';return;}
+  K=v; document.getElementById('okk').textContent='Listo.';
+}
+function pedido(){ return document.getElementById('ped').value.trim(); }
+function campos(){
+  var p=pedido(), a=p.indexOf('{'), b=p.indexOf('}',a);
+  if(a>=0&&b>a){ try{ var o=JSON.parse(p.slice(a,b+1)); var ks=Object.keys(o); if(ks.length) return ks; }catch(e){} }
+  return CAMPOS_BASE;
+}
+async function llamar(texto){
+  var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    method:'POST',headers:{'Authorization':'Bearer '+K,'Content-Type':'application/json'},
+    body:JSON.stringify({model:'openai/gpt-oss-120b',temperature:0.2,
+      messages:[{role:'system',content:pedido()},{role:'user',content:texto}]})});
+  var d=await r.json();
+  if(d.error) throw new Error('clave');
+  return d.choices[0].message.content;
+}
+function leer(s){
+  s=(s||'').trim();
+  try{ var o=JSON.parse(s); if(o&&typeof o==='object'&&!Array.isArray(o)) return {obj:o,forma:'bien'}; }catch(e){}
+  var a=s.indexOf('{'), b=s.lastIndexOf('}');
+  if(a>=0&&b>a){ try{ var o2=JSON.parse(s.slice(a,b+1)); return {obj:o2,forma:'alrededor'}; }catch(e){} }
+  return {obj:null,forma:'no'};
+}
+async function probarTodos(){
+  var est=document.getElementById('estado');
+  if(!K){ est.textContent='Primero poné tu clave, en el paso 2.'; return; }
+  var alguno=false;
+  for(var i=1;i<=3;i++){
+    var t=document.getElementById('t'+i).value.trim(), c=document.getElementById('r'+i);
+    delete RESP[i]; delete DATOS[i];
+    if(!t){ c.className='rta esp'; c.textContent='Sin texto.'; continue; }
+    alguno=true; c.className='rta esp'; c.textContent='Pensando...';
+    try{ var out=await llamar(t); RESP[i]=out; DATOS[i]=leer(out); c.className='rta'; c.textContent=out; }
+    catch(e){ c.className='rta err'; c.textContent=(e.message==='clave')?'No pudo responder. Revisá la clave.':'No hay conexión.'; }
+  }
+  est.textContent=alguno?'Listo. Mirá tu tabla en el paso 5.':'Falta pegar los textos.';
+  dibujar();
+}
+function norm(s){ return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim(); }
+function estaEnTexto(v,texto){
+  var t=norm(texto), s=norm(v);
+  if(!s) return true;
+  if(t.indexOf(s)>=0) return true;
+  if(typeof v==='number'){ var alt=String(v).replace('.',','); if(t.indexOf(alt)>=0) return true; }
+  var ps=s.split(' ').filter(function(w){return w.length>=4;});
+  return ps.length>0 && ps.every(function(w){return t.indexOf(w)>=0;});
+}
+function dibujar(){
+  var cs=campos(), caja=document.getElementById('tabla'); caja.innerHTML='';
+  var tb=document.createElement('table'); tb.className='tab';
+  var tr=document.createElement('tr');
+  ['Texto'].concat(cs).concat(['¿Misma forma?']).forEach(function(h){ var th=document.createElement('th'); th.textContent=h; tr.appendChild(th); });
+  tb.appendChild(tr);
+  var hay=false;
+  for(var i=1;i<=3;i++){
+    if(!DATOS[i]) continue; hay=true;
+    var fila=document.createElement('tr'), d=DATOS[i], texto=document.getElementById('t'+i).value;
+    var c0=document.createElement('td'); c0.textContent=i; fila.appendChild(c0);
+    if(!d.obj){
+      var td=document.createElement('td'); td.colSpan=cs.length; td.textContent='No vino entre llaves.'; fila.appendChild(td);
+      var e=document.createElement('td'); e.className='estado'; e.textContent='❌'; fila.appendChild(e);
+    } else {
+      cs.forEach(function(k){
+        var td=document.createElement('td'), v=d.obj[k];
+        if(v===null||v===undefined||v===''){ td.className='nulo'; td.textContent=(v===undefined)?'falta':'—'; }
+        else { td.textContent=(typeof v==='object')?JSON.stringify(v):String(v); if(!estaEnTexto(v,texto)) td.className='dudoso'; }
+        fila.appendChild(td);
+      });
+      var ks=Object.keys(d.obj), igual=(ks.length===cs.length)&&cs.every(function(k){return ks.indexOf(k)>=0;});
+      var e2=document.createElement('td'); e2.className='estado';
+      e2.textContent=(igual&&d.forma==='bien')?'✅ Sí':(d.forma==='alrededor'?'⚠️ Texto alrededor':'⚠️ Campos distintos');
+      fila.appendChild(e2);
+    }
+    tb.appendChild(fila);
+  }
+  if(hay) caja.appendChild(tb); else caja.innerHTML='<p style="color:#888;font-style:italic;">Aparece cuando sacás los datos.</p>';
+}
+function copiarTexto(txt,o,msg){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){o.textContent=msg;}).catch(function(){manual(txt,o,msg);});
+  } else { manual(txt,o,msg); }
+}
+function manual(txt,o,msg){
+  var t=document.createElement('textarea'); t.value=txt; t.style.position='fixed'; t.style.left='-9999px';
+  document.body.appendChild(t); t.select();
+  try{ document.execCommand('copy'); o.textContent=msg; }catch(e){ o.textContent='No se pudo copiar. Pedile ayuda a la DAI.'; }
+  document.body.removeChild(t);
+}
+function filasTSV(){
+  var cs=campos(), L=[];
+  for(var i=1;i<=3;i++){ var d=DATOS[i]; if(!d||!d.obj) continue;
+    L.push(cs.map(function(k){ var v=d.obj[k]; return (v===null||v===undefined)?'':String(v).replace(/[\t\n]/g,' '); }).join('\t')); }
+  return L.join('\n');
+}
+function copiarFilas(){
+  var o=document.getElementById('okf'), t=filasTSV();
+  if(!t){ o.textContent='Primero sacá los datos en el paso 4.'; return; }
+  copiarTexto(t,o,'Copiado. Ahora pegalo en la tabla del equipo.');
+}
+function copiarPedido(){ copiarTexto(pedido(),document.getElementById('okc'),'Copiado. Ahora pegalo en la planilla.'); }
+function copiarFrases(){
+  var o=document.getElementById('okfr'), n=['NORMAL','ATENCIÓN','ALERTA'], L=[];
+  for(var i=1;i<=3;i++){ var f=document.getElementById('f'+i).value.trim().replace(/[\t\n]/g,' ');
+    if(f) L.push('Frase del agente, nivel '+n[i-1]+'\t'+f+'\tCuando el nivel es '+n[i-1].toLowerCase()+'\tAbril'); }
+  if(!L.length){ o.textContent='Primero escribí tus frases.'; return; }
+  copiarTexto(L.join('\n'),o,'Copiado. Ahora pegalas en la hoja Contexto.');
+}
+</script>
+</body></html>
