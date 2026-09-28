@@ -89,10 +89,11 @@
     <p>✔ Usa <strong>los nombres de la tabla del equipo</strong>.</p>
     <p>✔ El número va solo, sin la unidad. Y si falta un dato, pone <strong>null</strong>.</p>
   </div>
-  <textarea class="ped" id="ped" rows="8" spellcheck="false">Saca de este texto los datos del contaminante.
+  <textarea class="ped" id="ped" rows="9" spellcheck="false">Saca de este texto los datos del contaminante.
 Devolvelos en JSON, exactamente con esta forma:
 {"contaminante": "...", "limite": 0, "unidad": "...", "tiempo_exposicion": "...", "tipo_de_riesgo": "...", "fuente": "..."}
-El limite va como numero, sin la unidad. La unidad va aparte.
+No agregues otros campos ni saques ninguno.
+El limite va como numero, sin la unidad. La unidad va aparte. Si el texto da el valor en ppm, usa ppm.
 Si un dato no esta en el texto, pone null. No lo inventes.
 No agregues nada antes ni despues.</textarea>
   <p style="font-size:18px;color:#667;">Si tu equipo le cambió el nombre a alguna columna de la tabla, corregilo acá.</p>
@@ -145,7 +146,7 @@ No agregues nada antes ni despues.</textarea>
 
 <div class="card c-lila">
   <h2><span class="paso">7</span> Las frases del agente</h2>
-  <p>El lunes 7 escribiste qué le dice el agente a la persona en cada nivel. Si las tenés en tu archivo de ese día, copialas. Revisalas y dejalas listas para el equipo.</p>
+  <p>El lunes 7 escribiste qué le dice el agente a la persona en cada nivel. Escribilas de nuevo, revisadas, para dejarlas listas para el equipo.</p>
   <label class="lbl" for="f1">Cuando el nivel es NORMAL</label>
   <textarea id="f1" rows="2" placeholder="Tu frase"></textarea>
   <label class="lbl" for="f2">Cuando el nivel es ATENCIÓN</label>
@@ -195,7 +196,7 @@ async function llamar(texto){
     body:JSON.stringify({model:'openai/gpt-oss-120b',temperature:0.2,
       messages:[{role:'system',content:pedido()},{role:'user',content:texto}]})});
   var d=await r.json();
-  if(d.error) throw new Error('clave');
+  if(d.error) throw new Error(r.status===401?'clave':'otro');
   return d.choices[0].message.content;
 }
 function leer(s){
@@ -215,12 +216,14 @@ async function probarTodos(){
     if(!t){ c.className='rta esp'; c.textContent='Sin texto.'; continue; }
     alguno=true; c.className='rta esp'; c.textContent='Pensando...';
     try{ var out=await llamar(t); RESP[i]=out; DATOS[i]=leer(out); c.className='rta'; c.textContent=out; }
-    catch(e){ c.className='rta err'; c.textContent=(e.message==='clave')?'No pudo responder. Revisá la clave.':'No hay conexión.'; }
+    catch(e){ c.className='rta err'; c.textContent=(e.message==='clave')?'No pudo responder. Revisá la clave.':(e.message==='otro'?'No pudo responder. Probá de nuevo en un minuto.':'No hay conexión.'); }
   }
   est.textContent=alguno?'Listo. Mirá tu tabla en el paso 5.':'Falta pegar los textos.';
   dibujar();
 }
-function norm(s){ return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim(); }
+function norm(s){ var t=String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  for(var k=0;k<3;k++) t=t.replace(/(\d)[.,](\d{3})(?!\d)/g,'$1$2');
+  return t.replace(/\s+/g,' ').trim(); }
 function estaEnTexto(v,texto){
   var t=norm(texto), s=norm(v);
   if(!s) return true;
