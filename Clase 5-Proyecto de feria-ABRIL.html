@@ -89,11 +89,12 @@
     <p>✔ Usa <strong>los nombres de la tabla del equipo</strong>.</p>
     <p>✔ El número va solo, sin la unidad. Y si falta un dato, pone <strong>null</strong>.</p>
   </div>
-  <textarea class="ped" id="ped" rows="9" spellcheck="false">Saca de este texto los datos del contaminante.
+  <textarea class="ped" id="ped" rows="10" spellcheck="false">Saca de este texto los datos del contaminante.
 Devolvelos en JSON, exactamente con esta forma:
 {"contaminante": "...", "limite": 0, "unidad": "...", "tiempo_exposicion": "...", "tipo_de_riesgo": "...", "fuente": "..."}
 No agregues otros campos ni saques ninguno.
 El limite va como numero, sin la unidad. La unidad va aparte. Si el texto da el valor en ppm, usa ppm.
+Si da un rango, usa el valor mas bajo.
 Si un dato no esta en el texto, pone null. No lo inventes.
 No agregues nada antes ni despues.</textarea>
   <p style="font-size:18px;color:#667;">Si tu equipo le cambió el nombre a alguna columna de la tabla, corregilo acá.</p>
