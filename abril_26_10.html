@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi trabajo del lunes 26</title>
+<style>
+  :root{
+    --nav:#1A2C3A;--verde:#2A9D5C;--verde-bg:#E7F7EE;--lila:#7B5EA7;--lila-bg:#F3EEFB;
+    --sol:#E9A030;--sol-bg:#FEF6E7;--cielo:#2E86C1;--cielo-bg:#EAF4FB;
+    --rosa:#D65D8B;--rosa-bg:#FCEEF4;--txt:#2C3E50;--bd:#D5DDE5;--r:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;background:#F2F6FA;color:var(--txt);line-height:1.7;font-size:22px;padding:15px 0 60px;}
+  header{background:var(--lila);color:#fff;padding:28px 20px;border-bottom:6px solid var(--sol);border-radius:0 0 20px 20px;}
+  header h1{font-size:30px;margin-bottom:6px;}
+  header p{font-size:19px;opacity:.95;}
+  .container{width:94%;max-width:900px;margin:0 auto;padding:0 10px;}
+  .card{background:#fff;border-radius:var(--r);padding:28px;margin:24px 0;box-shadow:0 4px 14px rgba(0,0,0,.09);border-left:8px solid var(--bd);}
+  .c-lila{border-left-color:var(--lila);}
+  .c-verde{border-left-color:var(--verde);}
+  .c-sol{border-left-color:var(--sol);}
+  .c-cielo{border-left-color:var(--cielo);}
+  .c-rosa{border-left-color:var(--rosa);}
+  h2{color:var(--nav);font-size:25px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+  .paso{background:var(--lila);color:#fff;min-width:46px;height:46px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;}
+  p{margin-bottom:12px;}
+  .texto-lectura{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:14px;padding:20px 22px;font-size:23px;line-height:2;margin:16px 0;}
+  .btn{display:inline-block;background:var(--verde);color:#fff;border:none;padding:16px 26px;border-radius:14px;font-size:21px;font-weight:bold;cursor:pointer;margin:8px 6px 8px 0;font-family:inherit;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn-lila{background:var(--lila);}
+  .btn-sol{background:var(--sol);}
+  .btn-chico{padding:10px 18px;font-size:19px;}
+  .feedback{font-size:22px;font-weight:bold;min-height:36px;margin-top:10px;}
+  .bien{color:var(--verde);}
+  .casi{color:var(--sol);}
+  input[type=text], textarea{width:100%;padding:14px;border:3px solid var(--bd);border-radius:12px;font-size:21px;font-family:inherit;margin:6px 0 12px;}
+  input[type=text]:focus, textarea:focus{border-color:var(--lila);outline:none;}
+  label{font-weight:bold;font-size:20px;color:var(--nav);}
+  .dai{background:var(--rosa-bg);border:3px dashed var(--rosa);border-radius:var(--r);padding:20px 24px;margin:26px 0;font-size:21px;}
+  .dai strong{color:var(--rosa);font-size:22px;display:block;margin-bottom:6px;}
+  .estrellas{font-size:19px;font-weight:bold;color:var(--verde);min-height:28px;margin-top:4px;}
+  .opciones{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+  .opcion{background:#fff;border:4px solid var(--bd);border-radius:16px;padding:22px;text-align:center;font-size:22px;cursor:pointer;transition:all .15s;}
+  .opcion:hover{border-color:var(--lila);transform:translateY(-2px);}
+  .opcion.elegida{border-color:var(--verde);background:var(--verde-bg);}
+  .opcion .emoji{font-size:52px;display:block;margin-bottom:8px;}
+  .palabra{cursor:pointer;padding:3px 6px;border-radius:8px;transition:background .15s;}
+  .palabra:hover{background:#FFE9A8;}
+  .palabra.ok{background:var(--verde);color:#fff;}
+  .palabra.no{background:#F5B7B1;}
+  table{width:100%;border-collapse:collapse;font-size:20px;margin:14px 0;}
+  th,td{border:2px solid var(--bd);padding:12px;text-align:left;}
+  th{background:var(--lila);color:#fff;font-size:19px;}
+  td input[type=text]{margin:0;padding:10px;font-size:20px;border-width:2px;}
+  .chk{display:flex;align-items:center;gap:14px;background:#fff;border:3px solid var(--bd);border-radius:14px;padding:16px 20px;margin:10px 0;font-size:21px;cursor:pointer;}
+  .chk.hecho{border-color:var(--verde);background:var(--verde-bg);}
+  .chk .caja{font-size:30px;}
+  ul{margin-left:24px;} li{margin-bottom:10px;}
+  @media(max-width:700px){.opciones{grid-template-columns:1fr;} body{font-size:21px;}}
+
+  .campo{display:inline-block;background:#fff;border:3px solid var(--bd);border-radius:26px;
+         padding:14px 24px;margin:8px 8px 8px 0;cursor:pointer;font-size:23px;transition:all .15s;}
+  .campo:hover{border-color:var(--verde);}
+  .campo.si{background:var(--verde);color:#fff;border-color:var(--verde);}
+  .campo.no{background:#FFE5E5;border-color:#C62828;color:#8B1A1A;}
+
+  .pieza{display:inline-block;background:#fff;border:3px solid var(--bd);border-radius:12px;
+         padding:12px 20px;margin:7px;cursor:pointer;font-size:22px;transition:all .15s;}
+  .pieza:hover{border-color:var(--lila);}
+  .pieza.puesta{background:var(--lila);color:#fff;border-color:var(--lila);}
+  .hueco{display:inline-block;min-width:150px;border-bottom:4px dotted var(--lila);
+         padding:6px 12px;margin:0 6px;font-size:22px;color:var(--lila);font-weight:bold;}
+
+  .qz-op{display:block;width:100%;text-align:left;background:#fff;border:3px solid var(--bd);
+         border-radius:14px;padding:16px 22px;margin-bottom:12px;font-size:23px;cursor:pointer;
+         font-family:inherit;color:var(--txt);}
+  .qz-op:hover:enabled{border-color:var(--verde);}
+  .qz-op:disabled{cursor:default;}
+  .qz-vf{display:inline-block;width:47%;text-align:center;font-size:24px;font-weight:bold;
+         padding:20px;margin:0 1% 12px;border:3px solid var(--bd);border-radius:14px;
+         background:#fff;cursor:pointer;font-family:inherit;color:var(--txt);}
+  .qz-vf:hover:enabled{border-color:var(--verde);}
+  .qz-vf:disabled{cursor:default;}
+</style>
+</head>
+<body>
+<header>
+  <h1>💬 Mi trabajo del lunes 26</h1>
+  <p>Taller de IA &middot; Lunes 26</p>
+</header>
+<div class="container">
+<style>
+  .keybox{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:14px;padding:16px 20px;}
+  .keybox input{width:100%;box-sizing:border-box;font-size:19px;padding:13px 16px;
+    border:3px solid var(--bd);border-radius:12px;font-family:inherit;margin-top:8px;}
+  .btn-ia{background:var(--cielo);color:#fff;border:none;border-radius:12px;padding:14px 26px;
+    font-size:20px;font-weight:bold;cursor:pointer;font-family:inherit;margin-top:10px;}
+  .btn-ia:disabled{opacity:.5;}
+  .campo{width:100%;box-sizing:border-box;border:3px solid var(--bd);border-radius:12px;
+    padding:14px 16px;font-size:19px;font-family:inherit;line-height:1.6;resize:vertical;margin-top:8px;}
+  .campo:focus{outline:none;border-color:var(--verde);}
+  .pedido{background:var(--lila-bg);border:3px solid var(--lila);border-radius:14px;
+    padding:18px 22px;font-size:19px;line-height:1.7;margin:12px 0;}
+  .hueco{width:100%;box-sizing:border-box;border:3px dashed var(--lila);border-radius:10px;
+    padding:12px 15px;font-size:19px;font-family:inherit;background:#fff;margin-top:6px;}
+  .hueco:focus{outline:none;border-style:solid;}
+  details.tip{background:#fff;border-left:8px solid var(--lila);border-radius:12px;padding:12px 16px;margin-top:9px;}
+  details.tip summary{cursor:pointer;font-weight:bold;color:var(--lila);font-size:19px;}
+  details.tip p{margin:9px 0 0 0;font-size:18px;}
+  .lbl{font-weight:bold;font-size:19px;margin-top:14px;display:block;}
+  .gr{font-size:23px;font-weight:bold;}
+  .ok2{font-size:19px;font-weight:bold;color:var(--verde);margin-top:8px;}
+  .frag-card{background:#fff;border:3px solid var(--bd);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
+  .frag-card.ok{border-color:var(--verde);background:#F0FAF7;}
+  .frag-card.mal{border-color:#C0392B;background:#FDECEA;}
+  .frag-head{font-weight:bold;font-size:18px;color:var(--p1);}
+  .frag-txt{font-style:italic;font-size:17px;margin-top:6px;color:#445;line-height:1.5;}
+  .btn-chk{border:none;border-radius:10px;padding:10px 18px;font-size:17px;font-weight:bold;
+    cursor:pointer;font-family:inherit;}
+  .btn-chk.ok{background:var(--verde);color:#fff;}
+  .btn-chk.mal{background:#C0392B;color:#fff;}
+  .rta{background:#F4F8FB;border:3px solid var(--bd);border-radius:12px;padding:14px 17px;
+    font-size:19px;line-height:1.7;margin-top:10px;white-space:pre-wrap;min-height:48px;}
+  .rta.esp{color:#888;font-style:italic;}
+  .rta.err{background:#FDECEA;border-color:#C0392B;color:#8B1A1A;}
+</style><style>
+  .nivel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0;}
+  .nv{border-radius:14px;padding:14px;text-align:center;font-size:19px;font-weight:bold;color:#fff;}
+  .nv small{display:block;font-weight:normal;font-size:17px;margin-top:4px;}
+  .n1{background:#2A9D5C;} .n2{background:#E9A030;} .n3{background:#C0392B;}
+  .fila{background:#fff;border:3px solid var(--bd);border-radius:12px;padding:12px 16px;font-size:18px;margin-top:8px;}
+  .med{background:var(--cielo-bg);border:3px solid var(--cielo);border-radius:14px;padding:14px 18px;font-size:24px;font-weight:bold;margin:8px 0 12px;}
+  .btn-n{border:none;border-radius:12px;padding:12px 20px;font-size:19px;font-weight:bold;cursor:pointer;font-family:inherit;color:#fff;margin:4px 6px 4px 0;}
+  .btn-n.n1{background:#2A9D5C;} .btn-n.n2{background:#E9A030;} .btn-n.n3{background:#C0392B;}
+  .fb{font-size:19px;font-weight:bold;min-height:30px;margin:6px 0;}
+  .fb.si{color:#2A9D5C;} .fb.no{color:#C0392B;}
+  .nv.n2, .btn-n.n2{color:#2B1D00 !important;}
+  @media (max-width:640px){ .nivel{grid-template-columns:1fr;} body{font-size:20px;} }
+</style>
+<div class="card c-verde">
+  <h2><span class="paso">1</span> Qué hacés hoy</h2>
+  <p>Qué bueno que volviste. Tu equipo armó el agente: mira el aire, lo compara con la tabla y avisa.</p>
+  <p>Vos hiciste la instrucción que sacó los datos, y las frases para cada nivel. Hoy las terminás.</p>
+  <div class="caja" style="background:var(--verde-bg);border-left:8px solid var(--verde);padding:14px 18px;border-radius:12px;">
+    <p class="gr">Hoy escribís lo que el agente le dice a la persona.</p>
+    <p class="gr" style="margin-top:8px;">Un mensaje para cada nivel, diciendo con qué valor comparó.</p>
+  </div>
+  <div class="dai" style="padding:12px 16px;margin-top:10px;">Hoy evalúo a tu equipo. Cuando presenten el agente, vos mostrás tus tres mensajes. Si los llamo antes de que termines, mostrá lo que tengas.</div>
+</div>
+
+<div class="card c-sol">
+  <h2><span class="paso">2</span> Tu clave</h2>
+  <div class="keybox">
+    <input id="k" type="password" placeholder="Pegá tu clave">
+    <button class="btn-ia" style="background:var(--cielo);" onclick="act()">Activar</button>
+    <p id="okk" class="ok2"></p>
+  </div>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">3</span> La regla del agente</h2>
+  <p>Sale de la tabla de tu equipo:</p>
+  <div class="nivel">
+    <div class="nv n1">NORMAL<small>menos de 9 ppm</small></div>
+    <div class="nv n2">ATENCIÓN<small>de 9 a 25 ppm</small></div>
+    <div class="nv n3">ALERTA<small>más de 25 ppm</small></div>
+  </div>
+  <div class="fila">N° 8 de la tabla: monóxido, <strong>9 ppm</strong>, 8 horas.</div>
+  <div class="fila">N° 7 de la tabla: monóxido, <strong>25 ppm</strong>, 1 hora.</div>
+  <p style="margin-top:10px;font-size:18px;">Fuente: OMS – recogido por inBiot.</p>
+</div>
+<div class="card c-cielo"><h2><span class="paso">4</span> A las 20:00</h2><div class="med">💨 Monóxido: 2 ppm</div><p>¿Qué nivel es? Mirá la regla del paso 3.</p><button class="btn-n n1" onclick="nivel(0,'normal')">Normal</button><button class="btn-n n2" onclick="nivel(0,'atencion')">Atención</button><button class="btn-n n3" onclick="nivel(0,'alerta')">Alerta</button><p id="fb0" class="fb"></p><label class="lbl">Tu mensaje para la persona</label><textarea class="campo" id="m0" rows="3" placeholder="El nivel, qué pasa, qué hacer y contra qué valor comparaste"></textarea><details class="tip"><summary>💡 Ayuda</summary><p>Cuatro cosas, nada más: el nivel, cuánto monóxido hay, qué tiene que hacer la persona y con qué valor de la tabla lo comparaste.</p><p>Podés completar esto:<br><strong>Nivel ___. El monóxido está en ___ ppm. ___ (qué hacer). Lo comparé con ___ ppm de la tabla.</strong></p><p>Y podés partir de las frases que escribiste el lunes 7.</p></details></div><div class="card c-cielo"><h2><span class="paso">5</span> A las 12:15</h2><div class="med">💨 Monóxido: 14,1 ppm</div><p>¿Qué nivel es? Mirá la regla del paso 3.</p><button class="btn-n n1" onclick="nivel(1,'normal')">Normal</button><button class="btn-n n2" onclick="nivel(1,'atencion')">Atención</button><button class="btn-n n3" onclick="nivel(1,'alerta')">Alerta</button><p id="fb1" class="fb"></p><label class="lbl">Tu mensaje para la persona</label><textarea class="campo" id="m1" rows="3" placeholder="El nivel, qué pasa, qué hacer y contra qué valor comparaste"></textarea><details class="tip"><summary>💡 Ayuda</summary><p>Cuatro cosas, nada más: el nivel, cuánto monóxido hay, qué tiene que hacer la persona y con qué valor de la tabla lo comparaste.</p><p>Podés completar esto:<br><strong>Nivel ___. El monóxido está en ___ ppm. ___ (qué hacer). Lo comparé con ___ ppm de la tabla.</strong></p><p>Y podés partir de las frases que escribiste el lunes 7.</p></details></div><div class="card c-cielo"><h2><span class="paso">6</span> A las 17:25</h2><div class="med">💨 Monóxido: 44 ppm</div><p>¿Qué nivel es? Mirá la regla del paso 3.</p><button class="btn-n n1" onclick="nivel(2,'normal')">Normal</button><button class="btn-n n2" onclick="nivel(2,'atencion')">Atención</button><button class="btn-n n3" onclick="nivel(2,'alerta')">Alerta</button><p id="fb2" class="fb"></p><label class="lbl">Tu mensaje para la persona</label><textarea class="campo" id="m2" rows="3" placeholder="El nivel, qué pasa, qué hacer y contra qué valor comparaste"></textarea><details class="tip"><summary>💡 Ayuda</summary><p>Cuatro cosas, nada más: el nivel, cuánto monóxido hay, qué tiene que hacer la persona y con qué valor de la tabla lo comparaste.</p><p>Podés completar esto:<br><strong>Nivel ___. El monóxido está en ___ ppm. ___ (qué hacer). Lo comparé con ___ ppm de la tabla.</strong></p><p>Y podés partir de las frases que escribiste el lunes 7.</p></details></div>
+
+<div class="card c-rosa">
+  <h2><span class="paso">7</span> Revisalo con la IA</h2>
+  <p>La IA revisa tus tres mensajes. Mira tres cosas:</p>
+  <div class="caja" style="background:var(--rosa-bg);border-left:8px solid var(--rosa);padding:14px 18px;border-radius:12px;">
+    <p>✔ ¿Dice el nivel que corresponde?</p>
+    <p>✔ ¿Dice con qué valor comparó?</p>
+    <p>✔ ¿Usa solo la medición y la tabla?</p>
+  </div>
+  <button class="btn-ia" onclick="revisar()">▶ Revisar mis mensajes</button>
+  <div id="rev" class="rta esp">Todavía no revisaste.</div>
+  <p style="margin-top:10px;font-size:18px;">Tiene que decir <strong>sí</strong> en todo. Si algo dice <strong>no</strong>, cambiá ese mensaje y revisá de nuevo.</p>
+</div>
+
+<div class="card c-verde">
+  <h2><span class="paso">8</span> Contalo</h2>
+  <p>Contáselo a Edith o a mí. Podés escribirlo o decirlo.</p>
+  <label class="lbl">¿Qué hace el agente?</label>
+  <textarea class="campo" id="p1" rows="2"></textarea>
+  <label class="lbl">¿Por qué necesita la tabla verificada de tu equipo, y no lo que la IA sabe de memoria?</label>
+  <textarea class="campo" id="p2" rows="2"></textarea>
+</div>
+
+<div class="card c-lila">
+  <h2><span class="paso">9</span> Bitácora y guardá</h2>
+  <p>Abrí tu bitácora y contestá las tres preguntas del <strong>lunes 26</strong>. Con una frase alcanza.</p>
+  <p>Después, tu nombre y descargá tu trabajo.</p>
+  <label class="lbl">Tu nombre</label>
+  <input type="text" id="n" placeholder="Tu nombre">
+  <button class="btn" onclick="baj()">⬇ Descargar</button>
+  <p id="okb" class="ok2"></p>
+</div>
+</div>
+<script>
+var K="";
+var MED=[["20:00", 2.0, "normal"], ["12:15", 14.1, "atencion"], ["17:25", 44.0, "alerta"]];
+var NOM={normal:'normal',atencion:'atención',alerta:'alerta'};
+var ELEG=["","",""];
+function act(){
+  var v=document.getElementById('k').value.trim();
+  if(v.length<20){document.getElementById('okk').textContent='Parece incompleta.';return;}
+  K=v; document.getElementById('okk').textContent='Listo.';
+}
+function nivel(i,n){
+  ELEG[i]=n; var fb=document.getElementById('fb'+i); var m=MED[i];
+  var v=String(m[1]).replace('.',',');
+  if(n===m[2]){ fb.className='fb si';
+    fb.textContent = m[2]==='normal' ? '✔ Sí: '+v+' es menos que 9.' : (m[2]==='atencion' ? '✔ Sí: '+v+' pasa 9, pero no llega a 25.' : '✔ Sí: '+v+' es más que 25.');
+  } else { fb.className='fb no'; fb.textContent='Mirá de nuevo la regla del paso 3: ¿'+v+' es más o menos que 9? ¿Y que 25?'; }
+}
+async function revisar(){
+  if(!K && document.getElementById('k').value.trim()) act();
+  if(!K){alert('Primero poné tu clave, en el paso 2.');return;}
+  var faltan=[0,1,2].filter(function(i){return !document.getElementById('m'+i).value.trim();});
+  if(faltan.length){alert('Escribí los tres mensajes.');return;}
+  var caja=document.getElementById('rev'); caja.className='rta'; caja.textContent='Revisando...';
+  var sys="Sos un revisor. Te paso mensajes que un agente de calidad del aire le dice a una persona."+
+    "\nLa regla del agente: menos de 9 ppm de monoxido es normal; de 9 a 25 ppm es atencion; mas de 25 ppm es alerta."+
+    "\nLos valores de la tabla son 9 ppm (8 horas) y 25 ppm (1 hora), de la OMS, recogidos por inBiot."+
+    "\nContesta una linea por mensaje, asi, con si o no:"+
+    "\nMensaje 1 - nivel: si - valor: si - solo datos: si"+
+    "\nnivel: si, si dice el nivel que corresponde a la medicion. valor: si, si dice contra que valor de la tabla comparo, 9 o 25 ppm. solo datos: si, si usa solo la medicion y la tabla."+
+    "\nPara solo datos esta permitido: decir que hacer (ventilar, salir, avisar), nombrar la fuente de la tabla (OMS, inBiot) y decir que el monoxido no se ve ni se huele. Es no si pone numeros, fuentes o hechos que no estan en la medicion ni en la tabla."+
+    "\nSi algo es no, agrega en la misma linea por que, en cinco palabras como maximo. No agregues nada mas.";
+  var u=MED.map(function(m,i){return 'Mensaje '+(i+1)+' - medicion: '+m[1]+' ppm a las '+m[0]+'\n'+document.getElementById('m'+i).value.trim();}).join('\n\n');
+  try{
+    var res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',headers:{'Authorization':'Bearer '+K,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'openai/gpt-oss-120b',temperature:0.2,
+        messages:[{role:'system',content:sys},{role:'user',content:u}]})});
+    var d=await res.json();
+    if(d.error){caja.className='rta err'; caja.textContent='⚠ Error: '+d.error.message;}
+    else caja.textContent=d.choices[0].message.content;
+  }catch(e){caja.className='rta err'; caja.textContent='No hay conexión.';}
+}
+function baj(){
+  var n=document.getElementById('n').value.trim();
+  if(!n){alert('Escribí tu nombre.');return;}
+  var f=new Date();
+  function v(i){var e=document.getElementById(i);return e&&e.value.trim()?e.value.trim():'(vacío)';}
+  var L=['MI TRABAJO DEL LUNES 26','Nombre: '+n,'Fecha: '+f.getDate()+'/'+(f.getMonth()+1)+'/'+f.getFullYear(),'','MIS MENSAJES DEL AGENTE:'];
+  MED.forEach(function(m,i){ L.push('A las '+m[0]+' - monóxido '+String(m[1]).replace('.',',')+' ppm - nivel que elegí: '+(ELEG[i]?NOM[ELEG[i]]:'(sin elegir)'));
+    L.push(v('m'+i)); L.push(''); });
+  L.push('LO QUE DIJO LA REVISIÓN:'); L.push(document.getElementById('rev').textContent); L.push('');
+  L.push('QUÉ HACE EL AGENTE:'); L.push(v('p1')); L.push('');
+  L.push('POR QUÉ NECESITA LA TABLA VERIFICADA:'); L.push(v('p2'));
+  var bl=new Blob([L.join('\n')],{type:'text/plain;charset=utf-8'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(bl);
+  a.download='mi_trabajo_26_'+n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'_')+'.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  document.getElementById('okb').textContent='Listo.';
+}
+</script>
+</body></html>
