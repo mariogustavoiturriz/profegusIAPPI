@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El agente contesta</title>
+<style>
+  .preg{background:#FFFDF6;border-left:6px solid var(--amb);border-radius:8px;
+        padding:12px 17px;margin:11px 0;font-size:17px;line-height:1.6;font-weight:bold;}
+  .preg strong:first-child{color:var(--amb);margin-right:5px;}
+  :root{
+    --nav:#1A2C3A;--teal:#00949A;--grn:#2A6049;--amb:#D4873A;
+    --vio:#3D5A99;--gris:#F3F6F9;--bd:#C5D2DC;--txt:#2C3E50;
+    --bco:#FFFFFF;--code-bg:#1E1E1E;--r:12px;
+    --p1:#1F6E5C;--p1-bg:#E8F4F0;
+    --g2:#2E6820;--g2-bg:#EFF8EE;
+    --json:#006400;--json-bg:#F0FFF0;
+    --rojo:#C62828;--rojo-bg:#FFEBEE;
+    --azul:#1565C0;--azul-bg:#E3F2FD;
+    --classroom:#137333;--class-bg:#F0FFF4;
+    --rpg:#5C2070;--rpg-bg:#F8F3FF;
+    --plan:#2A4A7F;--plan-bg:#E5ECF6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#EEF3F7;color:var(--txt);line-height:1.6;font-size:20px;padding:15px 0 50px;}
+  header{background:var(--nav);color:var(--bco);padding:25px 20px;border-bottom:5px solid var(--vio);}
+  header h1{font-size:26px;margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;}
+  header p{font-size:17px;opacity:.9;}
+  .container{width:95%;max-width:1400px;margin:0 auto;padding:0 15px;}
+  .back-btn{display:inline-block;margin-top:20px;margin-bottom:10px;padding:10px 20px;background:var(--bco);color:var(--nav);text-decoration:none;font-weight:bold;border-radius:8px;border:2px solid var(--bd);}
+  .card{background:var(--bco);border-radius:var(--r);padding:30px;margin-bottom:28px;margin-top:20px;box-shadow:0 4px 12px rgba(0,0,0,.08);border-left:6px solid var(--bd);}
+  .c-p1{border-left-color:var(--p1);background:var(--p1-bg);}
+  .c-plan{border-left-color:var(--plan);background:var(--plan-bg);}
+  .c-info{border-left-color:var(--vio);background:#FAFCFF;}
+  .c-json{border-left-color:var(--json);background:var(--json-bg);}
+  .c-rojo{border-left-color:var(--rojo);background:var(--rojo-bg);}
+  .c-entrega{border-left-color:var(--classroom);background:var(--class-bg);}
+  .c-asistente{border-left-color:var(--rpg);background:var(--rpg-bg);}
+  .c-avanzado{border-left-color:var(--amb);background:#FFFBF5;}
+  h2{color:var(--nav);font-size:23px;margin-bottom:15px;text-transform:uppercase;border-bottom:2px solid var(--gris);padding-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .badge{background:var(--nav);color:var(--bco);padding:5px 12px;border-radius:6px;font-size:17px;font-weight:bold;}
+  .info{padding:18px 20px;border-radius:var(--r);margin:15px 0;border-left:5px solid;font-size:18px;line-height:1.7;}
+  .i-p1{background:var(--p1-bg);border-color:var(--p1);}
+  .i-plan{background:var(--plan-bg);border-color:var(--plan);}
+  .i-grn{background:var(--g2-bg);border-color:var(--g2);}
+  .i-amb{background:#FFF8EE;border-color:var(--amb);}
+  .i-azul{background:var(--azul-bg);border-color:var(--azul);}
+  .i-rojo{background:var(--rojo-bg);border-color:var(--rojo);}
+  .i-json{background:var(--json-bg);border-color:var(--json);}
+  .info > strong:first-child{display:block;margin-bottom:6px;font-size:19px;}
+  .code-block{background:var(--code-bg);color:#D4D4D4;font-family:'Consolas',monospace;padding:18px 20px;font-size:17px;overflow-x:auto;white-space:pre;line-height:1.65;margin:14px 0;border-radius:8px;}
+  .kw{color:#569CD6;} .str{color:#CE9178;} .cm{color:#6A9955;font-style:italic;}
+  .nm{color:#B5CEA8;} .fn{color:#DCDCAA;} .dk{color:#9CDCFE;}
+  code{background:#E8E6FF;color:var(--vio);padding:2px 6px;border-radius:4px;font-family:'Consolas',monospace;font-size:17px;}
+  ul{margin-left:22px;} li{margin-bottom:8px;}
+  ol{margin-left:22px;} ol li{margin-bottom:8px;}
+  table{width:100%;border-collapse:collapse;font-size:17px;margin:16px 0;background:#fff;border-radius:8px;overflow:hidden;}
+  th,td{border:1px solid var(--bd);padding:12px 14px;text-align:left;}
+  th{background:var(--nav);color:#fff;font-size:15px;text-transform:uppercase;letter-spacing:.5px;}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px;}
+  .mini{background:#fff;border:2px solid var(--bd);border-radius:10px;padding:16px;font-size:16px;line-height:1.6;}
+  .mini strong{color:var(--p1);display:block;margin-bottom:4px;font-size:17px;}
+  .check{list-style:none;margin-left:0;}
+  .check li{padding-left:34px;position:relative;margin-bottom:12px;font-size:18px;}
+  .check li::before{content:"\25A2";position:absolute;left:0;font-size:24px;color:var(--p1);}
+  #asist-chat{display:none;}
+  #asist-msgs{background:#1E1E1E;border-radius:10px;padding:16px;min-height:160px;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;margin-bottom:10px;}
+  .asist-inp{display:flex;gap:8px;}
+  .asist-inp input{flex:1;padding:11px;border-radius:8px;border:1px solid #ccc;font-size:17px;outline:none;}
+  .btn-rpg{background:var(--rpg);color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer;}
+  .btn-rpg:disabled{background:#ccc;cursor:not-allowed;}
+  .key-row{display:flex;gap:8px;align-items:center;margin-bottom:12px;}
+  .key-row input{flex:1;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:16px;outline:none;}
+  @media(max-width:768px){.duo,.trio{grid-template-columns:1fr;}}
+
+  /* Ejercicio de JSON */
+  .jej{display:none;}
+  .jej.activo{display:block;}
+  .jpanel{background:#F0FFF0;border:2px solid #006400;border-radius:10px;padding:18px 20px;
+          font-family:Consolas,monospace;font-size:17px;line-height:2;overflow-x:auto;white-space:pre;}
+  .jval{background:#fff;border:2px solid var(--bd);border-radius:6px;padding:1px 7px;
+        cursor:pointer;transition:all .15s;display:inline-block;}
+  .jval:hover{border-color:var(--json);background:#E6F7E6;}
+  .jval.ok{background:#1F6E5C;color:#fff;border-color:#1F6E5C;}
+  .jval.no{background:#FFEBEE;border-color:var(--rojo);}
+  .jkey{color:#9CDCFE;}
+  .jctx{background:var(--azul-bg);border-left:5px solid var(--azul);border-radius:8px;
+        padding:12px 16px;margin-bottom:12px;font-size:17px;}
+  .jpide{font-size:21px;font-weight:bold;margin:14px 0 10px;}
+  .jfb{margin-top:12px;font-size:18px;}
+  .jcamino{background:var(--code-bg);color:#D4D4D4;font-family:Consolas,monospace;
+           padding:12px 16px;border-radius:8px;font-size:17px;margin-top:10px;overflow-x:auto;}
+  .jcam-ops{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+  .jcam-op{background:#1E1E1E;color:#D4D4D4;font-family:Consolas,monospace;font-size:16px;
+           padding:11px 14px;border:2px solid #3A3A3A;border-radius:8px;cursor:pointer;text-align:left;
+           transition:all .15s;}
+  .jcam-op:hover:enabled{border-color:var(--vio);}
+  .jcam-op:disabled{cursor:default;}
+  .jcam-op.cam-ok{background:#1F6E5C;color:#fff;border-color:#1F6E5C;}
+  .jcam-op.cam-no{background:#3a1e1e;border-color:#C0392B;opacity:.6;}
+  .jprog{font-size:16px;color:#666;margin-bottom:8px;}
+
+  /* Taller de reparaciones */
+  .rep{display:none;}
+  .rep.activo{display:block;}
+  .repcod{background:var(--code-bg);border-radius:8px;padding:14px 0;font-family:Consolas,monospace;
+          font-size:16px;line-height:1.9;overflow-x:auto;}
+  .rline{display:block;padding:2px 18px;cursor:pointer;white-space:pre;color:#D4D4D4;}
+  .rline:hover{background:#2D2D2D;}
+  .rline.ok{background:#1F6E5C;}
+  .rline.no{background:#5C1F1F;}
+  .rline.fija{cursor:default;color:#808080;}
+  .rline.fija:hover{background:transparent;}
+  .rnum{color:#606060;display:inline-block;width:26px;user-select:none;}
+
+  .encasa{display:inline-block;background:#7A4B00;color:#fff;font-size:14px;font-weight:bold;
+          letter-spacing:1px;padding:5px 12px;border-radius:20px;margin-left:auto;}
+  .banda-casa{background:#FFF8EE;border:2px dashed #B8720A;border-radius:10px;
+              padding:12px 18px;margin-bottom:16px;font-size:18px;}
+
+  /* Campos extraíbles */
+  .campo{display:inline-block;background:#fff;border:2px solid var(--bd);border-radius:22px;
+         padding:9px 18px;margin:6px 6px 6px 0;cursor:pointer;font-size:18px;transition:all .15s;}
+  .campo:hover{border-color:var(--p1);background:#F2FAF8;}
+  .campo.si{background:#1F6E5C;color:#fff;border-color:#1F6E5C;}
+  .campo.no{background:#FFEBEE;border-color:var(--rojo);color:#8B1A1A;text-decoration:line-through;}
+  .ext-txt{background:#FFFDF5;border:2px solid var(--amb);border-radius:10px;padding:16px 20px;
+           font-size:19px;line-height:1.7;font-style:italic;margin-bottom:14px;}
+
+  .tarea{background:#fff;border:2px solid var(--bd);border-radius:10px;
+         padding:13px 18px;margin-bottom:10px;font-size:18px;transition:all .15s;
+         display:flex;flex-wrap:wrap;align-items:center;gap:10px;}
+  .tarea-txt{flex:1 1 240px;}
+  .tarea-btns{display:flex;gap:8px;}
+  .tbtn{background:#fff;border:2px solid var(--bd);border-radius:8px;padding:8px 12px;
+        font-size:16px;cursor:pointer;font-family:inherit;color:var(--txt);white-space:nowrap;}
+  .tbtn:hover:enabled{border-color:var(--vio);}
+  .tbtn:disabled{cursor:default;opacity:.55;}
+  .tbtn.ok{background:#1F6E5C;color:#fff;border-color:#1F6E5C;opacity:1;}
+  .tbtn.mal{background:#FFEBEE;border-color:#C0392B;color:#8B1A1A;opacity:1;}
+  .tarea.resuelta{background:#F7FBF9;border-color:#1F6E5C;}
+  .tarea-fb{flex:1 1 100%;font-size:16px;}
+  .btn-op{background:#fff;border:2px solid var(--bd);border-radius:10px;padding:12px 20px;
+          margin:6px 8px 6px 0;font-size:18px;cursor:pointer;font-family:inherit;color:var(--txt);}
+  .btn-op:hover{border-color:var(--p1);}
+  .btn-op.ok{background:#E8F4F0;border-color:var(--p1);}
+  .btn-op.mal{background:#FFEBEE;border-color:var(--rojo);}
+  .parte{display:inline-block;background:#1E1E1E;color:#DCDCAA;border:2px solid #444;
+         border-radius:8px;padding:8px 14px;margin:5px 4px;cursor:pointer;
+         font-family:Consolas,monospace;font-size:20px;}
+  .parte:hover{border-color:#DCDCAA;}
+  .parte.ok{background:#1F6E5C;color:#fff;border-color:#1F6E5C;}
+  .parte.mal{background:#5C1F1F;border-color:#C62828;}
+
+  /* Cuestionario de cierre */
+  .cq-op{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--bd);
+         border-radius:10px;padding:13px 18px;margin-bottom:9px;font-size:18px;cursor:pointer;
+         font-family:inherit;color:var(--txt);line-height:1.5;}
+  .cq-op:hover:enabled{border-color:var(--vio);background:#FAF7FF;}
+  .cq-op:disabled{cursor:default;opacity:.95;}
+  .cq-vf{display:inline-block;width:48%;text-align:center;font-size:20px;font-weight:bold;
+         padding:16px;margin:0 1% 10px;border:2px solid var(--bd);border-radius:10px;
+         background:#fff;cursor:pointer;font-family:inherit;color:var(--txt);}
+  .cq-vf:hover:enabled{border-color:var(--vio);}
+  .cq-vf:disabled{cursor:default;opacity:.95;}
+  .cq-barra{height:14px;background:#E8E8E8;border-radius:7px;overflow:hidden;margin:10px 0 4px;}
+  .cq-fill{height:100%;background:var(--vio);width:0;transition:width .3s;}
+</style>
+</head>
+<body>
+<header>
+  <h1>EL AGENTE CONTESTA</h1>
+  <p>Taller de IA &middot; 7&deg; TIC &middot; Viernes 30/10 &middot; los cuatro grupos</p>
+</header>
+<div class="container">
+<a href="index.html" class="back-btn">&#11013; Volver al &Iacute;ndice</a>
+<style>  .cp{width:100%;box-sizing:border-box;border:2px solid var(--bd);border-radius:9px;padding:11px 14px;
+      font-size:16px;font-family:inherit;line-height:1.5;resize:vertical;margin-top:7px;}
+  .cp:focus{outline:none;border-color:var(--p1);}
+  .lb{font-weight:bold;font-size:17px;margin-top:15px;display:block;}
+  .ay{display:block;font-size:15px;color:#667;margin-top:2px;}
+  .reloj{display:inline-block;background:var(--amb);color:#fff;font-size:15px;font-weight:bold;
+         padding:3px 12px;border-radius:20px;margin-left:10px;vertical-align:middle;}
+  .cod{background:#1E1E1E;color:#D4D4D4;border-radius:10px;padding:15px 19px;margin:10px 0;
+       font-family:Consolas,monospace;font-size:15.5px;line-height:1.7;white-space:pre-wrap;overflow-x:auto;}
+  .cod .cm{color:#6A9955;} .cod .st{color:#CE9178;} .cod .kw{color:#569CD6;}
+  .mal{background:#FDECEA;border:2px solid #C0392B;border-radius:10px;padding:13px 17px;
+       font-family:Consolas,monospace;font-size:15px;line-height:1.7;margin:8px 0;}
+  .bien{background:#F0FAF7;border:2px solid #1F6E5C;border-radius:10px;padding:13px 17px;
+        font-family:Consolas,monospace;font-size:15px;line-height:1.7;margin:8px 0;}
+  .mal,.bien{white-space:pre-wrap;}
+  details.pista{background:var(--gris);border-left:5px solid var(--vio);border-radius:8px;
+                padding:12px 16px;margin-top:9px;}
+  details.pista summary{cursor:pointer;font-weight:bold;color:var(--vio);font-size:17px;}
+  details.pista p{margin:10px 0 0 0;font-size:17px;}
+  table.cierre{width:100%;border-collapse:collapse;font-size:16px;margin:12px 0;}
+  table.cierre th{background:var(--nav);color:#fff;padding:9px 12px;text-align:left;font-size:13.5px;}
+  table.cierre td{border:1px solid var(--bd);padding:10px 12px;vertical-align:top;}
+  table.cierre tr:nth-child(even) td{background:#F7FAFC;}</style><style>
+  .reloj{background:#A35A12 !important;}
+  .que{font-size:18px;line-height:1.6;margin:6px 0 10px;}
+  .chico{font-size:15px;color:#556;margin:6px 0;}
+  ol.pasos{font-size:17.5px;margin:8px 0 10px 24px;} ol.pasos li{margin-bottom:5px;}
+  .hueco{background:#FFE082;color:#5D4300;border-radius:4px;padding:0 3px;font-weight:bold;}
+  .cod .hueco{color:#3A2A00;}
+  .btn-cp{background:var(--p1);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:16px;font-weight:bold;cursor:pointer;margin:2px 0 6px;}
+  .camino{display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:var(--gris);border-radius:10px;padding:8px 12px;margin:4px 0 10px;}
+  .camino .nodo{border:2px solid var(--bd);border-radius:20px;padding:3px 12px;font-size:15px;background:#fff;}
+  .camino .nodo.on{background:var(--json);border-color:var(--json);color:#fff;font-weight:bold;}
+  .camino .fl{color:#99A;}
+  .pq{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px;}
+  .pq > div{border-radius:10px;padding:10px 14px;font-size:16.5px;}
+  .pq-a{background:#F2F5FB;border-left:6px solid var(--vio);} .pq-b{background:#F0FAF7;border-left:6px solid var(--p1);}
+  .pq-t{font-weight:bold;font-size:14px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+  .pq-a .pq-t{color:var(--vio);} .pq-b .pq-t{color:var(--p1);}
+  .sale{background:#F0FAF7;border-left:6px solid var(--p1);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:16.5px;}
+  .pistas{background:var(--gris);border-radius:10px;padding:12px 16px;margin:10px 0;}
+  .pistas details{background:#fff;border-left:5px solid var(--vio);border-radius:8px;padding:9px 14px;margin-top:8px;}
+  .pistas summary{cursor:pointer;font-weight:bold;color:var(--vio);font-size:16.5px;}
+  .pistas details p{margin:8px 0 2px;font-size:16px;}
+  details.lin{background:var(--gris);border-radius:10px;padding:9px 14px;margin:10px 0 12px;}
+  details.lin.err{background:#FDF1EE;border-left:5px solid var(--rojo);}
+  details.lin summary{cursor:pointer;font-weight:bold;font-size:17px;color:var(--nav);}
+  details.lin table{margin-top:8px;background:#fff;}
+  table.cierre{width:100%;border-collapse:collapse;font-size:16px;margin:6px 0 10px;}
+  table.cierre th{background:var(--nav);color:#fff;text-align:left;padding:8px 10px;}
+  table.cierre td{border-bottom:1px solid var(--bd);padding:8px 10px;vertical-align:top;}
+  table.cierre td code{white-space:nowrap;}
+  .lin table.cierre td:first-child{width:38%;}
+  pre.arch{background:#F3F6F9;border-left:5px solid var(--json);border-radius:8px;padding:10px 14px;font-size:15px;overflow-x:auto;margin:8px 0;white-space:pre-wrap;}
+  .eq-bar{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px;}
+  .btn-eq{background:#fff;border:3px solid var(--nav);border-radius:12px;padding:10px 18px;font-size:18px;font-weight:bold;cursor:pointer;color:var(--nav);}
+  .btn-eq.activo{background:var(--nav);color:#fff;}
+  .falta-eq{font-size:15px;color:#a05a00;font-weight:bold;margin:6px 0;}
+  @media (max-width:640px){
+    .pq{grid-template-columns:1fr;}
+    table.cierre{font-size:14.5px;} table.cierre td, table.cierre th{padding:7px 6px;overflow-wrap:anywhere;}
+    table.cierre td code{white-space:normal;overflow-wrap:anywhere;}
+    .lin table.cierre, .lin table.cierre tbody, .lin table.cierre tr, .lin table.cierre td{display:block;width:auto !important;}
+    .lin table.cierre tr{border-bottom:1px solid #D5DCE6;padding:6px 0;} .lin table.cierre td{border:none;padding:2px 8px;}
+    .lin table.cierre td:first-child code{font-weight:bold;}
+    .lin table.cierre tr:has(th){display:none;}
+  }
+</style><div class="card c-info">
+  <h2><span class="badge" style="background:var(--teal)">0</span> HOY EL AGENTE CONTESTA<span class="reloj">5 min</span></h2>
+  <p class="que">Hoy <strong>termino de evaluar a los dos grupos que faltan</strong>. Cuando los llamo, vienen con su planilla y su Colab abiertos. Los demás siguen con esta página.</p>
+  <p class="que">El viernes 23 y el lunes 26 no tuvimos clase, así que arrancamos por lo que quedó pendiente: <strong>la tabla</strong>.</p>
+  <p class="que"><strong>Toquen su grupo:</strong></p>
+  <div class="eq-bar"><button class="btn-eq" data-v="vitalair" onclick="elegir('vitalair')">VitalAir</button><button class="btn-eq" data-v="ambiente" onclick="elegir('ambiente')">Ambiente Óptimo</button><button class="btn-eq" data-v="residuo" onclick="elegir('residuo')">Residuo Econexo</button><button class="btn-eq" data-v="mpxl" onclick="elegir('mpxl')">MPXL</button></div>
+  <ol class="pasos">
+    <li>Abran su Colab <code>agente_NombreDelEquipo</code>, en la carpeta <strong>codigo</strong> del Drive del grupo.</li>
+    <li>▶ en los bloques 1 a 6, de arriba para abajo. Si Colab pide permiso para la clave, acepten.</li>
+    <li>Si les falta alguno, termínenlo con la página del lunes 19 y vuelvan acá.</li>
+  </ol>
+  <div class="chico">Cada <span class="hueco">[completar]</span> se reemplaza <strong>entero, con los corchetes</strong>. Si sale <code>NameError: name 'completar' is not defined</code>, les quedó un hueco sin completar.</div>
+  <div data-eq="vitalair" style="display:none"><div class="info i-grn"><strong>VitalAir: hoy los evalúo en formato feria</strong><ol class="pasos" style="margin-top:6px">
+<li>En el bloque 2 tiene que decir <code>MI_FUENTE = "vitalair"</code>: con <code>"aire"</code> no está la fuga.</li>
+<li>Antes de que los llame, hagan 📊, 7 y 8. Si ya hicieron el 7 y el 8 con su página del lunes 19, después de la ronda vayan directo a <strong>Mejorar las reglas</strong>.</li>
+<li>Tengan listo el guion (quién cuenta qué), su tabla con la fuente, el agente andando con un momento difícil, por ejemplo la fuga de las 10:30, y Clase a clase. Las cuatro preguntas del jurado están al final de su página del lunes 19.</li>
+<li>Su tabla es larga: si sale <em>rate limit</em>, esperen un minuto antes de volver a preguntar.</li></ol></div></div>
+  <div class="info i-amb"><strong>Dos cosas de siempre</strong>✍️ Los comentarios del código los escriben ustedes, con sus palabras: los miro cuando les pregunto. 📁 El Colab va en la carpeta codigo: si queda en otro lado, no lo veo.</div>
+</div>
+<div class="card c-info"><h2><span class="badge" style="background:var(--teal)">🗺️</span> QUÉ HACEMOS HOY</h2>
+  <p class="que">El lunes 19 su agente aprendió a <strong>percibir</strong> (bloques 1 a 4) y le escribieron <strong>las reglas</strong> (bloque 6). Hoy <strong>decide y actúa</strong>: contesta, y ustedes comprueban si contesta bien.</p>
+  <table class="cierre"><tr><th style="white-space:nowrap">Bloque</th><th>Qué hacen</th></tr>
+  <tr><td style="white-space:nowrap">📊</td><td>Arreglan su tabla con la devolución y la vuelven a pegar en el bloque 6.</td></tr>
+  <tr><td style="white-space:nowrap">7</td><td>⚖️📣 El bucle, igual que en el RPG: el agente contesta, y comprueban la respuesta con su tabla.</td></tr>
+  <tr><td style="white-space:nowrap">8</td><td>🔁 Lo prueban con los momentos difíciles del día.</td></tr>
+  <tr><td style="white-space:nowrap">🔧</td><td>Mejoran las reglas donde se equivocó.</td></tr></table>
+  <div class="info i-grn"><strong>🎯 Lo mínimo de hoy</strong>La tabla con lo urgente arreglado, el bloque 7 andando y una respuesta comprobada con su tabla. Si llegan: el 8 y una regla nueva. Si no terminaron del 1 al 6, lo mínimo es terminarlos y llegar al 7. Lo que no terminen hoy, lo siguen la próxima clase.</div></div>
+<div class="card c-json"><h2><span class="badge" style="background:var(--json)">📊</span> SU TABLA, ARREGLADA<span class="reloj">15 min</span></h2><div class="camino"><span class="aqui">📍</span><span class="nodo">👀 percibe</span><span class="fl">→</span><span class="nodo on">🧠 razona</span><span class="fl">→</span><span class="nodo">⚖️ decide</span><span class="fl">→</span><span class="nodo">📣 actúa</span></div><p class="que">En este bloque arreglan lo de su tabla que el agente usa para decidir, y la vuelven a pegar en el bloque 6. No hay código nuevo.</p><div class="pq"><div class="pq-a"><div class="pq-t">❔ Por qué</div>Porque el agente decide con su tabla: si un dato está mal, la decisión sale mal.</div><div class="pq-b"><div class="pq-t">🎯 Para qué</div>Para que el agente compare contra valores verificados, cada uno con su fuente.</div></div><div class="info i-rojo"><strong>Lo urgente de su tabla</strong><div class="falta-eq">⬆ Toquen su grupo, arriba de todo.</div><span data-eq="vitalair" style="display:none">Las 6 filas de <em>Rango proporcionado</em> (N° 38 a 43) son de Naturgy, su texto N° 12: pónganlo en Fuente. Las de hidrógeno (N° 29 a 32) y las de <em>por estancia</em> (N° 44 a 53) no aparecen en sus textos fuente: si no encuentran el documento, sáquenlas de la tabla.</span><span data-eq="ambiente" style="display:none">Fila N° 1 (BID): máxima 22 y mínima vacía, como dice el texto. Fila N° 9 (Foro Nergiza): sáquenla, no es una recomendación.</span><span data-eq="residuo" style="display:none">Las dos filas de arriba de la hoja tabla, abajo de los títulos (la que solo tiene la fuente y la vacía): bórrenlas. Orgánicos 1, Plásticos 400, Papel y cartón 5 y los dos vidrios de 1000 no aparecen en sus textos fuente: si no encuentran el documento, sáquenlas. Las otras son de Fundación AQUAE, su texto 3: esa es la fuente, no los ministerios ni Buenos Aires Ciudad, que los puso la IA.</span><span data-eq="mpxl" style="display:none">Comparen con su documento <em>conservar carne fresca y sin congelar</em>: la N° 6 dice −4 °C y el documento, menos de 4 °C; la N° 10 dice 14 días y el documento, varias semanas a meses; la N° 11 dice −30 °C y el documento, menos de 30 °C; la N° 12 dice 14 días y el documento, semanas. N° 18 y 19 (cordero y ternera): 90 – 95 y 90 son la humedad de la tabla de FAO; la temperatura es −1 °C. N° 1 y 2 (pescado): su texto de agroglobal habla de la carne, no del pescado, así que esa fuente no va.</span></div><div class="info i-amb"><strong>Si una fila no sale de ninguno de sus textos</strong>No le inventen la fuente: sáquenla de la tabla y anótenlo en Clase a clase. Una fila sin documento es un invento, aunque tenga un nombre al lado.</div><ol class="pasos"><li>Arréglenlo en la planilla, en la hoja <strong>tabla</strong> o, si no la tienen, en <strong>Tabla de datos</strong>. El resto está en su devolución, enlazada en la hoja <strong>Seguimiento</strong>.</li><li>Copien la tabla desde la fila de títulos hasta la última fila con datos: <strong>sin la fila gris de ejemplo</strong> (si la tienen), sin las columnas Verificó y sin las notas de los costados. Péguenla en el bloque 6, entre las tres comillas, en lugar de la anterior. ▶ el bloque 6. Para ver que entró entera, ▶ el <code>print(MI_SYSTEM_PROMPT)</code> del lunes 19.</li><li>Anoten en Clase a clase, en la fila del viernes 30, qué arreglaron.</li></ol><div class="chico">Lo demás de la devolución, como Verificó y Textos fuente, queda para la próxima clase.</div></div>
+<div class="card c-json"><h2><span class="badge" style="background:var(--json)">7</span> EL BUCLE<span class="reloj">25 min</span></h2><div class="camino"><span class="aqui">📍</span><span class="nodo">👀 percibe</span><span class="fl">→</span><span class="nodo">🧠 razona</span><span class="fl">→</span><span class="nodo on">⚖️ decide</span><span class="fl">→</span><span class="nodo on">📣 actúa</span></div><p class="que">En este bloque el agente conversa: ustedes le preguntan, él le manda a la IA la pregunta junto con las reglas y la medición, y les muestra la respuesta. Lo repite hasta que escriban <code>/salir</code>. Ustedes completan dos líneas que ya escribieron en el RPG y en el extractor.</p><div class="pq"><div class="pq-a"><div class="pq-t">❔ Por qué</div>Porque un agente no contesta una sola vez: escucha, responde y sigue, como el bucle del RPG.</div><div class="pq-b"><div class="pq-t">🎯 Para qué</div>Para que diga el nivel, qué hacer, qué decirle a la persona y contra qué valor comparó.</div></div><ol class="pasos"><li>📋 Copiar → + Código → Ctrl+V.</li><li>Completen los dos huecos, reemplazando cada <span class="hueco">[completar]</span> entero: ya los escribieron en el RPG y en el extractor.</li><li>▶ y, cuando aparezca <code>Vos:</code>, pregunten <span data-eq="vitalair" style="display:none">¿cómo está el aire?</span><span data-eq="ambiente" style="display:none">¿cómo está el aula?</span><span data-eq="residuo" style="display:none">¿lo tiraron bien?</span><span data-eq="mpxl" style="display:none">por un alimento de su tabla, por ejemplo <code>¿la carne vacuna de la heladera sigue bien?</code></span> Escriban algo antes de apretar Enter. Para terminar: <code>/salir</code>, con la barra.</li></ol><div class="cod" id="c1">while True:
+    entrada = input(&quot;Vos: &quot;)
+    if entrada.lower() == &quot;/salir&quot;:
+        print(&quot;👋 Listo.&quot;)
+        break
+
+    historial.append(<span class="hueco">[completar]</span>)
+
+    payload = {
+        &quot;model&quot;: &quot;openai/gpt-oss-120b&quot;,
+        &quot;messages&quot;: historial,
+        &quot;temperature&quot;: 0.2
+    }
+    resp = requests.post(URL, headers=headers, json=payload)
+
+    if resp.status_code != 200:
+        print(&quot;⚠️ Error:&quot;, resp.text)
+        break
+
+    texto_ia = resp.json()<span class="hueco">[completar]</span>
+    historial.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: texto_ia})
+
+    print(&quot;🤖&quot;, texto_ia)</div><button class="btn-cp" onclick="copiar('c1', this)">📋 Copiar</button><div class="chico">✍️ <strong>Coméntenlo ustedes:</strong> en el Colab, arriba de cada parte, una línea con <code>#</code> que diga con sus palabras qué hace y para qué. Después abran «Qué hace cada línea» y comparen.</div><div class="sale"><strong>✅ Tiene que salir:</strong> nivel, accion, mensaje y razon. Si no tiene con qué comparar, tiene que decir que falta un dato: no es un error.</div><details class="lin err"><summary>🧯 Si aparece un error</summary><table class="cierre"><tr><th>Lo que ven</th><th>Qué es</th><th>Qué hacen</th></tr><tr><td><code>⚠️ Error:</code> apenas preguntan</td><td>El primer hueco no quedó como un diccionario con <code>"role": "user"</code>: está entre corchetes, le falta el diccionario, el rol está mal escrito o pegaron la línea entera adentro del paréntesis.</td><td>Corríjanlo. Después ▶ el bloque 6 (así se borra la pregunta mal guardada) y el bucle.</td></tr><tr><td><code>TypeError: list.append() takes exactly one argument</code></td><td>Al primer hueco le faltan las llaves.</td><td>El rol y la entrada van adentro de un diccionario, entre llaves.</td></tr><tr><td><code>NameError: name 'user'</code> o <code>'role'</code></td><td>Faltan comillas: <code>"role"</code>, <code>"user"</code> y <code>"content"</code> son textos.</td><td>Pónganles comillas. <code>entrada</code> va sin comillas: es la variable.</td></tr><tr><td><code>SyntaxError</code></td><td>Falta una llave, un corchete, una comilla o una coma en uno de los huecos.</td><td>La línea que marca el error es la del hueco: compárenla con la pista, signo por signo.</td></tr><tr><td>Un error (<code>KeyError</code>, <code>TypeError</code>, <code>IndexError</code>…) que marca la línea de <code>texto_ia</code></td><td>El camino del segundo hueco está mal: una palabra mal escrita o sin comillas, corchetes de más, falta el <code>[0]</code> o tiene otro número.</td><td>Miren la pista del segundo hueco y comparen paso por paso. Después ▶ el 6 y el bucle.</td></tr><tr><td>La respuesta sale entre llaves, con <code>role</code> o <code>message</code> adentro</td><td>Al camino del segundo hueco le falta el final.</td><td>Tiene que terminar en <code>["message"]["content"]</code>. Después ▶ el 6 y el bucle.</td></tr><tr><td>Contesta como si no leyera la pregunta: pregunten lo que pregunten, dice lo mismo</td><td>Escribieron <code>"entrada"</code> entre comillas: le mandan la palabra, no lo que escribieron.</td><td><code>entrada</code> va sin comillas. Después ▶ el 6 y el bucle.</td></tr><tr><td><code>NameError: name 'historial'</code> (o <code>URL</code>)</td><td>No corrieron el bloque 6 (o el 5), o Colab se desconectó.</td><td>▶ desde el bloque 1, en orden.</td></tr><tr><td><code>⚠️ Error:</code> que habla de <em>rate limit</em></td><td>Le hicieron muchas preguntas seguidas a la IA.</td><td>Esperen un minuto y pregunten de nuevo.</td></tr></table></details><div class="info i-azul"><strong>🔎 Comprueben la respuesta</strong>Este es el trabajo de hoy: no alcanza con que conteste.<ol class="pasos" style="margin-top:6px"><li>Busquen en su tabla el valor que dice <strong>razon</strong>. ¿Está?</li><li>Comparen la medición con ese valor: ¿lo pasa o no?</li><li>Con eso, ¿el <strong>nivel</strong> tiene sentido?</li><li>Anótenlo en Clase a clase, en la fila del viernes 30, columna <em>Qué hicimos hoy</em>, un renglón por prueba: la hora, el nivel, el valor de razon y si estaba bien.</li></ol></div><details class="lin"><summary>🔍 Qué hace cada línea <span class="chico">· ábranlo después de escribir sus comentarios, para comparar</span></summary><table class="cierre"><tr><td><code>while True:</code></td><td>Repite todo lo de adentro hasta que escriban <code>/salir</code>; ahí <code>break</code> corta.</td></tr><tr><td><code>input("Vos: ")</code></td><td>Espera a que escriban algo y lo guarda en <code>entrada</code>.</td></tr><tr><td><code>historial.append(...)</code></td><td>Suma la pregunta a la conversación, que ya tiene sus reglas adentro.</td></tr><tr><td><code>payload</code></td><td>El pedido: qué modelo usar, la conversación entera y la temperatura. Con 0.2 contesta más parejo y menos al azar.</td></tr><tr><td><code>requests.post(...)</code></td><td>Le manda el pedido a la IA.</td></tr><tr><td><code>resp.status_code != 200</code></td><td>El 200 quiere decir que salió bien. Si no, muestra el error y corta.</td></tr><tr><td><code>texto_ia = ...</code></td><td>Saca el texto de la respuesta, por el mismo camino que en <code>consultar_ia</code>.</td></tr><tr><td><code>historial.append({"role": "assistant", ...})</code></td><td>Guarda la respuesta: así el agente recuerda lo que ya dijo.</td></tr></table></details><div class="pistas"><strong>💡 Si se traban</strong><div class="chico" style="margin:2px 0 6px">Toquen la duda que tengan. La última tiene la respuesta: ábranla solo si con las otras no les salió.</div><details><summary>¿Qué va en el primer hueco, el del append?</summary><p>Lo mismo que en el RPG: un diccionario con el rol del que pregunta y lo que escribió, que está guardado en <code>entrada</code>.</p></details><details><summary>¿Qué va en el segundo hueco?</summary><p>El camino hasta el texto de la respuesta, como en <code>consultar_ia</code>: choices, la primera (posición 0), message y content.</p></details><details><summary>Ver la respuesta</summary><p><code>historial.append({"role": "user", "content": entrada})</code><br><code>texto_ia = resp.json()["choices"][0]["message"]["content"]</code></p></details></div><div class="info i-rojo"><strong>¿razon trae un valor que no está en su tabla?</strong>El agente lo inventó. Anótenlo en Clase a clase: lo arreglan en Mejorar las reglas.</div></div>
+<div class="card c-json"><h2><span class="badge" style="background:var(--json)">8</span> UN MOMENTO DIFÍCIL<span class="reloj">20 min</span></h2><div class="camino"><span class="aqui">📍</span><span class="nodo on">👀 percibe</span><span class="fl">→</span><span class="nodo on">🧠 razona</span><span class="fl">→</span><span class="nodo on">⚖️ decide</span><span class="fl">→</span><span class="nodo on">📣 actúa</span></div><p class="que">En este bloque eligen una hora del día en la que pasa algo, por ejemplo <span data-eq="vitalair" style="display:none">la fuga de gas o el pico de monóxido</span><span data-eq="ambiente" style="display:none">la ventana abierta o lo más caluroso del día</span><span data-eq="residuo" style="display:none">una pila o una lata con el contenedor lleno</span><span data-eq="mpxl" style="display:none">el corte de luz o la puerta abierta</span>, y el agente toma esa medición en lugar de la de ahora. Antes de preguntarle, deciden ustedes con su tabla qué tendría que contestar. Ustedes completan la hora y el minuto.</p><div class="pq"><div class="pq-a"><div class="pq-t">❔ Por qué</div>Porque a la hora de la clase puede no pasar nada, y así no se sabe si el agente decide bien.</div><div class="pq-b"><div class="pq-t">🎯 Para qué</div>Para probarlo con los momentos difíciles del día.</div></div><ol class="pasos"><li>Si el bucle sigue esperando <code>Vos:</code>, escriban <code>/salir</code>: mientras espera, las otras celdas no arrancan.</li><li>📋 Copiar → + Código → Ctrl+V.</li><li>Completen la hora con una de la tabla de acá abajo, y ▶. Miren lo que imprime y compárenlo con su tabla.</li><li>Antes de preguntarle, decidan ustedes el nivel que corresponde. Después ▶ el bloque 6 y el bucle, y pregunten lo mismo que antes. <strong>Sin el 6, el agente sigue mirando la medición anterior.</strong></li><li>¿Dijo lo mismo que ustedes? Anótenlo en Clase a clase: la hora, el nivel de ustedes, el del agente y el valor de razon.</li><li>Repitan con otro momento.</li></ol><div class="falta-eq">⬆ Toquen su grupo, arriba de todo.</div><div data-eq="vitalair" style="display:none"><table class="cierre"><tr><th>Pongan</th><th>Qué pasa a esa hora</th></tr><tr><td><code>HORA = 0</code><br><code>MINUTO = 0</code></td><td>De madrugada: frío y húmedo.</td></tr><tr><td><code>HORA = 10</code><br><code>MINUTO = 10</code></td><td>Empieza una fuga de gas. El sensor no dice qué gas es: ¿contra qué fila compara?</td></tr><tr><td><code>HORA = 10</code><br><code>MINUTO = 30</code></td><td>Lo peor de la fuga.</td></tr><tr><td><code>HORA = 12</code><br><code>MINUTO = 15</code></td><td>Sube el monóxido al mediodía.</td></tr><tr><td><code>HORA = 17</code><br><code>MINUTO = 25</code></td><td>El pico de monóxido de la tarde.</td></tr><tr><td><code>HORA = 20</code><br><code>MINUTO = 0</code></td><td>El monóxido vuelve a lo normal.</td></tr></table></div><div data-eq="ambiente" style="display:none"><table class="cierre"><tr><th>Pongan</th><th>Qué pasa a esa hora</th></tr><tr><td><code>HORA = 6</code><br><code>MINUTO = 0</code></td><td>Antes de clase: hace frío y la calefacción está apagada.</td></tr><tr><td><code>HORA = 8</code><br><code>MINUTO = 0</code></td><td>Se prendió la calefacción, pero todavía hace frío.</td></tr><tr><td><code>HORA = 10</code><br><code>MINUTO = 25</code></td><td>Con la ventana cerrada: la humedad más alta.</td></tr><tr><td><code>HORA = 10</code><br><code>MINUTO = 40</code></td><td>Con la ventana abierta.</td></tr><tr><td><code>HORA = 14</code><br><code>MINUTO = 30</code></td><td>Lo más caluroso del día, con la calefacción prendida.</td></tr><tr><td><code>HORA = 20</code><br><code>MINUTO = 0</code></td><td>Con la calefacción apagada desde la tarde.</td></tr></table></div><div data-eq="residuo" style="display:none"><table class="cierre"><tr><th>Pongan</th><th>Qué pasa a esa hora</th></tr><tr><td><code>HORA = 3</code><br><code>MINUTO = 0</code></td><td>De madrugada: nadie tira nada.</td></tr><tr><td><code>HORA = 8</code><br><code>MINUTO = 15</code></td><td>Una botella de vidrio en el amarillo.</td></tr><tr><td><code>HORA = 11</code><br><code>MINUTO = 40</code></td><td>Una pila.</td></tr><tr><td><code>HORA = 13</code><br><code>MINUTO = 20</code></td><td>Una caja de cartón en el azul.</td></tr><tr><td><code>HORA = 18</code><br><code>MINUTO = 25</code></td><td>Una lata, con el amarillo lleno.</td></tr><tr><td><code>HORA = 20</code><br><code>MINUTO = 5</code></td><td>Ya pasó el camión.</td></tr></table></div><div data-eq="mpxl" style="display:none"><table class="cierre"><tr><th>Pongan</th><th>Qué pasa a esa hora</th></tr><tr><td><code>HORA = 3</code><br><code>MINUTO = 0</code></td><td>De madrugada: todo estable.</td></tr><tr><td><code>HORA = 7</code><br><code>MINUTO = 35</code></td><td>Abren la puerta en el desayuno.</td></tr><tr><td><code>HORA = 16</code><br><code>MINUTO = 0</code></td><td>Se cortó la luz: la heladera sube.</td></tr><tr><td><code>HORA = 17</code><br><code>MINUTO = 0</code></td><td>Lo peor del corte.</td></tr><tr><td><code>HORA = 22</code><br><code>MINUTO = 20</code></td><td>La puerta quedó abierta.</td></tr><tr><td><code>HORA = 23</code><br><code>MINUTO = 30</code></td><td>Vuelve a lo normal.</td></tr></table></div><div class="cod" id="c2">HORA = <span class="hueco">[completar]</span>
+MINUTO = <span class="hueco">[completar]</span>
+
+minutos_del_dia = HORA * 60 + MINUTO
+numero_de_medicion = minutos_del_dia // 5
+
+lectura = FUENTE[&quot;lecturas&quot;][numero_de_medicion]
+
+material = &quot;&quot;
+for clave, valor in lectura.items():
+    material = material + f&quot;{clave}: {valor}\n&quot;
+
+print(f&quot;Medicion de las {lectura[&#x27;hora&#x27;]}:\n&quot;)
+print(material)
+print(&quot;Ahora volve a correr el bloque 6 y despues el bucle.&quot;)</div><button class="btn-cp" onclick="copiar('c2', this)">📋 Copiar</button><div class="chico">✍️ <strong>Coméntenlo ustedes:</strong> en el Colab, arriba de cada parte, una línea con <code>#</code> que diga con sus palabras qué hace y para qué. Después abran «Qué hace cada línea» y comparen.</div><div class="sale"><strong>✅ Tiene que salir:</strong> <code>Medicion de las</code> con la hora que pusieron, los datos de ese momento y el aviso de que corran el 6 y el bucle. Fíjense que la hora sea la que pusieron: si ponen un minuto que no termina en 0 o en 5, usa la medición de antes, por ejemplo 10:42 → 10:40.</div><details class="lin err"><summary>🧯 Si aparece un error</summary><table class="cierre"><tr><th>Lo que ven</th><th>Qué es</th><th>Qué hacen</th></tr><tr><td><code>SyntaxError</code></td><td>Escribieron la hora con dos puntos (<code>HORA = 10:30</code>), con un cero adelante (<code>HORA = 08</code>) o con letras (<code>10hs</code>).</td><td>La hora y los minutos van separados y sin cero adelante: <code>HORA = 8</code> y <code>MINUTO = 5</code>.</td></tr><tr><td><code>TypeError</code></td><td>La hora o el minuto no son números enteros: tienen comillas, coma, punto o corchetes.</td><td>Solo el número: <code>HORA = 10</code>.</td></tr><tr><td><code>IndexError: list index out of range</code></td><td>Una hora que no existe, como 24.</td><td>La hora va de 0 a 23 y los minutos de 0 a 59.</td></tr><tr><td><code>NameError: name 'FUENTE'</code></td><td>Colab se reinició y perdió el archivo.</td><td>▶ desde el bloque 1, en orden.</td></tr><tr><td><code>NameError</code> con lo que escribieron, como <code>'diez'</code></td><td>Escribieron la hora con letras.</td><td>Solo el número: <code>HORA = 10</code>.</td></tr></table></details><div class="info i-rojo"><strong>Si el bloque 8 da error, no sigan</strong>El agente se queda con la medición de antes y contesta igual, pero sobre otra hora. Arreglen el 8 primero.</div><details class="lin"><summary>🔍 Qué hace cada línea <span class="chico">· ábranlo después de escribir sus comentarios, para comparar</span></summary><table class="cierre"><tr><td><code>HORA y MINUTO</code></td><td>El momento que quieren probar, en lugar de la hora de ahora.</td></tr><tr><td><code>lo demás</code></td><td>Es lo mismo que los bloques 3 y 4: busca esa medición y la pasa a texto.</td></tr><tr><td><code>¿Por qué otra vez el bloque 6?</code></td><td>Porque las reglas se armaron con la medición de antes: la f completa <code>{material}</code> cuando se corre la celda. Si no lo corren de nuevo, el agente sigue mirando la medición vieja.</td></tr></table></details></div>
+<div class="card c-json"><h2><span class="badge" style="background:var(--json)">🔧</span> MEJORAR LAS REGLAS<span class="reloj">10 min</span></h2><div class="camino"><span class="aqui">📍</span><span class="nodo">👀 percibe</span><span class="fl">→</span><span class="nodo on">🧠 razona</span><span class="fl">→</span><span class="nodo">⚖️ decide</span><span class="fl">→</span><span class="nodo">📣 actúa</span></div><p class="que">En este bloque buscan dónde se equivocó el agente y le agregan una regla en el bloque 6. Después prueban de nuevo el mismo momento.</p><div class="pq"><div class="pq-a"><div class="pq-t">❔ Por qué</div>Porque cuando el agente se equivoca, no se cambia el código: se cambian las reglas que sigue. Esas reglas son su política de decisión.</div><div class="pq-b"><div class="pq-t">🎯 Para qué</div>Para que decida mejor, y tener anotado qué cambiaron y qué pasó.</div></div><ol class="pasos"><li>Busquen en Clase a clase un momento en que se equivocó: el valor de razon no está en la tabla, el nivel no tiene sentido, o no dijo que le faltaba un dato.</li><li>En el bloque 6, agreguen una regla para ese caso, en REGLAS, adentro de las comillas, con un guion adelante:</li></ol><pre class="arch">REGLAS:
+- (su primera regla)
+- (su segunda regla)
+- <span class="hueco">[completar: la regla nueva]</span>
+- Respondé siempre con este formato, sin nada alrededor:</pre><div class="info i-amb"><strong>Ojo con el #</strong>Una regla escrita con <code>#</code> adelante, afuera de las comillas, no da error, pero es un comentario: la IA no la lee. Y adentro de las comillas no escriban comentarios: ahí todo lo lee la IA.</div><ol class="pasos" start="3"><li>Si el bucle sigue esperando <code>Vos:</code>, escriban <code>/salir</code>. ▶ el bloque 8 con el mismo momento, el 6 y el bucle. Pregunten lo mismo.</li><li>Anoten en Clase a clase la regla nueva y qué cambió en la respuesta.</li></ol><details class="lin err"><summary>🧯 Si aparece un error</summary><table class="cierre"><tr><th>Lo que ven</th><th>Qué es</th><th>Qué hacen</th></tr><tr><td><code>SyntaxError</code></td><td>La regla quedó afuera de las comillas, o escribieron tres comillas seguidas adentro.</td><td>La regla va adentro, en REGLAS, sin comillas triples.</td></tr><tr><td><code>NameError</code>, <code>ValueError</code> o <code>SyntaxError</code> que nombra llaves o <em>f-string</em></td><td>Usaron llaves <code>{ }</code> en la regla. En el system prompt, las llaves son solo para <code>{TABLA}</code> y <code>{material}</code>, que ya están puestas.</td><td>Saquen las llaves de su regla. Y no vuelvan a escribir <code>{TABLA}</code> en una regla: le mandan la tabla dos veces.</td></tr></table></details><div class="info i-amb"><strong>¿No se equivocó en nada?</strong>Pruébenlo con una pregunta trampa: pregúntenle por algo que no está en su tabla. Tiene que decir que le falta el dato. Si inventa, ahí tienen su regla.</div><div class="pistas"><strong>💡 Si se traban</strong><div class="chico" style="margin:2px 0 6px">Toquen la duda que tengan. La última tiene la respuesta: ábranla solo si con las otras no les salió.</div><details><summary>¿Qué regla agrego?</summary><p>Depende de lo que falló. Si razon trae un valor que no está en su tabla, pídanle que copie la fila que usó. Si no supo con qué comparar, que diga qué dato le falta. Si el nivel no tiene sentido, díganle cuándo es normal, atención y alerta, con valores de su tabla: esos valores son los umbrales.</p></details><details><summary>¿Dónde va?</summary><p>Adentro de las comillas del system prompt, en REGLAS, con un guion adelante como las otras. Después ▶ el bloque 6.</p></details></div><div class="falta-eq">⬆ Toquen su grupo, arriba de todo.</div><div data-eq="vitalair" style="display:none"><div class="info i-amb"><strong>VitalAir: la fuga de gas</strong>El sensor no dice qué gas es, y su tabla tiene el límite de explosión de cada gas, no uno de alarma. Decidan qué tiene que hacer el agente en ese caso y escríbanlo como regla.</div></div><div data-eq="ambiente" style="display:none"></div><div data-eq="residuo" style="display:none"></div><div data-eq="mpxl" style="display:none"></div></div>
+<div class="card c-entrega" style="border-top:6px solid var(--vio);">
+  <h2><span class="badge" style="background:var(--vio)">📓</span> ANTES DE IRSE<span class="reloj">5 min</span></h2>
+  <table class="cierre"><tr><th>Qué</th><th>Dónde</th></tr>
+    <tr><td><strong>El Colab</strong>, con sus comentarios</td><td>Archivo → Guardar, en la carpeta codigo</td></tr>
+    <tr><td>Qué arreglaron de la tabla, los momentos que probaron (un renglón por prueba) y la regla nueva</td><td>Planilla → Clase a clase, fila del viernes 30</td></tr>
+  </table>
+  <div class="info i-grn"><strong>📓 Y cada uno, su bitácora</strong>La del día, las cinco preguntas, con algo concreto: qué momento probaron, qué contestó el agente, qué regla agregaron.</div>
+</div>
+</div>
+<script>
+var NOMBRES = {'vitalair':'VitalAir','ambiente':'Ambiente Óptimo','residuo':'Residuo Econexo','mpxl':'MPXL'};
+function elegir(e){
+  document.querySelectorAll('[data-eq]').forEach(function(el){ el.style.display = (el.getAttribute('data-eq')===e) ? '' : 'none'; });
+  document.querySelectorAll('.falta-eq').forEach(function(el){ el.style.display = 'none'; });
+  document.querySelectorAll('.btn-eq').forEach(function(b){ b.classList.toggle('activo', b.getAttribute('data-v')===e); });
+  try{ localStorage.setItem('agente_grupo', e); }catch(x){}
+  try{ history.replaceState(null, '', '#' + e); }catch(x){}
+}
+window.addEventListener('load', function(){
+  var h = location.hash.replace('#',''), e = null;
+  if (NOMBRES[h]) e = h; else { try{ var g = localStorage.getItem('agente_grupo'); if (NOMBRES[g]) e = g; }catch(x){} }
+  if (e) elegir(e);
+});
+function copiar(id, b){
+  var t = document.getElementById(id).innerText;
+  function ok(){ var o=b.textContent; b.textContent='✅ Copiado'; setTimeout(function(){ b.textContent=o; }, 1600); }
+  function viejo(){ var a=document.createElement('textarea'); a.value=t; document.body.appendChild(a); a.select();
+    try{ document.execCommand('copy'); ok(); }catch(x){ b.textContent='Seleccionalo y copialo a mano'; } document.body.removeChild(a); }
+  if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(t).then(ok, viejo); } else { viejo(); }
+}
+</script>
+</body></html>
